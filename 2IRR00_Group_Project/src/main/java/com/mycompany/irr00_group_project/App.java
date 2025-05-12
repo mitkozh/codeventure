@@ -7,6 +7,6 @@ package com.mycompany.irr00_group_project;
 public class App {
 
     public static void main(String[] args) {
-        System.out.println("Hello World! TESTING TESTING");
+        System.out.println("Hello World! TESTING for VSCode pls work");
     }
 }
