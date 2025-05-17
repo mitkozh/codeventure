@@ -23,7 +23,7 @@
                 <Image url="@../../assets/images/game_bezel.png" />
             </image>
         </ImageView>
-        <VBox fx:id="menuVBox" alignment="CENTER" maxHeight="600.0" maxWidth="400.0" spacing="18.0">
+        <VBox fx:id="menuVBox" alignment="CENTER" maxHeight="600.0" maxWidth="700.0" spacing="18.0">
             <padding>
                 <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
             </padding>
