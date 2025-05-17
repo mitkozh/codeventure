@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.mycompany.irr00_group_project.controller.MainMenuController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<StackPane fx:id="rootPane" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.irr00_group_project.controller.MainMenuController">
+    <children>
+        <ImageView fx:id="backgroundGeometricImage" fitHeight="${rootPane.height}" fitWidth="${rootPane.width}">
+            <image>
+                <Image url="@../../assets/images/geometric_background.png" />
+            </image>
+        </ImageView>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+        <ImageView fx:id="backgroundImage" fitHeight="700" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../assets/images/background.jpg" />
+            </image>
+        </ImageView>
+        <ImageView fx:id="bezelImage" fitHeight="800" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../assets/images/game_bezel.png" />
+            </image>
+        </ImageView>
+        <VBox fx:id="menuVBox" alignment="CENTER" maxHeight="600.0" maxWidth="400.0" spacing="18.0">
+            <padding>
+                <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+            </padding>
+            <children>
+                <Label fx:id="titleLabel" styleClass="title-label" text="Codeventure" />
+                <Button fx:id="startButton" onAction="#onStartNewGameClick" styleClass="menu-button" text="START NEW GAME" />
+                <Button fx:id="levelSelectButton" onAction="#onLevelSelectClick" styleClass="menu-button" text="LEVEL SELECT" />
+                <Button fx:id="settingsButton" onAction="#onSettingsClick" styleClass="menu-button" text="SETTINGS" />
+                <Button fx:id="helpButton" onAction="#onHelpClick" styleClass="menu-button" text="HELP" />
+                <Button fx:id="exitButton" onAction="#onExitGameClick" styleClass="menu-button" text="EXIT GAME" />
+            </children>
+        </VBox>
+    </children>
+</StackPane>

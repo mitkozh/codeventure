@@ -1,0 +1,25 @@
+
+.title-label {
+    -fx-font-size: 40px;
+    -fx-text-fill: #DDDDDD;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 20 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 2, 0.3, 1, 1);
+}
+
+.menu-button {
+    -fx-background-image: url('../images/button_main.png');
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 8px 15px 8px 15px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+    -fx-font-size: 18px;
+    -fx-alignment: CENTER;
+    -fx-text-fill: #E0D8C0;
+    -fx-pref-width: 400px;
+    -fx-pref-height: 100px;
+
+}

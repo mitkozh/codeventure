@@ -5,13 +5,16 @@
 
 package com.mycompany.irr00_group_project;
 
+import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * App javadoc.
+ * The App class is the main entry point of the JavaFX application.
+ * It initializes the application and displays the main menu screen.
  */
 public class App extends Application {
 
@@ -21,11 +24,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class
-            .getResource("/com/mycompany/irr00_group_project/view/screen/MainMenuScreen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+        MainMenuScreen mainMenu = new MainMenuScreen();
+        try {
+            mainMenu.display(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading Main Menu Screen");
+            Platform.exit();
+        }
     }
 }
