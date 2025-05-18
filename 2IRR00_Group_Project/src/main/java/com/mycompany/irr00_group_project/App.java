@@ -5,7 +5,9 @@
 
 package com.mycompany.irr00_group_project;
 
+import com.mycompany.irr00_group_project.view.screen.AbstractScreen;
 import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
+import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +26,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        MainMenuScreen mainMenu = new MainMenuScreen();
+        AbstractScreen mainMenu = new MainMenuScreen();
         try {
             mainMenu.display(stage);
         } catch (Exception e) {

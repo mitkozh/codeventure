@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
  */
 //todo
 public class MainMenuController {
-    @FXML private Label titleLabel;         // Reference if needed
+    @FXML private Label titleLabel;
     @FXML private Button startButton;
     @FXML private Button levelSelectButton;
     @FXML private Button settingsButton;
