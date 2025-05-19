@@ -1,16 +1,17 @@
 package com.mycompany.irr00_group_project.view.screen;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
 import com.mycompany.irr00_group_project.utils.StringUtils;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 
 /**
  * AbstractScreen is an abstract class that provides a template for creating JavaFX screens.
