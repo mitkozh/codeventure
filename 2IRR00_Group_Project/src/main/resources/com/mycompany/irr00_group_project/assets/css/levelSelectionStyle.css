@@ -36,8 +36,20 @@
 
 .content-inner-box {
     -fx-background-color: #D3D7DB;
-    -fx-background-radius: 8px;
     -fx-padding: 20px;
+}
+
+.content-area {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-position: center;
+}
+
+.scroll-pane .viewport {
+    -fx-background-image: url("../images/spaceBackground.png");
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
 }
 
 .section-title {
@@ -51,27 +63,6 @@
     -fx-font-size: 14px;
     -fx-text-fill: #2B3E50;
     -fx-padding-top: 8px;
-}
-
-.volume-slider .track {
-    -fx-background-color: #3A4B5C;
-    -fx-background-radius: 4px;
-    -fx-pref-height: 8px;
-}
-
-.volume-slider .thumb {
-    -fx-background-color: #52A9D6;
-    -fx-background-radius: 10px;
-    -fx-padding: 7px;
-    -fx-border-color: #2B3E50;
-    -fx-border-width: 1px;
-    -fx-border-radius: 10px;
-}
-
-
-.character-combobox {
-    -fx-min-width: 150px;
-    -fx-min-height: 50px;
 }
 
 .back-to-menu-button {

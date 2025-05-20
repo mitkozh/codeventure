@@ -43,6 +43,25 @@ public class LevelSelectionController {
     public void levelFour(ActionEvent actionEvent) {
         goToMenu();
     }
+
+    public void levelFive(ActionEvent actionEvent) {
+        goToMenu();
+    }
+
+    @FXML
+    public void levelSix(ActionEvent actionEvent) {
+        goToMenu();
+    }
+
+    @FXML
+    public void levelSeven(ActionEvent actionEvent) {
+        goToMenu();
+    }
+
+    @FXML
+    public void levelEight(ActionEvent actionEvent) {
+        goToMenu();
+    }
    
 
     /**
