@@ -1,5 +1,6 @@
 package com.mycompany.irr00_group_project.controller;
 
+import com.mycompany.irr00_group_project.utils.NavigationManager;
 import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
 
 import javafx.application.Platform;
@@ -36,10 +37,8 @@ public class MainMenuController {
      */
     public void onSettingsClick(ActionEvent actionEvent) {
         try {
-            // Get the current stage from any button (e.g., settingsButton)
-            Stage stage = (Stage) settingsButton.getScene().getWindow();
-            SettingsScreen settingsScreen = new SettingsScreen();
-            settingsScreen.display(stage);
+            SettingsScreen settings = new SettingsScreen();
+            NavigationManager.getInstance().navigateTo(settings.getView());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -5,13 +5,8 @@
 
 package com.mycompany.irr00_group_project;
 
-import com.mycompany.irr00_group_project.view.screen.AbstractScreen;
-import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
-import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
+import com.mycompany.irr00_group_project.view.screen.MainLayout;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -26,13 +21,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        AbstractScreen mainMenu = new MainMenuScreen();
-        try {
-            mainMenu.display(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error loading Main Menu Screen");
-            Platform.exit();
-        }
+        MainLayout mainLayout = new MainLayout();
+        mainLayout.display(stage);
     }
 }
