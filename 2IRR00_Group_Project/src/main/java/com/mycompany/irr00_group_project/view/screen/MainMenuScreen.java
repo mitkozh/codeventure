@@ -6,6 +6,7 @@ package com.mycompany.irr00_group_project.view.screen;
  * AbstractScreen class.
  */
 public class MainMenuScreen extends AbstractScreen {
+    
     @Override
     protected String getFxmlPath() {
         return "/com/mycompany/irr00_group_project/view/screen/MainMenuScreen.fxml";

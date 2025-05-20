@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
 
 import javafx.application.Platform;
@@ -26,7 +27,21 @@ public class MainMenuController {
     public void onStartNewGameClick(ActionEvent actionEvent) {
     }
 
+    /**
+     * This method is called when the level selection button is clicked.
+     * It loads the level selection screen and displays it.
+     *
+     * @param actionEvent The action event triggered by the button click.
+     */
     public void onLevelSelectClick(ActionEvent actionEvent) {
+        try {
+            LevelSelectionScreen levels = new LevelSelectionScreen();
+            NavigationManager.getInstance().navigateTo(levels.getView());
+            System.out.println("Level selection screen loaded");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading level selection screen");
+        }
     }
 
     /**
