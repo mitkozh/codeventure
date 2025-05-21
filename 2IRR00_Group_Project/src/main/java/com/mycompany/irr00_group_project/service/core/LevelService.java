@@ -1,7 +1,12 @@
 package com.mycompany.irr00_group_project.service.core;
 
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
+
+import java.util.List;
+
 /**
- * .
+ * Service interface for managing levels.
  */
 public interface LevelService {
+    List<LevelDTO> getAllLevelsDTO();
 }

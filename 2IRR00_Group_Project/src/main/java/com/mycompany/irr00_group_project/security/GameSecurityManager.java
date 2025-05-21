@@ -3,5 +3,5 @@ package com.mycompany.irr00_group_project.security;
 /**
  * .
  */
-public class GameSecurityManager extends SecurityManager {
+public class GameSecurityManager {
 }

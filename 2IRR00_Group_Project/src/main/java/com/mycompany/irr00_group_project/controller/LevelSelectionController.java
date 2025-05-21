@@ -1,68 +1,74 @@
 package com.mycompany.irr00_group_project.controller;
 
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
+import com.mycompany.irr00_group_project.service.core.LevelService;
+import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
+import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.view.components.LevelPreviewButton;
 import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.Node;
+import javafx.scene.control.Pagination;
+import javafx.scene.layout.GridPane;
+
+import java.util.List;
 
 /**
- * .
+ * Controller for the level selection screen.
+ * This class is responsible for paginating the levels and displaying them in a
+ * grid format.
  */
 public class LevelSelectionController {
 
     @FXML
-    private void handleClose(ActionEvent event) {
-        goToMenu();
-    }
+    private Pagination pagination;
 
-    //Keep the below methods untouched for now
+    private final LevelService levelService = new LevelServiceImpl();
+    private List<LevelDTO> allLevelsDTO;
 
     /**
-     * This method is called when the close button is clicked.
-     * It closes the current screen and returns to the main menu.
-     *
-     * @param actionEvent The action event triggered by the button click.
+     * This method is called when the controller is initialized.
+     * It retrieves all levels and sets up the pagination.
      */
     @FXML
-    public void levelOne(ActionEvent actionEvent) {
-        goToMenu();
+    public void initialize() {
+        allLevelsDTO = levelService.getAllLevelsDTO();
+        int pageCount = (int) Math.ceil((double) allLevelsDTO.size() / Constants.LEVELS_PER_PAGE);
+        pagination.setPageCount(pageCount);
+        pagination.setPageFactory(this::createPage);
     }
 
-    @FXML
-    public void levelTwo(ActionEvent actionEvent) {
-        goToMenu();
+    private Node createPage(int pageIndex) {
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setAlignment(javafx.geometry.Pos.CENTER);
+        int buttonCol = 0;
+        int buttonRow = 0;
+        int beginPageIdx = pageIndex * Constants.LEVELS_PER_PAGE;
+        int endPageIdx = Math.min(beginPageIdx + Constants.LEVELS_PER_PAGE, allLevelsDTO.size());
+        for (int i = beginPageIdx; i < endPageIdx; i++) {
+            LevelDTO level = allLevelsDTO.get(i);
+            LevelPreviewButton button = new LevelPreviewButton();
+            button.setLevelNumber(level.getLevelNumber());
+            button.setStars(level.getStars());
+            button.setUnlocked(level.isUnlocked());
+            grid.add(button, buttonCol, buttonRow);
+            buttonCol++;
+            if (buttonCol > 3) {
+                buttonCol = 0;
+                buttonRow++;
+            }
+        }
+        return grid;
     }
 
-    @FXML
-    public void levelThree(ActionEvent actionEvent) {
-        goToMenu();
+    private void loadLevel(int levelNumber) {
+        System.out.println("Loading level " + levelNumber);
+        // we load the level here and navigate to the it.
     }
-
-    @FXML
-    public void levelFour(ActionEvent actionEvent) {
-        goToMenu();
-    }
-
-    public void levelFive(ActionEvent actionEvent) {
-        goToMenu();
-    }
-
-    @FXML
-    public void levelSix(ActionEvent actionEvent) {
-        goToMenu();
-    }
-
-    @FXML
-    public void levelSeven(ActionEvent actionEvent) {
-        goToMenu();
-    }
-
-    @FXML
-    public void levelEight(ActionEvent actionEvent) {
-        goToMenu();
-    }
-   
 
     /**
      * This method is called when the main menu button is clicked.

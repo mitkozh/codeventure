@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.geometry.Insets?>
@@ -21,7 +22,6 @@
             <HBox HBox.hgrow="ALWAYS" alignment="CENTER">
                 <Label text="LEVEL SELECTION" styleClass="levelSelection-title"/>
             </HBox>
-            <Button fx:id="closeButton" text="X" styleClass="custom-button, close-button" onAction="#handleClose"/>
         </HBox>
 
         <!-- Content Section -->
@@ -30,30 +30,10 @@
                 <Insets top="20" bottom="20" left="20" right="20"/>
             </padding>
 
-            <!-- Scrollable Grid of Level Buttons -->
-            <ScrollPane fx:id="contentArea" styleClass="content-area" fitToWidth="true" vbarPolicy="ALWAYS" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
-                <GridPane fx:id="levelGrid"  hgap="10" vgap="10" alignment="TOP_CENTER">
-                    <padding>
-                        <Insets top="10" right="10" bottom="10" left="10"/>
-                    </padding>
-
-                    <!-- Sample buttons; you will populate dynamically in controller -->
-                    <Button fx:id="levelOneButton" onAction="#levelOne" text="Level 1" styleClass="custom-button, back-to-menu-button, bum" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                    <Button fx:id="levelTwoButton" onAction="#levelTwo" text="Level 2" styleClass="custom-button, back-to-menu-button, bum" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                    <Button fx:id="levelThreeButton" onAction="#levelThree" text="Level 3" styleClass="custom-button, back-to-menu-button, bum" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                    <Button fx:id="levelFourButton" onAction="#levelFour" text="Level 4" styleClass="custom-button, back-to-menu-button, bum" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-                    <Button fx:id="levelFiveButton" onAction="#levelFive" text="Level 5" styleClass="custom-button, back-to-menu-button, bum" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                    <Button fx:id="levelSixButton" onAction="#levelSix" text="Level 6" styleClass="custom-button, back-to-menu-button, bum" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                    <Button fx:id="levelSevenButton" onAction="#levelSeven" text="Level 7" styleClass="custom-button, back-to-menu-button, bum" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-                    <Button fx:id="levelEightButton" onAction="#levelEight" text="Level 8" styleClass="custom-button, back-to-menu-button, bum" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
-
-                </GridPane>
-            </ScrollPane>
-
-            <!--<Separator/> -->
+            <Pagination fx:id="pagination" maxPageIndicatorCount="5" pageCount="1" currentPageIndex="0" VBox.vgrow="ALWAYS"/>
 
             <!-- Main Menu Button -->
-            <Button fx:id="backToMenuButton" onAction="#backToMenu" styleClass="custom-button, back-to-menu-button, bum" text="MAIN MENU"/>
+            <Button fx:id="backToMenuButton" onAction="#backToMenu" styleClass="custom-button, back-to-menu-button" text="MAIN MENU"/>
         </VBox>
     </VBox>
 </StackPane>

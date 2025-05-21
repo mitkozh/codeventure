@@ -51,3 +51,12 @@
     -fx-background-color: #4A5C6D;
     -fx-text-fill: white;
 }
+
+#closeButton {
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+    -fx-background-size: 100% 100%;
+    -fx-effect: innershadow( gaussian, rgba(255, 255, 255, 0.24), 30, 30, 30, 30 );
+}
