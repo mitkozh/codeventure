@@ -3,7 +3,9 @@ package com.mycompany.irr00_group_project.view.screen;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+
 import com.mycompany.irr00_group_project.utils.StringUtils;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
@@ -30,7 +32,11 @@ public abstract class AbstractScreen {
         return root;
     }
 
-    private void applyCssToRoot() {
+    /**
+     * Applies CSS styles to the root node of the screen.
+     * The CSS file is loaded from the path returned by getCssPath().
+     */
+    protected void applyCssToRoot() {
         String cssPath = getCssPath();
         if (!StringUtils.isNullOrWhiteSpace(cssPath)) {
             URL cssUrl = getClass().getResource(cssPath);

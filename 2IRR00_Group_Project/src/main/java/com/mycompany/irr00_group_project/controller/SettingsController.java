@@ -1,10 +1,9 @@
 package com.mycompany.irr00_group_project.controller;
 
-import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.service.core.AudioManagerService;
-import com.mycompany.irr00_group_project.service.persistence.PersistenceService;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
 import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -22,46 +21,58 @@ public class SettingsController {
     private ComboBox<String> characterComboBox;
 
     @FXML
-    private Slider volumeSlider;
+    private Slider masterVolumeSlider;
 
-    private GameState gameState;
-    private PersistenceService persistenceService;
+    @FXML
+    private Slider musicSlider;
+
+    @FXML
+    private Slider sfxSlider;
+
     private AudioManagerService audioManagerService;
     
     // todo: predefine character selection choices
+
+    public void setAudioManagerService(AudioManagerService audioManagerService) {
+        this.audioManagerService = audioManagerService;
+    }
 
     @FXML
     private void initialize() {
         characterComboBox.setValue(currentCharacter);
 
-        // volume setup (FR4)
-        volumeSlider.setMin(0.0);
-        volumeSlider.setMax(1.0);
-        volumeSlider.setBlockIncrement(0.05);
+        // Set initial slider values (optional: load from persistence)
+        masterVolumeSlider.setValue(100);
+        musicSlider.setValue(100);
+        sfxSlider.setValue(100);
 
-        // load saved volume
-        volumeSlider.setValue(gameState.getSoundVolume());
-        
-        // apply original volume
-        audioManagerService.setGlobalVolume(gameState.getSoundVolume());
+        // Add listeners to sliders
+        masterVolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (audioManagerService != null) {
+                audioManagerService.setMasterVolume(newVal.doubleValue() / 100.0);
+            }
+        });
+
+        musicSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (audioManagerService != null) {
+                audioManagerService.setMusicVolume(newVal.doubleValue() / 100.0);
+            }
+        });
+
+        sfxSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (audioManagerService != null) {
+                audioManagerService.setSfxVolume(newVal.doubleValue() / 100.0);
+            }
+        });
     }
 
-    private void handleVolumeChange(double newVolume) {
-        newVolume = Math.max(volumeSlider.getMin(), Math.min(newVolume, volumeSlider.getMax()));
-
-        if (Math.abs(newVolume - gameState.getSoundVolume()) > 0.001) {
-            audioManagerService.setGlobalVolume(newVolume);
-            gameState.setSoundVolume(newVolume);
-            persistenceService.saveSettings(gameState);
-        }
-    }
-    
     /**
      * This method is called when the close button is clicked.
-     * It closes the current screen and returns to the main menu.
+     * It navigates back to the main menu screen.
      *
      * @param actionEvent The action event triggered by the button click.
      */
+    
     public void handleClose(ActionEvent actionEvent) {
         goToMenu();
     }

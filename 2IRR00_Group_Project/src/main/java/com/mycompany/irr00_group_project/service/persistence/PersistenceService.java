@@ -6,6 +6,4 @@ import com.mycompany.irr00_group_project.model.core.GameState;
  * .
  */
 public interface PersistenceService {
-
-    void saveSettings(GameState gameState);
 }
