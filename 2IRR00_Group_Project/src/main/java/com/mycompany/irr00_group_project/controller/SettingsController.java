@@ -72,7 +72,6 @@ public class SettingsController {
      *
      * @param actionEvent The action event triggered by the button click.
      */
-    
     public void handleClose(ActionEvent actionEvent) {
         goToMenu();
     }

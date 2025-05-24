@@ -1,11 +1,13 @@
-/*
+/**
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt 
  * to change this license
  */
 
 package com.mycompany.irr00_group_project;
 
+import com.mycompany.irr00_group_project.service.core.impl.AudioManagerServiceImpl;
 import com.mycompany.irr00_group_project.view.screen.MainLayout;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -14,6 +16,12 @@ import javafx.stage.Stage;
  * It initializes the application and displays the main menu screen.
  */
 public class App extends Application {
+    
+    private static AudioManagerServiceImpl audioManagerService;
+
+    public static AudioManagerServiceImpl getAudioManagerService() {
+        return audioManagerService;
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -21,6 +29,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // Start music playback
+        audioManagerService = new AudioManagerServiceImpl();
+        
         MainLayout mainLayout = new MainLayout();
         mainLayout.display(stage);
     }

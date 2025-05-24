@@ -2,6 +2,7 @@ package com.mycompany.irr00_group_project.view.screen;
 
 import java.io.IOException;
 
+import com.mycompany.irr00_group_project.App;
 import com.mycompany.irr00_group_project.controller.SettingsController;
 import com.mycompany.irr00_group_project.service.core.impl.AudioManagerServiceImpl;
 
@@ -19,7 +20,7 @@ public class SettingsScreen extends AbstractScreen {
         loadFxml();
         // Inject AudioManagerService after loading FXML
         SettingsController controller = fxmlLoader.getController();
-        controller.setAudioManagerService(new AudioManagerServiceImpl());
+        controller.setAudioManagerService(App.getAudioManagerService());
         applyCssToRoot();
         return root;
     }
