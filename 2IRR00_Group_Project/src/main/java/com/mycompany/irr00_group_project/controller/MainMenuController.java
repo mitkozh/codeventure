@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.view.screen.HelpScreen;
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
 
@@ -59,8 +60,22 @@ public class MainMenuController {
         }
     }
 
+    /**
+    * This method is called when the help button is clicked.
+    * It loads the help screen and displays it.
+    *
+    * @param actionEvent The action event triggered by the button click.
+    */
     public void onHelpClick(ActionEvent actionEvent) {
-    }
+        try {
+            HelpScreen helpScreen = new HelpScreen();
+            NavigationManager.getInstance().navigateTo(helpScreen.getView());
+            System.out.println("Help screen loaded successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error loading help screen");
+        }   
+    }   
 
     public void onExitGameClick(ActionEvent actionEvent) {
         Platform.exit();
