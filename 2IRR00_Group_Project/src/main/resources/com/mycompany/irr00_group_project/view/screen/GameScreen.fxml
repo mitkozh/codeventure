@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import com.mycompany.irr00_group_project.view.components.CodeEditorArea?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.mycompany.irr00_group_project.controller.GameScreenController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-</VBox>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+fx:controller="com.mycompany.irr00_group_project.controller.GameScreenController">
+    
+
+    <!-- Main split: vertical stack (top: content, bottom: console output) -->
+    <center>
+        <VBox spacing="0" prefHeight="600" prefWidth="800">
+            <!-- Top part: split horizontally into code editor and game grid -->
+            <HBox fx:id="topSplit" VBox.vgrow="ALWAYS">
+                <!-- Left: Code Editor -->
+                <CodeEditorArea fx:id="codeEditor" HBox.hgrow="ALWAYS" />
+
+                <!-- Right: Game Grid -->
+                <Pane fx:id="gameGrid" prefWidth="400" prefHeight="400"
+                    style="-fx-background-color: lightgray;" HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <!-- Bottom: Console output placeholder -->
+            <TextArea fx:id="consoleOutput" editable="false" prefHeight="150"
+                style="-fx-control-inner-background: black; -fx-text-fill: white;"
+                promptText="Console output will appear here..." />
+        </VBox>
+    </center>
+</BorderPane>
