@@ -13,13 +13,11 @@ import javafx.fxml.FXML;
 public class HelpController {
 
     /**
-     * Initializes the controller. This method can be used to set up
+     * Initializes the controller. Can be used to set up
      * any initial data or bindings needed for the help screen.
      */
     @FXML
     public void initialize() {
-        // Currently no initialization needed for help screen
-        // Could be used to load dynamic help content in the future
     }
 
     /**
