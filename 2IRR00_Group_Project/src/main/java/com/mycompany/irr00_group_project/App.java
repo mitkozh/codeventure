@@ -6,6 +6,7 @@
 package com.mycompany.irr00_group_project;
 
 import com.mycompany.irr00_group_project.service.core.impl.AudioManagerServiceImpl;
+import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 import com.mycompany.irr00_group_project.view.screen.MainLayout;
 
 import javafx.application.Application;
@@ -29,6 +30,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        SettingsServiceImpl.getInstance();
         // Start music playback
         audioManagerService = new AudioManagerServiceImpl();
         
