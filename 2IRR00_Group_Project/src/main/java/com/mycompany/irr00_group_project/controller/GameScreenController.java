@@ -4,6 +4,9 @@ import com.mycompany.irr00_group_project.controller.components.CodeEditorAreaCon
 import com.mycompany.irr00_group_project.controller.components.ConsoleOutputController;
 import com.mycompany.irr00_group_project.controller.components.GameGridController;
 import com.mycompany.irr00_group_project.model.core.GameState;
+import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
+
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -107,4 +110,14 @@ public class GameScreenController {
         stopExecutionButton.setDisable(true);
         consoleOutputController.appendMessage(message);
     }
+
+    public void onSettingsClick(ActionEvent actionEvent) {
+        try {
+            SettingsScreen settings = new SettingsScreen();
+            NavigationManager.getInstance().navigateTo(settings.getView());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

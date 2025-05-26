@@ -106,7 +106,7 @@
     -fx-padding: 5px;
 }
 
-.run-button, .stop-button, .reset-button {
+.run-button, .stop-button, .reset-button, .settings-button {
     -fx-background-size: 100% 100%;
     -fx-min-height: 40px;
 }
