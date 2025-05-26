@@ -3,7 +3,7 @@ package com.mycompany.irr00_group_project.view.screen;
 /**
  * .
  */
-public class GameScreen extends AbstractScreen{
+public class GameScreen extends AbstractScreen {
 
     @Override
     protected String getFxmlPath() {

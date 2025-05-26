@@ -29,8 +29,7 @@
             </padding>
             <children>
                 <Label fx:id="titleLabel" styleClass="title-label" text="Codeventure" />
-                <Button fx:id="startButton" onAction="#onStartNewGameClick" styleClass="menu-button" text="START NEW GAME" />
-                <Button fx:id="levelSelectButton" onAction="#onLevelSelectClick" styleClass="menu-button" text="LEVEL SELECT" />
+                <Button fx:id="levelSelectButton" onAction="#onLevelSelectClick" styleClass="menu-button" text="PLAY" />
                 <Button fx:id="settingsButton" onAction="#onSettingsClick" styleClass="menu-button" text="SETTINGS" />
                 <Button fx:id="helpButton" onAction="#onHelpClick" styleClass="menu-button" text="HELP" />
                 <Button fx:id="exitButton" onAction="#onExitGameClick" styleClass="menu-button" text="EXIT GAME" />

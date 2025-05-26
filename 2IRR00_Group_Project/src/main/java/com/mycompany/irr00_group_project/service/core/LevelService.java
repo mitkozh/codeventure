@@ -1,5 +1,6 @@
 package com.mycompany.irr00_group_project.service.core;
 
+import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface LevelService {
     List<LevelDTO> getAllLevelsDTO();
+    LevelData getLevelDataByFileName(String fileName);
 }

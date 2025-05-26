@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox styleClass="grid-panel" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycompany.irr00_group_project.controller.components.GameGridController">
+
+    <VBox styleClass="grid-container" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets top="20.0" bottom="20.0" left="20.0" right="20.0"/>
+        </padding>
+        <StackPane fx:id="gameGridContainer" styleClass="game-grid-background"
+                   VBox.vgrow="ALWAYS">
+            <GridPane fx:id="gameGrid" styleClass="game-grid" alignment="CENTER"/>
+        </StackPane>
+    </VBox>
+</VBox>

@@ -5,15 +5,22 @@ import com.mycompany.irr00_group_project.model.enums.Direction;
 /**
  * .
  */
-public class SpriteCharacter implements CharacterControls{
+public class SpriteCharacter implements CharacterControls {
     private int currentRow;
     private int currentCol;
     private Direction currentDirection; // enum: NORTH, EAST, SOUTH, WEST
 
+    /**
+     * Constructor to initialize the sprite character with a starting position and direction.
+     *
+     * @param startRow          The initial row position of the sprite.
+     * @param startCol          The initial column position of the sprite.
+     * @param initialDirection  The initial direction the sprite is facing.
+     */
     public SpriteCharacter(int startRow, int startCol, Direction initialDirection) {
-    this.currentRow = startRow;
-    this.currentCol = startCol;
-    this.currentDirection = initialDirection;
+        this.currentRow = startRow;
+        this.currentCol = startCol;
+        this.currentDirection = initialDirection;
     }
 
     // getters
@@ -50,12 +57,22 @@ public class SpriteCharacter implements CharacterControls{
     @Override
     public void turnLeft() {
         switch (currentDirection) {
-            case NORTH: currentDirection = Direction.WEST; break;
-            case WEST: currentDirection = Direction.SOUTH; break;
-            case SOUTH: currentDirection = Direction.EAST; break;
-            case EAST: currentDirection = Direction.NORTH; break;
+            case NORTH:
+                currentDirection = Direction.WEST;
+                break;
+            case WEST:
+                currentDirection = Direction.SOUTH;
+                break;
+            case SOUTH:
+                currentDirection = Direction.EAST;
+                break;
+            case EAST:
+                currentDirection = Direction.NORTH;
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + currentDirection);
         }
-        //for debug
+        // for debug
         System.out.println("Sprite turned left. New orientation is: " + currentDirection);
 
     }
@@ -63,12 +80,22 @@ public class SpriteCharacter implements CharacterControls{
     @Override
     public void turnRight() {
         switch (currentDirection) {
-            case NORTH: currentDirection = Direction.EAST; break;
-            case EAST: currentDirection = Direction.SOUTH; break;
-            case SOUTH: currentDirection = Direction.WEST; break;
-            case WEST: currentDirection = Direction.NORTH; break;
+            case NORTH:
+                currentDirection = Direction.EAST;
+                break;
+            case EAST:
+                currentDirection = Direction.SOUTH;
+                break;
+            case SOUTH:
+                currentDirection = Direction.WEST;
+                break;
+            case WEST:
+                currentDirection = Direction.NORTH;
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + currentDirection);
         }
-        //for debug
+        // for debug
         System.out.println("Sprite turned right. New orientation is: " + currentDirection);
     }
 
@@ -84,12 +111,22 @@ public class SpriteCharacter implements CharacterControls{
         int nextCol = currentCol;
 
         switch (currentDirection) {
-            case NORTH: nextRow--; break;
-            case EAST: nextCol++; break;
-            case SOUTH: nextRow++; break;
-            case WEST: nextCol--; break;
+            case NORTH:
+                nextRow--;
+                break;
+            case EAST:
+                nextCol++;
+                break;
+            case SOUTH:
+                nextRow++;
+                break;
+            case WEST:
+                nextCol--;
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + currentDirection);
         }
-        return new int[]{nextRow, nextCol};
+        return new int[] { nextRow, nextCol };
     }
 
     /**
@@ -100,10 +137,10 @@ public class SpriteCharacter implements CharacterControls{
      * @param newRow The validated new row.
      * @param newCol The validated new column.
      */
-    private void moveTo(int newRow, int newCol) {
+    public void moveTo(int newRow, int newCol) {
         this.currentRow = newRow;
         this.currentCol = newCol;
-        //for future debugging
+        // for future debugging
         System.out.println("Sprite moved to: (" + currentRow + ", " + currentCol + ")");
     }
 }

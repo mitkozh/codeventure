@@ -1,8 +1,11 @@
 package com.mycompany.irr00_group_project.service.core.impl;
 
+import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
+import com.mycompany.irr00_group_project.utils.ParseUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,5 +28,15 @@ public class LevelServiceImpl implements LevelService {
             }
         }
         return levels;
+    }
+
+    @Override
+    public LevelData getLevelDataByFileName(String fileName) {
+        try {
+            return ParseUtils.parseLevel(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("Error loading level from file: " + fileName, e);
+        }
     }
 }

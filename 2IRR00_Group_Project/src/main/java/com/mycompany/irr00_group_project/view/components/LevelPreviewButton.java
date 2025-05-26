@@ -13,7 +13,7 @@ import javafx.scene.text.TextAlignment;
  * A button that represents a level preview in the level selection screen.
  * It displays the level number and the number of stars earned.
  */
-public class LevelPreviewButton extends StackPane {
+public class LevelPreviewButton extends Button {
 
     private int levelNumber;
     private int stars;
@@ -47,7 +47,7 @@ public class LevelPreviewButton extends StackPane {
         content.setAlignment(Pos.CENTER);
         content.setSpacing(5);
 
-        this.getChildren().add(content);
+        this.setGraphic(content);
     }
 
     private void updateStarLabel() {

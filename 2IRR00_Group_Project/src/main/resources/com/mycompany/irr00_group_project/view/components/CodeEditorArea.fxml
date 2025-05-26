@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" styleClass="code-editor-panel" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mycompany.irr00_group_project.controller.components.CodeEditorAreaController">
+    <VBox styleClass="code-editor-container" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets top="15.0" bottom="15.0" left="15.0" right="15.0"/>
+        </padding>
+
+        <ScrollPane fx:id="codeScrollPane" styleClass="code-scroll"
+                    VBox.vgrow="ALWAYS" fitToWidth="true">
+            <TextArea fx:id="codeEditor" styleClass="code-editor"
+                      wrapText="true"/>
+        </ScrollPane>
+    </VBox>
+</VBox>

@@ -24,9 +24,7 @@ public class MainMenuController {
     @FXML private Button helpButton;
     @FXML private Button exitButton;
     Stage primaryStage;
-    
-    public void onStartNewGameClick(ActionEvent actionEvent) {
-    }
+
 
     /**
      * This method is called when the level selection button is clicked.
