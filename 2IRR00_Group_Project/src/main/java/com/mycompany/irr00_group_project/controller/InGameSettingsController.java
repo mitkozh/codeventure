@@ -14,6 +14,8 @@ import javafx.scene.control.Slider;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.scene.Parent;
+
 /**
  * .
  */
@@ -39,10 +41,15 @@ public class InGameSettingsController {
 
     private boolean isInitializingView = true;
 
+    private Parent previousScreen;
+
     public void setAudioManagerService(AudioManagerService audioManagerService) {
         this.audioManagerService = audioManagerService;
     }
 
+    public void setPreviousScreen(Parent previousScreen) {
+        this.previousScreen = previousScreen;
+    }
     @FXML
     private void initialize() {
         try {
@@ -185,7 +192,17 @@ public class InGameSettingsController {
      * @param actionEvent The action event triggered by the button click.
      */
     public void handleClose(ActionEvent actionEvent) {
-        goToMenu();
+        try {
+            if(previousScreen != null) {
+                NavigationManager.getInstance().navigateTo(previousScreen);
+            } else {
+                MainMenuScreen menuScreen = new MainMenuScreen();
+                NavigationManager.getInstance().navigateTo(menuScreen.getView());
+            }
+           
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

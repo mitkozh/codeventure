@@ -3,7 +3,7 @@ package com.mycompany.irr00_group_project.view.screen;
 import java.io.IOException;
 
 import com.mycompany.irr00_group_project.App;
-import com.mycompany.irr00_group_project.controller.SettingsController;
+import com.mycompany.irr00_group_project.controller.InGameSettingsController;
 import com.mycompany.irr00_group_project.service.core.impl.AudioManagerServiceImpl;
 
 import javafx.scene.Parent;
@@ -19,7 +19,7 @@ public class InGameSettingsScreen extends AbstractScreen {
     public Parent getView() throws IOException {
         loadFxml();
         // Inject AudioManagerService after loading FXML
-        SettingsController controller = fxmlLoader.getController();
+        InGameSettingsController controller = fxmlLoader.getController();
         controller.setAudioManagerService(App.getAudioManagerService());
         applyCssToRoot();
         return root;
@@ -33,5 +33,9 @@ public class InGameSettingsScreen extends AbstractScreen {
     @Override
     protected String getCssPath() {
         return "/com/mycompany/irr00_group_project/assets/css/settingsMenuStyle.css";
+    }
+
+    public InGameSettingsController getController() {
+        return (InGameSettingsController) fxmlLoader.getController();
     }
 }
