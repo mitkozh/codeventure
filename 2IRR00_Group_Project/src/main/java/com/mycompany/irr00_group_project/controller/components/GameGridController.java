@@ -119,11 +119,11 @@ public class GameGridController {
         SpriteCharacter sprite = gameState.getSprite();
         if (sprite != null) {
             spriteCharacterView.updateDirection(sprite.getCurrentDirection());
-            gameGrid.getChildren().removeIf(node -> node == spriteCharacterView.getImageView());
-            gameGrid.add(spriteCharacterView.getImageView(),
+            gameGrid.getChildren().removeIf(node -> node == spriteCharacterView.getNode());
+            gameGrid.add(spriteCharacterView.getNode(),
                     sprite.getCurrentCol(), sprite.getCurrentRow());
-            GridPane.setHalignment(spriteCharacterView.getImageView(), javafx.geometry.HPos.CENTER);
-            GridPane.setValignment(spriteCharacterView.getImageView(), javafx.geometry.VPos.CENTER);
+            GridPane.setHalignment(spriteCharacterView.getNode(), javafx.geometry.HPos.CENTER);
+            GridPane.setValignment(spriteCharacterView.getNode(), javafx.geometry.VPos.CENTER);
 
         }
 
