@@ -2,6 +2,7 @@ package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.service.core.AudioManagerService;
 import com.mycompany.irr00_group_project.service.core.SettingsService;
+import com.mycompany.irr00_group_project.service.core.impl.AudioManagerServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
 import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
@@ -45,12 +46,11 @@ public class SettingsController {
 
     @FXML
     private void initialize() {
+        isInitializingView = true;
+
         try {
             // attempt to get AudioManagerService instance if not already set by a setter
-            if (this.audioManagerService == null && com.mycompany.irr00_group_project.service.core.impl.AudioManagerServiceImpl.class != null) {
-                this.audioManagerService = com.mycompany.irr00_group_project.service.core.impl.AudioManagerServiceImpl.getInstance();
-            }
-
+            this.audioManagerService = AudioManagerServiceImpl.getInstance();
             this.settingsService = SettingsServiceImpl.getInstance();
         } catch (Exception e) {
             System.err.println("SettingsController: CRITICAL - Failed to initialize services: " + e.getMessage());
@@ -70,7 +70,7 @@ public class SettingsController {
                 if (AVATAR_OPTIONS.contains(savedAvatar)) {
                     characterComboBox.setValue(savedAvatar);
                 } else if (!AVATAR_OPTIONS.isEmpty()) {
-                    characterComboBox.setValue(AVATAR_OPTIONS.get(0));
+                    characterComboBox.setValue(AVATAR_OPTIONS.getFirst());
                 }
             }
 
@@ -95,7 +95,7 @@ public class SettingsController {
 
         if (characterComboBox != null) {
             characterComboBox.setOnAction(event -> {
-                if (isInitializingView || settingsService == null) return;
+                if (isInitializingView) return;
                 String selectedAvatar = characterComboBox.getValue();
                 if (selectedAvatar != null && !selectedAvatar.equals(settingsService.getSelectedAvatar())) {
                     settingsService.setSelectedAvatar(selectedAvatar);
@@ -107,7 +107,12 @@ public class SettingsController {
         // master volume slider
         if (masterVolumeSlider != null) {
             masterVolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                if (audioManagerService != null) audioManagerService.setMasterVolume(newVal.doubleValue() / 100.0);
+                if (audioManagerService != null) {
+                    double value = newVal.doubleValue() / 100.0;
+                    settingsService.setMasterVolume(value);
+                    AudioManagerServiceImpl.getInstance().setMasterVolume(value);
+                    AudioManagerServiceImpl.getInstance().setMusicVolume(settingsService.getMusicVolume());
+                }
             });
             masterVolumeSlider.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
                 if (isInitializingView || settingsService == null) return;
@@ -118,7 +123,6 @@ public class SettingsController {
                 }
             });
             masterVolumeSlider.setOnMouseReleased(event -> {
-                if (isInitializingView || settingsService == null) return;
                 if(!masterVolumeSlider.isValueChanging()){
                     settingsService.setMasterVolume(masterVolumeSlider.getValue() / 100.0);
                     settingsService.saveCurrentSettings();
@@ -129,7 +133,9 @@ public class SettingsController {
 
         if (musicSlider != null) {
             musicSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                if (isInitializingView || audioManagerService == null) return;
+                double value = newVal.doubleValue() / 100.0;
+                settingsService.setMusicVolume(value); // Save to settings
+                AudioManagerServiceImpl.getInstance().setMusicVolume(value);
                 audioManagerService.setMusicVolume(newVal.doubleValue() / 100.0);
             });
             // save when user finishes interaction
@@ -138,7 +144,8 @@ public class SettingsController {
                 if (wasChanging && !isChanging) {
                     settingsService.setMusicVolume(musicSlider.getValue() / 100.0);
                     settingsService.saveCurrentSettings();
-                    System.out.println("Music Volume changed to " + (musicSlider.getValue()/100.0) + ". Settings saved.");
+                    System.out.println("Music Volume changed to " +
+                            (musicSlider.getValue()/100.0) + ". Settings saved.");
                 }
             });
             musicSlider.setOnMouseReleased(event -> {
@@ -153,7 +160,9 @@ public class SettingsController {
 
         if (sfxSlider != null) {
             sfxSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                if (isInitializingView || audioManagerService == null) return;
+                double value = newVal.doubleValue() / 100.0;
+                settingsService.setSfxVolume(value);
+                AudioManagerServiceImpl.getInstance().setSfxVolume(value);
                 audioManagerService.setSfxVolume(newVal.doubleValue() / 100.0);
             });
             // save when user finishes interaction

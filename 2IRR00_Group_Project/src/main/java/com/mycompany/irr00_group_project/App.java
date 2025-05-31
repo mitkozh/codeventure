@@ -32,9 +32,10 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         SettingsServiceImpl.getInstance();
         // Start music playback
-        audioManagerService = new AudioManagerServiceImpl();
-        
+        AudioManagerServiceImpl.getInstance();
+
         MainLayout mainLayout = new MainLayout();
         mainLayout.display(stage);
     }
 }
+

@@ -31,7 +31,8 @@ public class AudioManagerServiceImpl implements AudioManagerService {
      * Constructor that initializes the audio manager service.
      * It attempts to load and play the background music for the main menu.
      */
-    public AudioManagerServiceImpl() {
+    private AudioManagerServiceImpl() {
+
         try {
             SettingsService settings = SettingsServiceImpl.getInstance();
             this.masterVolume = settings.getMasterVolume();
@@ -94,6 +95,8 @@ public class AudioManagerServiceImpl implements AudioManagerService {
                 }
             }
             volumeControl.setValue(dB);
+            System.out.println("Updating music clip volume. Master: " + masterVolume + ", Music: " + musicVolume);
+            System.out.println("Calculated dB: " + dB);
         }
     }
 
@@ -101,14 +104,13 @@ public class AudioManagerServiceImpl implements AudioManagerService {
     public void setMasterVolume(double newVolume) {
         // Implementation for setting master volume
         this.masterVolume = Math.max(0.0, Math.min(1.0, newVolume));
-        updateMusicClipVolume();
+        setMusicVolume(this.musicVolume);
         System.out.println("Master volume set to: " + newVolume);
     }
 
     @Override
     public void setMusicVolume(double newVolume) {
         this.musicVolume = Math.max(0.0, Math.min(1.0, newVolume));
-        musicVolume = newVolume;
         updateMusicClipVolume();
         System.out.println("Music volume set to: " + newVolume);
     }
