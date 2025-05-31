@@ -108,10 +108,7 @@ public class SettingsController {
         if (masterVolumeSlider != null) {
             masterVolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
                 if (audioManagerService != null) {
-                    double value = newVal.doubleValue() / 100.0;
-                    settingsService.setMasterVolume(value);
-                    AudioManagerServiceImpl.getInstance().setMasterVolume(value);
-                    AudioManagerServiceImpl.getInstance().setMusicVolume(settingsService.getMusicVolume());
+                    audioManagerService.setMasterVolume(newVal.doubleValue() / 100.0);
                 }
             });
             masterVolumeSlider.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
@@ -123,6 +120,7 @@ public class SettingsController {
                 }
             });
             masterVolumeSlider.setOnMouseReleased(event -> {
+                if (isInitializingView || settingsService == null) return;
                 if(!masterVolumeSlider.isValueChanging()){
                     settingsService.setMasterVolume(masterVolumeSlider.getValue() / 100.0);
                     settingsService.saveCurrentSettings();

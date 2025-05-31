@@ -11,10 +11,8 @@
             <Insets top="15.0" bottom="15.0" left="15.0" right="15.0"/>
         </padding>
 
-        <ScrollPane fx:id="codeScrollPane" styleClass="code-scroll"
-                    VBox.vgrow="ALWAYS" fitToWidth="true">
-            <TextArea fx:id="codeEditor" styleClass="code-editor"
-                      wrapText="true"/>
-        </ScrollPane>
+        <TextArea fx:id="codeEditor" styleClass="code-editor"
+                  wrapText="true"
+                  VBox.vgrow="ALWAYS"/>
     </VBox>
 </VBox>

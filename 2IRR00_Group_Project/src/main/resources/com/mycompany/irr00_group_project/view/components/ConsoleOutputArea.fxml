@@ -12,10 +12,8 @@
             <Insets top="15.0" bottom="15.0" left="15.0" right="15.0"/>
         </padding>
 
-        <ScrollPane fx:id="outputScrollPanel" styleClass="output-scroll"
-                    VBox.vgrow="ALWAYS" fitToWidth="true">
-            <TextArea fx:id="consoleOutput" editable="false" styleClass="console-output-area"
-                      wrapText="true"/>
-        </ScrollPane>
+        <TextArea fx:id="consoleOutput" editable="false" styleClass="console-output-area"
+                  wrapText="true"
+                  VBox.vgrow="ALWAYS"/>
     </VBox>
 </VBox>
