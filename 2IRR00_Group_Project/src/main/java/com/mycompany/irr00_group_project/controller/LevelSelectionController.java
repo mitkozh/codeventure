@@ -70,7 +70,11 @@ public class LevelSelectionController {
 
     private void loadLevel(int levelNumber) {
         System.out.println("Loading level " + levelNumber);
-        GameScreen gameScreen = new GameScreen();
+        String levelFileName = "level"+ levelNumber + ".txt";
+        GameScreen gameScreen = new GameScreen(levelFileName);
+
+        //GameScreenController controller = gameScreen.getController();
+        //controller.setLevelFile(levelFileName);
         try {
             NavigationManager.getInstance().navigateTo(gameScreen.getView());
         } catch (IOException e) {

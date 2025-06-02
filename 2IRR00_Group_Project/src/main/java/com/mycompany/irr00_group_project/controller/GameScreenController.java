@@ -33,20 +33,30 @@ public class GameScreenController {
     private boolean isExecuting = false;
     private Task<Void> executionTask;
     private GameState gameState;
+    private String levelFile;
 
 
     @FXML
     public void initialize() {
-        gameState = new GameState();
-        loadLevel("level1.txt");
+        if (levelFile == null) {
+            levelFile = "level1.txt"; // default option for if the level file is null
+        }
+        gameState = new GameState(levelFile);
+        loadLevel(levelFile);
     }
 
     private void loadLevel(String levelFile) {
         gameState.loadFromFile(levelFile);
         gameGridController.loadLevelFromGameState(gameState);
         consoleOutputController.clear();
-        levelTitle.setText("Level 1");
+        // Extract level number from filename
+        String levelNum = levelFile.replaceAll("\\D+", "");
+        levelTitle.setText("Level " + levelNum);
     }
+
+
+
+
 
     @FXML
     public void runCode(ActionEvent event) {
@@ -97,7 +107,7 @@ public class GameScreenController {
             stopExecution(event);
         }
 
-        loadLevel("level1.txt");
+        loadLevel(levelFile);
         consoleOutputController.appendMessage("Level reset");
     }
 
@@ -124,6 +134,12 @@ public class GameScreenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    //setter for the level file
+    public void setLevelFile(String levelFile) {
+        this.levelFile = levelFile;
     }
 
 }
