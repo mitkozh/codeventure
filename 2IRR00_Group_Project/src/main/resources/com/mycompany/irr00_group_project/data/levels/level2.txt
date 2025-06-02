@@ -1,4 +1,4 @@
-# Level 1 - Basic Navigation
+# Level 2 -
 SIZE 8 8
 START 0 0 NORTH
 END 7 7
