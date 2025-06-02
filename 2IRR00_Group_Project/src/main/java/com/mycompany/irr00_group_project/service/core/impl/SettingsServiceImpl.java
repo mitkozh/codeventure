@@ -10,6 +10,15 @@ import java.util.Properties;
  * .
  */
 public class SettingsServiceImpl implements SettingsService {
+
+    public interface VolumeChangeListener {
+        void onMasterVolumeChanged(double newVolume);
+        void onMusicVolumeChanged(double newVolume);
+        void onSfxVolumeChanged(double newVolume);
+    }
+
+    private VolumeChangeListener volumeChangeListener;
+
     // default settings
     private String selectedAvatar = "Robot";
     private double masterVolume = 1.0;
@@ -31,6 +40,10 @@ public class SettingsServiceImpl implements SettingsService {
             instance = new SettingsServiceImpl();
         }
         return instance;
+    }
+
+    public void setVolumeChangeListener(VolumeChangeListener listener) {
+        this.volumeChangeListener = listener;
     }
 
     @Override
@@ -61,16 +74,25 @@ public class SettingsServiceImpl implements SettingsService {
     @Override
     public void setMasterVolume(double volume) {
         this.masterVolume = Math.max(0.0, Math.min(1.0, volume));
+        if (volumeChangeListener != null) {
+            volumeChangeListener.onMasterVolumeChanged(this.masterVolume);
+        }
     }
 
     @Override
     public void setMusicVolume(double volume) {
         this.musicVolume = Math.max(0.0, Math.min(1.0, volume));
+        if (volumeChangeListener != null) {
+            volumeChangeListener.onMusicVolumeChanged(this.musicVolume);
+        }
     }
 
     @Override
     public void setSfxVolume(double volume) {
         this.sfxVolume = Math.max(0.0, Math.min(1.0, volume));
+        if (volumeChangeListener != null) {
+            volumeChangeListener.onSfxVolumeChanged(this.sfxVolume);
+        }
     }
 
     @Override
@@ -96,7 +118,6 @@ public class SettingsServiceImpl implements SettingsService {
             this.musicVolume = Double.parseDouble(props.getProperty("musicVolume", "1.0"));
             this.sfxVolume = Double.parseDouble(props.getProperty("sfxVolume", "1.0"));
 
-            // Ensure values are clamped
             setMasterVolume(this.masterVolume);
             setMusicVolume(this.musicVolume);
             setSfxVolume(this.sfxVolume);
