@@ -11,7 +11,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.mycompany.irr00_group_project.service.core.AudioManagerService;
-import com.mycompany.irr00_group_project.service.core.SettingsService;
 
 /**
  * 

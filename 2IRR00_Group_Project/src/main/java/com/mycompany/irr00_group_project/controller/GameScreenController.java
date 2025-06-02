@@ -6,8 +6,6 @@ import com.mycompany.irr00_group_project.controller.components.GameGridControlle
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
 import com.mycompany.irr00_group_project.view.screen.InGameSettingsScreen;
-import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
-
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

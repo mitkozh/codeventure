@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import com.mycompany.irr00_group_project.App;
 import com.mycompany.irr00_group_project.controller.InGameSettingsController;
-import com.mycompany.irr00_group_project.service.core.impl.AudioManagerServiceImpl;
-
 import javafx.scene.Parent;
 
 /**
