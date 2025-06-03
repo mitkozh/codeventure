@@ -4,8 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 
-<StackPane fx:id="rootPane" styleClass="game-bg" xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.mycompany.irr00_group_project.controller.GameScreenController">
+<StackPane fx:id="rootPane" styleClass="game-bg" xmlns:fx="http://javafx.com/fxml">
 
     <BorderPane fx:id="gamePanel" styleClass="game-panel" maxWidth="1400" maxHeight="900">
         <padding>

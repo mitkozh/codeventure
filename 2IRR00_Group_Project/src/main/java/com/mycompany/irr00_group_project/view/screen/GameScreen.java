@@ -1,9 +1,13 @@
 package com.mycompany.irr00_group_project.view.screen;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 import com.mycompany.irr00_group_project.controller.GameScreenController;
 
+import com.mycompany.irr00_group_project.utils.StringUtils;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
@@ -11,6 +15,7 @@ import javafx.scene.Parent;
  */
 public class GameScreen extends AbstractScreen {
     private String levelFile;
+    private GameScreenController controller;
 
     public GameScreen(String levelFile) {
         this.levelFile = levelFile;
@@ -28,14 +33,25 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public Parent getView() throws IOException {
-        loadFxml();
-        GameScreenController controller = getController();
-        controller.setLevelFile(levelFile); // Pass the level file to the controller
+        loadFxmlCustom();
         applyCssToRoot();
         return root;
     }
 
-    public GameScreenController getController() {
-        return (GameScreenController) fxmlLoader.getController();
+    private void loadFxmlCustom() throws IOException {
+        controller = new GameScreenController();
+        String path = getFxmlPath();
+        if (StringUtils.isNullOrWhiteSpace(path)) {
+            throw new IllegalArgumentException("FXML path is null or empty");
+        }
+        URL fxmlUrl = getClass().getResource(path);
+        if (fxmlUrl == null) {
+            throw new FileNotFoundException("FXML file not found: " + path);
+        }
+        controller.setLevelFile(levelFile);
+        fxmlLoader = new FXMLLoader(fxmlUrl);
+        fxmlLoader.setController(controller);
+        this.root = fxmlLoader.load();
     }
+
 }

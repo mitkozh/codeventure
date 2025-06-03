@@ -58,7 +58,7 @@ public class GameScreenController {
 
     @FXML
     public void initialize() {
-        gameState = new GameState();
+        gameState = new GameState(levelFile);
         sharedJarService = new SharedJarServiceImpl();
         compilationService = new UserCodeCompilationService();
         executionService = new UserCodeExecutionService();
@@ -81,14 +81,14 @@ public class GameScreenController {
             runCodeButton.setDisable(true);
         }
 
-        loadLevel("level1.txt");
+        loadLevel(levelFile);
         codeEditorController.setCode(Constants.DEFAULT_CODE);
         stopExecutionButton.setDisable(true);
     }
 
     private void loadLevel(String levelFile) {
         if (gameState == null) {
-            gameState = new GameState();
+            gameState = new GameState(levelFile);
         }
         gameState.loadFromFile(levelFile);
         gameGridController.loadLevelFromGameState(gameState);
@@ -96,10 +96,6 @@ public class GameScreenController {
         levelTitle.setText("Level: "
                 + levelFile.replace(".txt", ""));
     }
-
-
-
-
 
     @FXML
     public void runCode(ActionEvent event) {
@@ -256,7 +252,7 @@ public class GameScreenController {
             return;
         }
         setExecutionState(false);
-        loadLevel("level1.txt");
+        loadLevel(levelFile);
         consoleOutputController.appendMessage("Level reset.");
     }
 
@@ -280,5 +276,9 @@ public class GameScreenController {
             e.printStackTrace();
             consoleOutputController.logError("Error opening settings: " + e.getMessage());
         }
+    }
+
+    public void setLevelFile(String levelFile) {
+        this.levelFile = levelFile;
     }
 }
