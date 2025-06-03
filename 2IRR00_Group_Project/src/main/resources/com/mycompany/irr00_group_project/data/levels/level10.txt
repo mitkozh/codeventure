@@ -1,7 +1,35 @@
 # Level 10 - 
-SIZE 5 5
+SIZE 10 10
 START 0 0 NORTH
-END 0 4
+END 9 9
+OBSTACLES
+1 2
+2 3
+3 4
+4 5
+5 6
+6 7
+7 8
+8 9
+3 1
+4 1
+4 2
+5 2
+5 3
+6 3
+6 4
+7 4
+7 5
+8 5
+8 6
+9 6
 OBSTACLES
 DOORS
+0 2
+2 2
+6 5
 KEYS
+7 3
+8 4
+1 9
+

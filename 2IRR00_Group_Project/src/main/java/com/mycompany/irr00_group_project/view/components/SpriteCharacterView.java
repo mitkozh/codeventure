@@ -1,14 +1,16 @@
 package com.mycompany.irr00_group_project.view.components;
 
+import java.util.Objects;
+
 import com.mycompany.irr00_group_project.model.enums.Direction;
+import com.mycompany.irr00_group_project.service.core.SettingsService;
+import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Polygon;
 import javafx.scene.paint.Color;
-
-import java.util.Objects;
+import javafx.scene.shape.Polygon;
 
 /**
  * SpriteCharacterView is responsible for displaying the sprite character.
@@ -16,14 +18,14 @@ import java.util.Objects;
 public class SpriteCharacterView {
     private ImageView spriteImageView;
     private Image sprite;
-
     private Polygon directionArrow;
     private StackPane stackPane;
-
+    private SettingsService settingsService;
     /**
      * Constructs a SpriteCharacterView and initializes the sprite image.
      */
     public SpriteCharacterView() {
+        settingsService = SettingsServiceImpl.getInstance();
         initializeSprite();
         loadSpriteImages();
         createDirectionArrow();
@@ -55,18 +57,38 @@ public class SpriteCharacterView {
 
     private void loadSpriteImages() {
         try {
+            String avatar = settingsService.getSelectedAvatar();
+            String imagePath;
+            
+            switch (avatar) {
+                case "Robot kid":
+                    imagePath = "images/sprite/character_robot_kid.png";
+                    break;
+                case "Alien":
+                    imagePath = "images/sprite/character_alien.png";
+                    break;
+                case "Cool alien":
+                    imagePath = "images/sprite/character_alien_cool.png";
+                    break;
+                case "Robot":
+                default:
+                    imagePath = "images/sprite/character_robot.png";
+                    break;
+            }
+            
             sprite = new Image(Objects.requireNonNull(getClass()
-                    .getResourceAsStream("/com/mycompany/irr00_group_project/assets/"
-                            + "images/sprite/character_robot.png")));
+                    .getResourceAsStream("/com/mycompany/irr00_group_project/assets/" 
+                        + imagePath)));
+            spriteImageView.setImage(sprite);
         } catch (Exception e) {
-            System.err.println("Could not load sprite images");
+            System.err.println("Could not load sprite images: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    /**
+    /** 
      * Updates the sprite image and direction based on the given direction.
-     *
-     * @param direction the direction to update the sprite to
+     * @param direction the direction to update the sprite to.
      */
     public void updateDirection(Direction direction) {
         spriteImageView.setImage(sprite);

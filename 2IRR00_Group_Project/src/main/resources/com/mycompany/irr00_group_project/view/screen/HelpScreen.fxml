@@ -8,6 +8,8 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
 <StackPane fx:id="rootPane" styleClass="helpScreen-bg" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.irr00_group_project.controller.HelpController">
     <VBox fx:id="helpPanel" styleClass="helpScreen-panel" maxWidth="1100" maxHeight="750" alignment="TOP_CENTER" spacing="20">
@@ -45,8 +47,46 @@
                         <VBox spacing="8">
                             <Label text="TILE TYPES" styleClass="subsection-title"/>
                             <Label text="FLOOR: Safe walking area" styleClass="help-text"/>
+                            <ImageView fx:id="floorTileImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/normal_tile.png"/>
+                                </image>
+                            </ImageView>
+
                             <Label text="HAZARD: Dangerous area to avoid" styleClass="help-text"/>
+                            <ImageView fx:id="obstacleTileImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/obstacle_tile.png"/>
+                                </image>
+                            </ImageView>
+
                             <Label text="TERMINAL: Goal destination" styleClass="help-text"/>
+                            <ImageView fx:id="endTileImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/end_tile.png"/>
+                                </image>
+                            </ImageView>
+
+                            <Label text="KEY: Objective" styleClass="help-text"/>
+                            <ImageView fx:id="keyAnimation" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/key-animation.gif"/>
+                                </image>
+                            </ImageView>
+
+                            <Label text="DOOR: Opened" styleClass="help-text"/>
+                            <ImageView fx:id="doorOpenedImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/door_opened.png"/>
+                                </image>
+                            </ImageView>
+
+                            <Label text="DOOR: Closed" styleClass="help-text"/>
+                            <ImageView fx:id="doorClosedImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/door_closed.png"/>
+                                </image>
+                            </ImageView>
                         </VBox>
                     </VBox>
 
@@ -55,18 +95,28 @@
                         <Label text="CODE EXAMPLES" styleClass="section-title"/>
 
                         <VBox spacing="10">
-                            <Label text="move();" styleClass="code-text"/>
                             <Label text="Basic movement command" styleClass="code-description"/>
+                            <Label text="moveForward();" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
-                            <Label text="if (safe()) {\n    move();\n}" styleClass="code-text"/>
+                            <Label text="Command for changing direction to left" styleClass="code-description"/>
+                            <Label text="turnLeft();" styleClass="code-text"/>
+                        </VBox>
+
+                        <VBox spacing="10">
+                            <Label text="Command for changing direction to right" styleClass="code-description"/>
+                            <Label text="turnRight();" styleClass="code-text"/>
+                        </VBox>
+
+                        <VBox spacing="10">
                             <Label text="Conditional movement" styleClass="code-description"/>
+                            <Label text="if (safe()) {&#10;    moveForward();&#10;}" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
-                            <Label text="while (true) {\n    move();\n}" styleClass="code-text"/>
                             <Label text="Loop movement" styleClass="code-description"/>
+                            <Label text="while (true) {&#10;    moveForward();&#10;}" styleClass="code-text"/>
                         </VBox>
                     </VBox>
                 </HBox>

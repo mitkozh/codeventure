@@ -1,10 +1,10 @@
 package com.mycompany.irr00_group_project.service.core.impl;
 
+import java.util.Properties;
+
 import com.mycompany.irr00_group_project.service.core.SettingsService;
 import com.mycompany.irr00_group_project.service.resources.PersistenceService;
 import com.mycompany.irr00_group_project.service.resources.impl.PersistenceServiceImpl;
-
-import java.util.Properties;
 
 /**
  * Class which implements the respective interface and handles 
@@ -14,8 +14,8 @@ import java.util.Properties;
  */
 public class SettingsServiceImpl implements SettingsService {
 
-    /*
-     * 
+    /**
+     * . 
      */
     public interface VolumeChangeListener {
         void onMasterVolumeChanged(double newVolume);
@@ -43,8 +43,8 @@ public class SettingsServiceImpl implements SettingsService {
         loadPersistedSettings();
     }
 
-    /*
-     * 
+    /**
+     * .
      */
     public static synchronized SettingsServiceImpl getInstance() {
         if (instance == null) {
@@ -120,7 +120,7 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public synchronized void loadPersistedSettings() {
-        System.out.println("SettingsServiceImpl: Loading settings from "
+        System.out.println("SettingsServiceImpl: Loading settings from " 
             + SETTINGS_FILENAME + "...");
         Properties props = persistenceManager.loadProperties();
 
@@ -136,8 +136,7 @@ public class SettingsServiceImpl implements SettingsService {
 
             System.out.println("SettingsServiceImpl: Settings loaded successfully.");
         } catch (NumberFormatException e) {
-            System.err.println("SettingsServiceImpl: Error loading settings"
-                + " or file corrupted. Using default values. Error: " 
+            System.err.println("SettingsServiceImpl: Settings load failed, using defaults. Error: " 
                 + e.getMessage());
             e.printStackTrace();
         }

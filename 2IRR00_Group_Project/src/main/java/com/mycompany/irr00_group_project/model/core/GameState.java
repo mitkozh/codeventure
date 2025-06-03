@@ -25,8 +25,8 @@ public class GameState {
     }
 
     /**
-     * Constructor that takes appropriate filename and initializes the 
-     *      game state with the appropriate level.
+     * Constructor that takes appropriate filename and 
+     * initializes the game state with the appropriate level.
      */
     public GameState(String filename) {
         levelService = new LevelServiceImpl();

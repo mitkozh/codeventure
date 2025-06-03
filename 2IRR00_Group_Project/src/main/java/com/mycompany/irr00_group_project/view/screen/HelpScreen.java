@@ -18,4 +18,3 @@ public class HelpScreen extends AbstractScreen {
         return "/com/mycompany/irr00_group_project/assets/css/helpStyle.css";
     }
 }
-
