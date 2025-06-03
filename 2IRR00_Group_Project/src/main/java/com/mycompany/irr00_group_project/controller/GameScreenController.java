@@ -232,7 +232,7 @@ public class GameScreenController {
                 }
                 break;
             case "ERROR":
-                if (arg != null) 
+                if (arg != null) {
                     consoleOutputController.logError("UserScript Error: " + arg);
                 }
                 break;
@@ -242,7 +242,7 @@ public class GameScreenController {
             default:
                 consoleOutputController.logError("Unknown IPC command: " + command);
         }
-    
+    }
 
     /**
      * .

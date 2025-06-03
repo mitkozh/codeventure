@@ -6,6 +6,7 @@ package com.mycompany.irr00_group_project.service.core;
 public interface SettingsService {
 
     String getSelectedAvatar();
+    
     void setSelectedAvatar(String avatarName);
 
     double getMasterVolume();
@@ -21,5 +22,6 @@ public interface SettingsService {
     void setSfxVolume(double volume);
 
     void saveCurrentSettings();    // saves the current state of the service to persistence
+
     void loadPersistedSettings();
 }
