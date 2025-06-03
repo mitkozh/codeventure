@@ -74,28 +74,28 @@
                         <Label text="CODE EXAMPLES" styleClass="section-title"/>
 
                         <VBox spacing="10">
-                            <Label text="moveForward();" styleClass="code-text"/>
                             <Label text="Basic movement command" styleClass="code-description"/>
+                            <Label text="moveForward();" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
-                            <Label text="turnLeft();" styleClass="code-text"/>
                             <Label text="Command for changing direction to left" styleClass="code-description"/>
+                            <Label text="turnLeft();" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
-                            <Label text="turnRight();" styleClass="code-text"/>
                             <Label text="Command for changing direction to right" styleClass="code-description"/>
+                            <Label text="turnRight();" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
-                            <Label text="if (safe()) {\n    move();\n}" styleClass="code-text"/>
                             <Label text="Conditional movement" styleClass="code-description"/>
+                            <Label text="if (safe()) {&#10;    moveForward();&#10;}" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
-                            <Label text="while (true) {\n    move();\n}" styleClass="code-text"/>
                             <Label text="Loop movement" styleClass="code-description"/>
+                            <Label text="while (true) {&#10;    moveForward();&#10;}" styleClass="code-text"/>
                         </VBox>
                     </VBox>
                 </HBox>

@@ -51,8 +51,8 @@
     -fx-font-size: 14px;
     -fx-text-fill: #52A9D6;
     -fx-background-color: #263238;
-    -fx-padding: 5;
-    -fx-background-radius: 5;
+    -fx-padding: 4;
+    -fx-background-radius: 6;
 }
 
 .code-description {
