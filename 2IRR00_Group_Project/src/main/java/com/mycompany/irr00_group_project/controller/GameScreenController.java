@@ -1,5 +1,8 @@
 package com.mycompany.irr00_group_project.controller;
 
+import java.io.File;
+import java.io.IOException;
+
 import com.mycompany.irr00_group_project.controller.components.CodeEditorAreaController;
 import com.mycompany.irr00_group_project.controller.components.ConsoleOutputController;
 import com.mycompany.irr00_group_project.controller.components.GameGridController;
@@ -16,12 +19,9 @@ import com.mycompany.irr00_group_project.view.screen.InGameSettingsScreen;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.Parent;
-
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Controller for the main game screen, handling user interactions and game
@@ -56,6 +56,9 @@ public class GameScreenController {
     private IPCService ipcService;
     private File resolvedSharedJarPath;
 
+    /**
+     * .
+     */
     @FXML
     public void initialize() {
         gameState = new GameState(levelFile);
@@ -76,7 +79,8 @@ public class GameScreenController {
                                 + resolvedSharedJarPath.getAbsolutePath());
             }
         } catch (IOException e) {
-            consoleOutputController.logError("CRITICAL: Error resolving shared.jar: " + e.getMessage());
+            consoleOutputController.logError("CRITICAL: Error resolving shared.jar: " 
+                + e.getMessage());
             e.printStackTrace();
             runCodeButton.setDisable(true);
         }
@@ -97,6 +101,9 @@ public class GameScreenController {
                 + levelFile.replace(".txt", ""));
     }
 
+    /**
+     * .
+     */
     @FXML
     public void runCode(ActionEvent event) {
         if (isExecuting)
@@ -116,7 +123,8 @@ public class GameScreenController {
         consoleOutputController.appendMessage("Compiling user code...");
         setExecutionState(true);
 
-        CompilationResult result = compilationService.compile(code, resolvedSharedJarPath.getAbsolutePath());
+        CompilationResult result = compilationService.compile(code, 
+            resolvedSharedJarPath.getAbsolutePath());
 
         if (!result.isSuccess() || result.getCompiledClasses() == null) {
             consoleOutputController.logError(result.getFormattedDiagnostics());
@@ -148,7 +156,8 @@ public class GameScreenController {
                         finishExecution("User code execution finished successfully.");
                     } else {
                         finishExecution(
-                                "User code execution finished with errors (Exit code: " + process.exitValue() + ").");
+                                "User code execution finished with errors (Exit code: " 
+                                    + process.exitValue() + ").");
                     }
                     executionService.cleanupTemporaryFiles();
                 });
@@ -220,7 +229,7 @@ public class GameScreenController {
                     consoleOutputController.appendMessage("UserScript: " + arg);
                 break;
             case "ERROR":
-                if (arg != null)
+                if (arg != null) 
                     consoleOutputController.logError("UserScript Error: " + arg);
                 break;
             case "EXECUTION_COMPLETE":
@@ -230,6 +239,10 @@ public class GameScreenController {
                 consoleOutputController.logError("Unknown IPC command: " + command);
         }
     }
+
+    /**
+     * .
+     */
 
     @FXML
     public void stopExecution(ActionEvent event) {
@@ -245,10 +258,13 @@ public class GameScreenController {
         }
     }
 
+    /**
+     * .
+     */
     @FXML
     public void resetLevel(ActionEvent event) {
         if (isExecuting) {
-            consoleOutputController.logError("Cannot reset while code is executing. Stop execution first.");
+            consoleOutputController.logError("Stop execution first before resetting.");
             return;
         }
         setExecutionState(false);
@@ -265,6 +281,10 @@ public class GameScreenController {
         });
     }
 
+    /**
+     * .
+     * @param actionEvent .
+     */
     public void onSettingsClick(ActionEvent actionEvent) {
         try {
             InGameSettingsScreen settings = new InGameSettingsScreen();

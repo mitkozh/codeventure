@@ -18,7 +18,6 @@ import javafx.scene.shape.Polygon;
 public class SpriteCharacterView {
     private ImageView spriteImageView;
     private Image sprite;
-
     private Polygon directionArrow;
     private StackPane stackPane;
     private SettingsService settingsService;
@@ -87,11 +86,9 @@ public class SpriteCharacterView {
         }
     }
 
-
-    /**
+    /** 
      * Updates the sprite image and direction based on the given direction.
-     *
-     * @param direction the direction to update the sprite to
+     * @param direction the direction to update the sprite to.
      */
     public void updateDirection(Direction direction) {
         spriteImageView.setImage(sprite);
@@ -108,7 +105,7 @@ public class SpriteCharacterView {
                 directionArrow.setRotate(0);
                 break;
             case SOUTH:
-            directionArrow.setRotate(180);
+                directionArrow.setRotate(180);
                 break;
             default:
                 directionArrow.setRotate(0);
