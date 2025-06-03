@@ -66,6 +66,27 @@
                                     <Image url="@../../assets/images/tiles/end_tile.png"/>
                                 </image>
                             </ImageView>
+
+                            <Label text="KEY: Objective" styleClass="help-text"/>
+                            <ImageView fx:id="keyAnimation" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/key-animation.gif"/>
+                                </image>
+                            </ImageView>
+
+                            <Label text="DOOR: Opened" styleClass="help-text"/>
+                            <ImageView fx:id="doorOpenedImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/door_opened.png"/>
+                                </image>
+                            </ImageView>
+
+                            <Label text="DOOR: Closed" styleClass="help-text"/>
+                            <ImageView fx:id="doorClosedImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/door_closed.png"/>
+                                </image>
+                            </ImageView>
                         </VBox>
                     </VBox>
 
