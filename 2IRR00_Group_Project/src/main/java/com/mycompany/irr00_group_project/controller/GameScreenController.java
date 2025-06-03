@@ -48,6 +48,7 @@ public class GameScreenController {
 
     private boolean isExecuting = false;
     private GameState gameState;
+    private String levelFile;
 
     private SharedJarServiceImpl sharedJarService;
     private UserCodeCompilationService compilationService;
@@ -95,6 +96,10 @@ public class GameScreenController {
         levelTitle.setText("Level: "
                 + levelFile.replace(".txt", ""));
     }
+
+
+
+
 
     @FXML
     public void runCode(ActionEvent event) {

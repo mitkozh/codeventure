@@ -25,6 +25,16 @@ public class GameState {
     }
 
     /**
+     *   Constructor that takes appropriate filename and initializes the game state with the appropriate level.
+     */
+
+     public GameState(String filename) {
+        levelService = new LevelServiceImpl();
+        this.size = 3; // default size
+        loadFromFile(filename);
+    }
+    
+    /**
      * Loads the game state from a level file.
      * @param filename the name of the level file to load
      */
