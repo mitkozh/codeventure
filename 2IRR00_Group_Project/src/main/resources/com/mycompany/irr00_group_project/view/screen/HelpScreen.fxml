@@ -8,6 +8,8 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
 <StackPane fx:id="rootPane" styleClass="helpScreen-bg" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mycompany.irr00_group_project.controller.HelpController">
     <VBox fx:id="helpPanel" styleClass="helpScreen-panel" maxWidth="1100" maxHeight="750" alignment="TOP_CENTER" spacing="20">
@@ -45,8 +47,25 @@
                         <VBox spacing="8">
                             <Label text="TILE TYPES" styleClass="subsection-title"/>
                             <Label text="FLOOR: Safe walking area" styleClass="help-text"/>
+                            <ImageView fx:id="floorTileImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/normal_tile.png"/>
+                                </image>
+                            </ImageView>
+
                             <Label text="HAZARD: Dangerous area to avoid" styleClass="help-text"/>
+                            <ImageView fx:id="obstacleTileImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/obstacle_tile.png"/>
+                                </image>
+                            </ImageView>
+
                             <Label text="TERMINAL: Goal destination" styleClass="help-text"/>
+                            <ImageView fx:id="endTileImage" fitWidth="50" fitHeight="50">
+                                <image>
+                                    <Image url="@../../assets/images/tiles/end_tile.png"/>
+                                </image>
+                            </ImageView>
                         </VBox>
                     </VBox>
 
