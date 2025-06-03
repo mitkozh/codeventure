@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.service.persistence.impl;
+package com.mycompany.irr00_group_project.service.resources.impl;
 
 /**
  * Class for maintaining persistency of settings properties file.
@@ -6,7 +6,7 @@ package com.mycompany.irr00_group_project.service.persistence.impl;
 import java.io.*;
 import java.util.Properties;
 
-import com.mycompany.irr00_group_project.service.persistence.PersistenceService;
+import com.mycompany.irr00_group_project.service.resources.PersistenceService;
 
 public class PersistenceServiceImpl implements PersistenceService {
     private String filePath = "game_settings.properties";

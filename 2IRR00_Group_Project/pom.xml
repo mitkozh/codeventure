@@ -57,9 +57,39 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>sandbox-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>sandbox</classifier>
+                            <includes>
+                                <include>**/UserCodeRunner.class</include>
+                                <include>**/UserCode.class</include>
+                                <include>**/Character.class</include>
+                                <include>**/CharacterProxy.class</include>
+                            </includes>
+                            <archive>
+                                <manifest>
+                                    <mainClass>com.mycompany.irr00_group_project.service.sandbox.UserCodeRunner</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
     </build>
-    
+
+
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>

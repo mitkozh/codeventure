@@ -5,4 +5,22 @@ package com.mycompany.irr00_group_project.utils;
  */
 public class Constants {
     public static final int LEVELS_PER_PAGE = 20;
+    public static final String SHARED_JAR_PATH = "/com/mycompany/irr00_group_project"
+            + "/assets/jars/shared.jar";
+    public static final String USER_CODE_PACKAGE = "player";
+    public static final String USER_CODE_CLASS_NAME = "PlayerCode";
+    public static final String USER_CODE_FQN = USER_CODE_PACKAGE + "." + USER_CODE_CLASS_NAME;
+    public static final String TEMP_OUTPUT_BASE_DIR = "temp_user_compiled_code";
+    public static final String DEFAULT_CODE = "package player;\n"
+            + "\n"
+            + "import com.mycompany.irr00_group_project.service.sandbox.UserCode;\n"
+            + "import com.mycompany.irr00_group_project.model.core.Character;\n"
+            + "\n"
+            + "public class PlayerCode implements UserCode {\n"
+            + "    @Override\n"
+            + "    public void execute(Character character) {\n"
+            + "        character.turnRight();\n"
+            + "        character.moveForward();\n"
+            + "    }\n"
+            + "}\n";
 }

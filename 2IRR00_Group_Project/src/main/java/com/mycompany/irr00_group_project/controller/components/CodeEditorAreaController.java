@@ -20,12 +20,6 @@ public class CodeEditorAreaController {
     private void setupCodeEditor() {
         codeEditor.setWrapText(true);
         codeEditor.setPrefHeight(400);
-        setDefaultCode();
-    }
-
-    private void setDefaultCode() {
-        String defaultCode = "moveForward();";
-        codeEditor.setText(defaultCode);
     }
 
     public String getCode() {

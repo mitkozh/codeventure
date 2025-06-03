@@ -3,6 +3,7 @@ module com.mycompany.irr00_group_project {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires java.compiler;
 
     opens com.mycompany.irr00_group_project.controller to javafx.fxml;
     opens com.mycompany.irr00_group_project.controller.components to javafx.fxml;

@@ -1,8 +1,8 @@
 package com.mycompany.irr00_group_project.service.core.impl;
 
 import com.mycompany.irr00_group_project.service.core.SettingsService;
-import com.mycompany.irr00_group_project.service.persistence.PersistenceService;
-import com.mycompany.irr00_group_project.service.persistence.impl.PersistenceServiceImpl;
+import com.mycompany.irr00_group_project.service.resources.PersistenceService;
+import com.mycompany.irr00_group_project.service.resources.impl.PersistenceServiceImpl;
 
 import java.util.Properties;
 

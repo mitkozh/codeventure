@@ -5,7 +5,7 @@ import com.mycompany.irr00_group_project.model.enums.Direction;
 /**
  * .
  */
-public class SpriteCharacter implements CharacterControls {
+public class SpriteCharacter implements Character {
     private int currentRow;
     private int currentCol;
     private Direction currentDirection; // enum: NORTH, EAST, SOUTH, WEST
@@ -51,7 +51,19 @@ public class SpriteCharacter implements CharacterControls {
 
     @Override
     public void moveForward() {
+        int[] nextPosition = calculateNextPosition();
+        int nextRow = nextPosition[0];
+        int nextCol = nextPosition[1];
 
+        // for debug
+        System.out.println("Sprite is attempting to move forward to: (" + nextRow + ", " + nextCol + ")");
+
+        // Update the sprite's position
+        setCurrentRow(nextRow);
+        setCurrentCol(nextCol);
+
+        // for future debugging
+        System.out.println("Sprite moved forward. New position is: (" + currentRow + ", " + currentCol + ")");
     }
 
     @Override
