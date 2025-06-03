@@ -55,8 +55,18 @@
                         <Label text="CODE EXAMPLES" styleClass="section-title"/>
 
                         <VBox spacing="10">
-                            <Label text="move();" styleClass="code-text"/>
+                            <Label text="moveForward();" styleClass="code-text"/>
                             <Label text="Basic movement command" styleClass="code-description"/>
+                        </VBox>
+
+                        <VBox spacing="10">
+                            <Label text="turnLeft();" styleClass="code-text"/>
+                            <Label text="Command for changing direction to left" styleClass="code-description"/>
+                        </VBox>
+
+                        <VBox spacing="10">
+                            <Label text="turnRight();" styleClass="code-text"/>
+                            <Label text="Command for changing direction to right" styleClass="code-description"/>
                         </VBox>
 
                         <VBox spacing="10">
