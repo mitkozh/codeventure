@@ -2,6 +2,9 @@ package com.mycompany.irr00_group_project.model.core;
 
 import java.io.PrintWriter;
 
+/*
+ * Class used to print the commands in the in-game terminal.
+ */
 public class CharacterProxy implements Character {
     private PrintWriter commandSender;
 

@@ -10,5 +10,6 @@ import java.util.List;
  */
 public interface LevelService {
     List<LevelDTO> getAllLevelsDTO();
+    
     LevelData getLevelDataByFileName(String fileName);
 }

@@ -32,19 +32,19 @@ public class SpriteCharacterView {
     }
 
     private void createDirectionArrow() {
-    directionArrow = new Polygon();
-    // Points for an upward-pointing triangle (relative to center)
-    directionArrow.getPoints().addAll(
-        0.0, -20.0,   // Top corner
-        10.0, 0.0,    // Bottom right corner
-        -10.0, 0.0    // Bottom left corner
-    );
-    directionArrow.setFill(Color.WHITE);
-    directionArrow.setOpacity(0.3);
-    directionArrow.setStroke(Color.BLACK);
-    directionArrow.setStrokeWidth(2);
-    directionArrow.setTranslateY(+10);
-}
+        directionArrow = new Polygon();
+        // Points for an upward-pointing triangle (relative to center)
+        directionArrow.getPoints().addAll(
+            0.0, -20.0,   // Top corner
+            10.0, 0.0,    // Bottom right corner
+            -10.0, 0.0    // Bottom left corner
+        );
+        directionArrow.setFill(Color.WHITE);
+        directionArrow.setOpacity(0.3);
+        directionArrow.setStroke(Color.BLACK);
+        directionArrow.setStrokeWidth(2);
+        directionArrow.setTranslateY(+10);
+    }
 
     private void initializeSprite() {
         spriteImageView = new ImageView();
@@ -69,31 +69,31 @@ public class SpriteCharacterView {
      * @param direction the direction to update the sprite to
      */
     public void updateDirection(Direction direction) {
-    spriteImageView.setImage(sprite);
-    switch (direction) {
-        case WEST:
-            spriteImageView.setScaleX(-1);
-            directionArrow.setRotate(270);
-            break;
-        case EAST:
-            spriteImageView.setScaleX(1);
-            directionArrow.setRotate(90);
-            break;
-        case NORTH:
-            directionArrow.setRotate(0);
-            break;
-        case SOUTH:
-            directionArrow.setRotate(180);
-            break;
-        default:
-            directionArrow.setRotate(0);
-            break;
+        spriteImageView.setImage(sprite);
+        switch (direction) {
+            case WEST:
+                spriteImageView.setScaleX(-1);
+                directionArrow.setRotate(270);
+                break;
+            case EAST:
+                spriteImageView.setScaleX(1);
+                directionArrow.setRotate(90);
+                break;
+            case NORTH:
+                directionArrow.setRotate(0);
+                break;
+            case SOUTH:
+                directionArrow.setRotate(180);
+                break;
+            default:
+                directionArrow.setRotate(0);
+                break;
+        }
     }
-}
 
-public StackPane getNode() {
-    return stackPane;
-}
+    public StackPane getNode() {
+        return stackPane;
+    }
 
     /**
      * Returns the ImageView of the sprite character.

@@ -13,9 +13,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import com.mycompany.irr00_group_project.service.core.AudioManagerService;
 
 /**
- * 
- * 
- * 
+ * Class which implements the respective interface and manages the sound levels of the game.
  */
 public class AudioManagerServiceImpl implements AudioManagerService {
 
@@ -55,11 +53,14 @@ public class AudioManagerServiceImpl implements AudioManagerService {
                 }
             });
 
-            System.out.println("AudioManagerServiceImpl: Initialized internal volumes from SettingsService: M=" +
-                    this.masterVolume + ", Mu=" + this.musicVolume +
-                    ", S=" + this.sfxVolume);
+            System.out.println("AudioManagerServiceImpl: Initialized internal"
+                + " volumes from SettingsService: M=" 
+                + this.masterVolume + ", Mu=" + this.musicVolume 
+                + ", S=" + this.sfxVolume);
         } catch (Exception e) {
-            System.err.println("AudioManagerServiceImpl: Error getting initial settings from SettingsService. Using internal defaults. Error: " + e.getMessage());
+            System.err.println("AudioManagerServiceImpl: Error getting"
+                + " initial settings from SettingsService. Using internal"
+                + " defaults. Error: " + e.getMessage());
         }
 
         try {
@@ -81,6 +82,9 @@ public class AudioManagerServiceImpl implements AudioManagerService {
 
     }
 
+    /*
+     * 
+     */
     public static synchronized AudioManagerServiceImpl getInstance() {
         if (instance == null) {
             instance = new AudioManagerServiceImpl();
@@ -91,7 +95,8 @@ public class AudioManagerServiceImpl implements AudioManagerService {
     private void updateMusicClipVolume() {
         if (mainMenuMusicClip != null && mainMenuMusicClip.isOpen()) {
             double effectiveVolume = masterVolume * musicVolume;
-            FloatControl volumeControl = (FloatControl) mainMenuMusicClip.getControl(FloatControl.Type.MASTER_GAIN);
+            FloatControl volumeControl = (FloatControl) 
+                mainMenuMusicClip.getControl(FloatControl.Type.MASTER_GAIN);
             float min = volumeControl.getMinimum();
             float max = volumeControl.getMaximum();
             float dB;
@@ -107,7 +112,8 @@ public class AudioManagerServiceImpl implements AudioManagerService {
                 }
             }
             volumeControl.setValue(dB);
-            System.out.println("Updating music clip volume. Master: " + masterVolume + ", Music: " + musicVolume);
+            System.out.println("Updating music clip volume. Master: " 
+                + masterVolume + ", Music: " + musicVolume);
             System.out.println("Calculated dB: " + dB);
         }
     }

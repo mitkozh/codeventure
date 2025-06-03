@@ -3,7 +3,9 @@ package com.mycompany.irr00_group_project.model.core;
 import com.mycompany.irr00_group_project.model.enums.Direction;
 
 /**
- * .
+ * Sprite declaration and movement.
+ * The class is aiming on establishing the sprite at the start of
+ *       the level, while also handles its movement along the grid.
  */
 public class SpriteCharacter implements Character {
     private int currentRow;
@@ -56,14 +58,16 @@ public class SpriteCharacter implements Character {
         int nextCol = nextPosition[1];
 
         // for debug
-        System.out.println("Sprite is attempting to move forward to: (" + nextRow + ", " + nextCol + ")");
+        System.out.println("Sprite is attempting to move forward to:"
+            + " (" + nextRow + ", " + nextCol + ")");
 
         // Update the sprite's position
         setCurrentRow(nextRow);
         setCurrentCol(nextCol);
 
         // for future debugging
-        System.out.println("Sprite moved forward. New position is: (" + currentRow + ", " + currentCol + ")");
+        System.out.println("Sprite moved forward. New position is:"
+            + " (" + currentRow + ", " + currentCol + ")");
     }
 
     @Override

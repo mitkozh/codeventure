@@ -8,13 +8,21 @@ import java.util.Map;
 import javax.tools.JavaFileObject;
 import javax.tools.Diagnostic;
 
+/*
+* Class used to check if the compilation of the class submitted by the user is successful or no.
+*/ 
 public class CompilationResult {
     private final boolean success;
     private final Map<String, JavaClassAsBytes> compiledClasses;
     private final List<Diagnostic<? extends JavaFileObject>> diagnostics;
     private final String formattedDiagnostics;
 
-    public CompilationResult(boolean success, Map<String, JavaClassAsBytes> compiledClasses, List<Diagnostic<? extends JavaFileObject>> diagnostics, String formattedDiagnostics) {
+    /*
+     * 
+     */
+    public CompilationResult(boolean success, Map<String, JavaClassAsBytes>
+        compiledClasses, List<Diagnostic<? extends JavaFileObject>> diagnostics,
+        String formattedDiagnostics) {
         this.success = success;
         this.compiledClasses = compiledClasses;
         this.diagnostics = diagnostics;

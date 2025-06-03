@@ -13,7 +13,10 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
- * .
+ * Controller for the main menu.
+ * The class manages the "movement" of the user from the main 
+ *      menu to the help screen, settings screen and level menu.
+ * Handles exiting the program by pressing the exit button.
  */
 //todo
 public class MainMenuController {
@@ -25,8 +28,7 @@ public class MainMenuController {
     @FXML private Button exitButton;
     Stage primaryStage;
 
-
-    /**
+    /*
      * This method is called when the level selection button is clicked.
      * It loads the level selection screen and displays it.
      *

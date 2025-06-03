@@ -7,13 +7,21 @@ import com.mycompany.irr00_group_project.service.resources.impl.PersistenceServi
 import java.util.Properties;
 
 /**
- * .
+ * Class which implements the respective interface and handles 
+ *      the changes on the volumes of the game.
+ * Loads the settings of the game in the properties file and saves them.
+ * Is able to reload the latest saved game settings from the properties file.
  */
 public class SettingsServiceImpl implements SettingsService {
 
+    /*
+     * 
+     */
     public interface VolumeChangeListener {
         void onMasterVolumeChanged(double newVolume);
+
         void onMusicVolumeChanged(double newVolume);
+
         void onSfxVolumeChanged(double newVolume);
     }
 
@@ -35,6 +43,9 @@ public class SettingsServiceImpl implements SettingsService {
         loadPersistedSettings();
     }
 
+    /*
+     * 
+     */
     public static synchronized SettingsServiceImpl getInstance() {
         if (instance == null) {
             instance = new SettingsServiceImpl();
@@ -109,7 +120,8 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public synchronized void loadPersistedSettings() {
-        System.out.println("SettingsServiceImpl: Loading settings from " + SETTINGS_FILENAME + "...");
+        System.out.println("SettingsServiceImpl: Loading settings from "
+            + SETTINGS_FILENAME + "...");
         Properties props = persistenceManager.loadProperties();
 
         try {
@@ -124,7 +136,9 @@ public class SettingsServiceImpl implements SettingsService {
 
             System.out.println("SettingsServiceImpl: Settings loaded successfully.");
         } catch (NumberFormatException e) {
-            System.err.println("SettingsServiceImpl: Error loading settings or file corrupted. Using default values. Error: " + e.getMessage());
+            System.err.println("SettingsServiceImpl: Error loading settings"
+                + " or file corrupted. Using default values. Error: " 
+                + e.getMessage());
             e.printStackTrace();
         }
     }

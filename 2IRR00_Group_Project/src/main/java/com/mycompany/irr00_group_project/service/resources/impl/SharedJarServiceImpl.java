@@ -9,11 +9,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+/*
+ * Class used to find and open shared jar file.
+ */
 public class SharedJarServiceImpl {
     private File resolvedSharedJarFile;
 
     public SharedJarServiceImpl() {}
-
+    
+    /*
+     * 
+     */
     public File getResolvedSharedJarFile() throws IOException {
         if (resolvedSharedJarFile != null && resolvedSharedJarFile.exists()) {
             return resolvedSharedJarFile;
@@ -21,7 +27,8 @@ public class SharedJarServiceImpl {
 
         InputStream jarStream = getClass().getResourceAsStream(Constants.SHARED_JAR_PATH);
         if (jarStream == null) {
-            throw new IOException("Cannot find shared.jar resource at: " + Constants.SHARED_JAR_PATH);
+            throw new IOException("Cannot find shared.jar resource at: "
+                + Constants.SHARED_JAR_PATH);
         }
 
         Path tempJarFile = Files.createTempFile("shared-", ".jar");

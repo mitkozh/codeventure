@@ -9,7 +9,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 /**
- * .
+ * Class used to run the code submitted by the user.
  */
 public class UserCodeRunner {
     public static void main(String[] args) {
