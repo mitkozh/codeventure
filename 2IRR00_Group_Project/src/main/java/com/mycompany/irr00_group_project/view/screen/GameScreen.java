@@ -11,7 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 /**
- * .
+ * Class for implementing game screen.
  */
 public class GameScreen extends AbstractScreen {
     private String levelFile;

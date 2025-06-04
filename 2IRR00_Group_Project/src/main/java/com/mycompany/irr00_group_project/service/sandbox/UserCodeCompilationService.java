@@ -17,12 +17,12 @@ import com.mycompany.irr00_group_project.model.core.CompilationResult;
 import com.mycompany.irr00_group_project.utils.Constants;
 
 /**
- * .
+ * Class dedicated for compilation of user code.
  */
 public class UserCodeCompilationService {
 
     /**
-     * .
+     * Method for getting compilation result.
      */
     public CompilationResult compile(String userCode, String sharedJarPath) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();

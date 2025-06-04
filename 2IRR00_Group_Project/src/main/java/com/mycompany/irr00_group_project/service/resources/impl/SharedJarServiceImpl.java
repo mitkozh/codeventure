@@ -18,7 +18,7 @@ public class SharedJarServiceImpl {
     public SharedJarServiceImpl() {}
     
     /*
-     * 
+     * Method to get the Resolved shared jar file.
      */
     public File getResolvedSharedJarFile() throws IOException {
         if (resolvedSharedJarFile != null && resolvedSharedJarFile.exists()) {

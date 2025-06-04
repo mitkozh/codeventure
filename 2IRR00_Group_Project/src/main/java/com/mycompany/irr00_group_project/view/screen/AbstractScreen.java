@@ -21,7 +21,6 @@ public abstract class AbstractScreen {
     /**
      * This method is called to get the root view of the screen.
      * It loads the FXML file and applies the CSS styles.
-     *
      * @return The root node of the screen.
      * @throws IOException An error can occur while loading the FXML file or
      *                     applying CSS.
@@ -48,7 +47,6 @@ public abstract class AbstractScreen {
 
     /**
      * Loads the FXML file and initializes the root node.
-     *
      * @throws IOException if an I/O error occurs while loading the FXML file
      */
     protected void loadFxml() throws IOException {

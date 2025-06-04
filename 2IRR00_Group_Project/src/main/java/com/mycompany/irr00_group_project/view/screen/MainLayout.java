@@ -25,7 +25,6 @@ public class MainLayout extends AbstractScreen {
      * This method is called to display the main layout of the application.
      * It initializes the FXML loader, sets up the stage, and applies the global CSS
      * style.
-     * 
      * @param primaryStage The primary stage of the application.
      * @throws IOException An error can occur while loading the FXML file or
      *                     applying CSS.

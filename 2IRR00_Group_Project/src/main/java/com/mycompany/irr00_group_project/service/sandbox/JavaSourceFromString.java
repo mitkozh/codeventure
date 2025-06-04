@@ -14,7 +14,6 @@ public class JavaSourceFromString extends SimpleJavaFileObject {
 
     /**
      * Constructor for JavaSourceFromString.
-     *
      * @param name       the name of the source file ("com.example.MyClass")
      * @param sourceCode the source code as a String
      */

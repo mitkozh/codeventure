@@ -25,8 +25,7 @@ public class AudioManagerServiceImpl implements AudioManagerService {
     private static AudioManagerServiceImpl instance;
 
     /**
-     * 
-     * 
+     * private method to create the AudioManagerServiceImpl.
      */
     private AudioManagerServiceImpl() {
 
@@ -76,7 +75,7 @@ public class AudioManagerServiceImpl implements AudioManagerService {
     }
 
     /*
-     * 
+     * method to publicly generate AudioManagerServiceImpl.
      */
     public static synchronized AudioManagerServiceImpl getInstance() {
         if (instance == null) {

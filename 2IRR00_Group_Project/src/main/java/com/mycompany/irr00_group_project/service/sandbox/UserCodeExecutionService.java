@@ -19,7 +19,7 @@ public class UserCodeExecutionService {
     private Path currentTempUserCodeDirRoot;
 
     /*
-     * 
+     * Method for starting executing user code.
      */
     public Process startUserCodeProcess(Map<String, JavaClassAsBytes> compiledClasses,
         String sharedJarPath) throws IOException {
@@ -59,7 +59,7 @@ public class UserCodeExecutionService {
     }
 
     /*
-     * 
+     * Method for stopping current process.
      */
     public void stopCurrentProcess() {
         if (userCodeProcess != null && userCodeProcess.isAlive()) {
@@ -68,14 +68,14 @@ public class UserCodeExecutionService {
     }
 
     /*
-     * 
+     * Method for checking if the process is alive.
      */
     public boolean isProcessAlive() {
         return userCodeProcess != null && userCodeProcess.isAlive();
     }
 
     /*
-     * 
+     * Method to get process.
      */
     public Process getProcess() {
         return userCodeProcess;

@@ -16,7 +16,6 @@ public class ParseUtils {
 
     /**
      * Parses a level file and returns a LevelData object.
-     *
      * @param filename the name of the level file to parse
      * @return a LevelData object containing the parsed level data
      * @throws IOException if a file cannot be found or read

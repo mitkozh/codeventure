@@ -120,7 +120,6 @@ public class SpriteCharacterView {
 
     /**
      * Returns the ImageView of the sprite character.
-     *
      * @return the ImageView of the sprite character
      */
     public ImageView getImageView() {

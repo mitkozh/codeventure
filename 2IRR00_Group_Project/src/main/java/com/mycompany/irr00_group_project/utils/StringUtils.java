@@ -7,7 +7,6 @@ public class StringUtils {
 
     /**
      * Checks if a string is null or empty.
-     *
      * @param s the string to check
      * @return true if the string is null or empty, false otherwise
      */
@@ -20,7 +19,6 @@ public class StringUtils {
 
     /**
      * Checks if a string is null or contains only whitespace characters.
-     *
      * @param s the string to check
      * @return true if the string is null or contains only whitespace, false otherwise
      */

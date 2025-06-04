@@ -21,7 +21,7 @@ public class PersistenceServiceImpl implements PersistenceService {
     }
 
     /*
-     * 
+     * Method for storing the filePath.
      */
     public void propertiesPersistenceManager(String filePath) {
         this.filePath = filePath;

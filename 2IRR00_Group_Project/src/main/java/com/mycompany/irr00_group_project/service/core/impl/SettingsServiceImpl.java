@@ -15,7 +15,7 @@ import com.mycompany.irr00_group_project.service.resources.impl.PersistenceServi
 public class SettingsServiceImpl implements SettingsService {
 
     /**
-     * . 
+     * Interface for changing the volumes.
      */
     public interface VolumeChangeListener {
         void onMasterVolumeChanged(double newVolume);
@@ -44,7 +44,7 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
     /**
-     * .
+     * method to publicly generate SettingsServiceImpl.
      */
     public static synchronized SettingsServiceImpl getInstance() {
         if (instance == null) {

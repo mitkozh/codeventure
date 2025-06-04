@@ -21,7 +21,6 @@ public class InMemoryFileManager extends ForwardingJavaFileManager<JavaFileManag
 
     /**
      * Constructor for InMemoryFileManager.
-     * 
      * @param standardManager the standard Java file manager.
      */
     public InMemoryFileManager(StandardJavaFileManager standardManager) {

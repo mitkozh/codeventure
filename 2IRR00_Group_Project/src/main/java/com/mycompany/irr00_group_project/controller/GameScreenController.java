@@ -57,7 +57,7 @@ public class GameScreenController {
     private File resolvedSharedJarPath;
 
     /**
-     * .
+     * Initialization of game screen.
      */
     @FXML
     public void initialize() {
@@ -102,7 +102,7 @@ public class GameScreenController {
     }
 
     /**
-     * .
+     * fxml method to run the code of the user.
      */
     @FXML
     public void runCode(ActionEvent event) {
@@ -245,7 +245,7 @@ public class GameScreenController {
     }
 
     /**
-     * .
+     * fxml method to stop executing the code of the user.
      */
 
     @FXML
@@ -263,7 +263,7 @@ public class GameScreenController {
     }
 
     /**
-     * .
+     * fxml method to reset the level.
      */
     @FXML
     public void resetLevel(ActionEvent event) {
@@ -286,7 +286,7 @@ public class GameScreenController {
     }
 
     /**
-     * .
+     * fxml method to open the in-game settings.
      * @param actionEvent .
      */
     public void onSettingsClick(ActionEvent actionEvent) {

@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /*
- * 
+ * Class for testing the sandbox functionality.
  */
 public class SandboxTest {
 
@@ -43,7 +43,7 @@ public class SandboxTest {
     Path tempDir;
     
     /*
-     * 
+     * method for setting up tests.
      */
     @BeforeEach
     void setUp() {
@@ -59,7 +59,7 @@ public class SandboxTest {
     }
 
     /*
-     * 
+     * method run after each test.
      */
     @AfterEach
     void tearDown() {

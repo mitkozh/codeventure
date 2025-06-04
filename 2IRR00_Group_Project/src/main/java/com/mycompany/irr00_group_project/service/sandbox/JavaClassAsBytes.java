@@ -16,7 +16,6 @@ public class JavaClassAsBytes extends SimpleJavaFileObject {
 
     /**
      * Constructor for JavaClassAsBytes.
-     * 
      * @param name the name of the class ("package.ClassName")
      * @param kind the kind of the Java file object (Kind.CLASS)
      */

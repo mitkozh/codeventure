@@ -15,7 +15,7 @@ public class IPCService {
     private volatile boolean running = false;
 
     /*
-     * 
+     * Method to start the IPC Listeners.
      */
     public void startIPCListeners(Process process, 
         Consumer<String> onOutput, Consumer<String> onError) {
@@ -54,7 +54,7 @@ public class IPCService {
     }
     
     /*
-     * 
+     * Method to stop the IPC Listeners.
      */
     public void stopListeners() {
         running = false;
