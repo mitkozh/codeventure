@@ -36,6 +36,8 @@ public class SettingsController {
     private AudioManagerService audioManagerService;
     private SettingsService settingsService;
 
+    private Runnable onExit;
+
     private final List<String> avatarOptions =
             Arrays.asList("Robot", "Robot kid", "Alien", "Cool alien");
 
@@ -228,8 +230,16 @@ public class SettingsController {
      * @param actionEvent The action event triggered by the button click.
      */
     public void handleClose(ActionEvent actionEvent) {
-        goToMenu();
+        if (onExit != null) {
+            onExit.run();
+        } else {
+            goToMenu();
+        }
     }
+
+    public void setOnExit(Runnable onExit) {
+    this.onExit = onExit;
+}
 
     /**
      * This method is called when the main menu button is clicked.

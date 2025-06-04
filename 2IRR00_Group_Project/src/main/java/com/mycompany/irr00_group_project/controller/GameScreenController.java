@@ -14,11 +14,12 @@ import com.mycompany.irr00_group_project.service.sandbox.UserCodeCompilationServ
 import com.mycompany.irr00_group_project.service.sandbox.UserCodeExecutionService;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
-import com.mycompany.irr00_group_project.view.screen.InGameSettingsScreen;
+
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -289,12 +290,17 @@ public class GameScreenController {
      * fxml method to open the in-game settings.
      * @param actionEvent .
      */
-    public void onSettingsClick(ActionEvent actionEvent) {
+   public void onSettingsClick(ActionEvent actionEvent) {
         try {
-            InGameSettingsScreen settings = new InGameSettingsScreen();
-            Parent settingsView = settings.getView();
-            InGameSettingsController controller = settings.getController();
-            controller.setPreviousScreen(rootPane);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                "/com/mycompany/irr00_group_project/view/screen/SettingsScreen.fxml"));
+            Parent settingsView = loader.load();
+            // Apply CSS for in-game settings look
+            settingsView.getStylesheets().add(
+                getClass().getResource("/com/mycompany/irr00_group_project/assets/css/settingsMenuStyle.css").toExternalForm()
+            );
+            SettingsController controller = loader.getController();
+            controller.setOnExit(() -> NavigationManager.getInstance().navigateTo(rootPane));
             NavigationManager.getInstance().navigateTo(settingsView);
         } catch (Exception e) {
             e.printStackTrace();
