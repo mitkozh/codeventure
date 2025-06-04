@@ -74,7 +74,7 @@ public class AudioManagerServiceImpl implements AudioManagerService {
 
     }
 
-    /*
+    /**
      * method to publicly generate AudioManagerServiceImpl.
      */
     public static synchronized AudioManagerServiceImpl getInstance() {

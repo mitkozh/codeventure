@@ -15,7 +15,7 @@ import javafx.scene.control.Slider;
 import java.util.Arrays;
 import java.util.List;
 
-/*
+/**
  * Controller for Game Settings Screen.
  * It manages the changes occurring in the sound lavels and character of the player.
  */
@@ -47,10 +47,20 @@ public class SettingsController {
         this.audioManagerService = audioManagerService;
     }
 
+    /**
+     * Initializes the settings screen.
+     */
     @FXML
     private void initialize() {
         isInitializingView = true;
+        initializeServices();
+        configureSliders();
+        loadSettings();
+        setupListeners();
+        isInitializingView = false;
+    }
 
+    private void initializeServices() {
         try {
             // attempt to get AudioManagerService instance if not already set by a setter
             this.audioManagerService = AudioManagerServiceImpl.getInstance();
@@ -60,67 +70,92 @@ public class SettingsController {
                 + "to initialize services: " + e.getMessage());
             e.printStackTrace();
             isInitializingView = false;
+        }
+    }
+
+    private void configureSliders() {
+        configureSlider(masterVolumeSlider);
+        configureSlider(musicSlider);
+        configureSlider(sfxSlider);
+    }
+
+    private void configureSlider(Slider slider) {
+        if (slider != null) {
+            slider.setMin(0);
+            slider.setMax(100);
+            slider.setBlockIncrement(1);
+        }
+    }
+
+    private void loadSettings() {
+        if (settingsService == null || audioManagerService == null) {
+            handleNullServices();
             return;
         }
+        loadAvatarSettings();
+        loadVolumeSettings();
+    }
 
-        if (masterVolumeSlider != null) { 
-            masterVolumeSlider.setMin(0); 
-            masterVolumeSlider.setMax(100); 
-            masterVolumeSlider.setBlockIncrement(1); 
+    private void handleNullServices() {
+        System.err.println("SettingsController: Cannot load "
+            + "settings to UI, services are null.");
+        if (characterComboBox != null && !avatarOptions.isEmpty()) {
+            characterComboBox.setValue(avatarOptions.get(0));
         }
-        if (musicSlider != null) { 
-            musicSlider.setMin(0); 
-            musicSlider.setMax(100); 
-            musicSlider.setBlockIncrement(1); 
+        if (masterVolumeSlider != null) {
+            masterVolumeSlider.setValue(100);
         }
-        if (sfxSlider != null) { 
-            sfxSlider.setMin(0); 
-            sfxSlider.setMax(100); 
-            sfxSlider.setBlockIncrement(1);
-        }
+    }
 
-        if (settingsService != null && audioManagerService != null) {
-            // avatar
-            if (characterComboBox != null) {
-                String savedAvatar = settingsService.getSelectedAvatar();
-                if (avatarOptions.contains(savedAvatar)) {
-                    characterComboBox.setValue(savedAvatar);
-                } else if (!avatarOptions.isEmpty()) {
-                    characterComboBox.setValue(avatarOptions.getFirst());
-                }
-            }
-
-            // master volume
-            double masterVol = settingsService.getMasterVolume();
-            audioManagerService.setMasterVolume(masterVol);
-            if (masterVolumeSlider != null) {
-                masterVolumeSlider.setValue(masterVol * 100.0);
-            }
-            // music volume
-            double musicVol = settingsService.getMusicVolume();
-            audioManagerService.setMusicVolume(musicVol);
-            if (musicSlider != null) {
-                musicSlider.setValue(musicVol * 100.0);
-            }
-            // SFX volume
-            double sfxVol = settingsService.getSfxVolume();
-            audioManagerService.setSfxVolume(sfxVol);
-            if (sfxSlider != null) {
-                sfxSlider.setValue(sfxVol * 100.0);
-            }
-        } else {
-            System.err.println("SettingsController: Cannot load "
-                + "settings to UI, services are null.");
-
-            if (characterComboBox != null && !avatarOptions.isEmpty()) {
-                characterComboBox.setValue(avatarOptions.get(0));
-            }
-
-            if (masterVolumeSlider != null) {
-                masterVolumeSlider.setValue(100);
+    private void loadAvatarSettings() {
+        if (characterComboBox != null) {
+            String savedAvatar = settingsService.getSelectedAvatar();
+            if (avatarOptions.contains(savedAvatar)) {
+                characterComboBox.setValue(savedAvatar);
+            } else if (!avatarOptions.isEmpty()) {
+                characterComboBox.setValue(avatarOptions.getFirst());
             }
         }
+    }
 
+    private void loadVolumeSettings() {
+        loadMasterVolume();
+        loadMusicVolume();
+        loadSfxVolume();
+    }
+
+    private void loadMasterVolume() {
+        double masterVol = settingsService.getMasterVolume();
+        audioManagerService.setMasterVolume(masterVol);
+        if (masterVolumeSlider != null) {
+            masterVolumeSlider.setValue(masterVol * 100.0);
+        }
+    }
+
+    private void loadMusicVolume() {
+        double musicVol = settingsService.getMusicVolume();
+        audioManagerService.setMusicVolume(musicVol);
+        if (musicSlider != null) {
+            musicSlider.setValue(musicVol * 100.0);
+        }
+    }
+
+    private void loadSfxVolume() {
+        double sfxVol = settingsService.getSfxVolume();
+        audioManagerService.setSfxVolume(sfxVol);
+        if (sfxSlider != null) {
+            sfxSlider.setValue(sfxVol * 100.0);
+        }
+    }
+
+    private void setupListeners() {
+        setupCharacterComboBoxListener();
+        setupMasterVolumeListeners();
+        setupMusicSliderListeners();
+        setupSfxSliderListeners();
+    }
+
+    private void setupCharacterComboBoxListener() {
         if (characterComboBox != null) {
             characterComboBox.setOnAction(event -> {
                 if (isInitializingView) {
@@ -134,7 +169,9 @@ public class SettingsController {
                 }
             });
         }
-        // master volume slider
+    }
+
+    private void setupMasterVolumeListeners() {
         if (masterVolumeSlider != null) {
             masterVolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
                 if (audioManagerService != null) {
@@ -146,7 +183,6 @@ public class SettingsController {
                     if (isInitializingView || settingsService == null) {
                         return;
                     }
-                    
                     if (wasChanging && !isChanging) {
                         settingsService.setMasterVolume(masterVolumeSlider.getValue() / 100.0);
                         settingsService.saveCurrentSettings();
@@ -156,22 +192,22 @@ public class SettingsController {
                 if (isInitializingView || settingsService == null) {
                     return;
                 }
-
                 if (!masterVolumeSlider.isValueChanging()) {
                     settingsService.setMasterVolume(masterVolumeSlider.getValue() / 100.0);
                     settingsService.saveCurrentSettings();
                 }
             });
         }
+    }
 
+    private void setupMusicSliderListeners() {
         if (musicSlider != null) {
             musicSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
                 double value = newVal.doubleValue() / 100.0;
-                settingsService.setMusicVolume(value); // Save to settings
+                settingsService.setMusicVolume(value);
                 AudioManagerServiceImpl.getInstance().setMusicVolume(value);
-                audioManagerService.setMusicVolume(newVal.doubleValue() / 100.0);
+                audioManagerService.setMusicVolume(value);
             });
-            // save when user finishes interaction
             musicSlider.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
                 if (isInitializingView || settingsService == null) {
                     return;
@@ -191,15 +227,16 @@ public class SettingsController {
                 }
             });
         }
+    }
 
+    private void setupSfxSliderListeners() {
         if (sfxSlider != null) {
             sfxSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
                 double value = newVal.doubleValue() / 100.0;
                 settingsService.setSfxVolume(value);
                 AudioManagerServiceImpl.getInstance().setSfxVolume(value);
-                audioManagerService.setSfxVolume(newVal.doubleValue() / 100.0);
+                audioManagerService.setSfxVolume(value);
             });
-            // save when user finishes interaction
             sfxSlider.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
                 if (isInitializingView || settingsService == null) {
                     return;
@@ -219,8 +256,6 @@ public class SettingsController {
                 }
             });
         }
-
-        isInitializingView = false;
     }
 
     /**
@@ -238,8 +273,8 @@ public class SettingsController {
     }
 
     public void setOnExit(Runnable onExit) {
-    this.onExit = onExit;
-}
+        this.onExit = onExit;
+    }
 
     /**
      * This method is called when the main menu button is clicked.

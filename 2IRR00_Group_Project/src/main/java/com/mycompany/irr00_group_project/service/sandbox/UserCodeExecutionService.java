@@ -10,7 +10,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Map;
 import java.util.UUID;
 
-/*
+/**
  * Class used to read the code submitted by the user and execute it.
  */
 public class UserCodeExecutionService {
@@ -18,7 +18,7 @@ public class UserCodeExecutionService {
     private Process userCodeProcess;
     private Path currentTempUserCodeDirRoot;
 
-    /*
+    /**
      * Method for starting executing user code.
      */
     public Process startUserCodeProcess(Map<String, JavaClassAsBytes> compiledClasses,
@@ -58,7 +58,7 @@ public class UserCodeExecutionService {
         return userCodeProcess;
     }
 
-    /*
+    /**
      * Method for stopping current process.
      */
     public void stopCurrentProcess() {
@@ -81,7 +81,7 @@ public class UserCodeExecutionService {
         return userCodeProcess;
     }
 
-    /*
+    /**
      * Method used to clean up the temporary files.
      */
     public void cleanupTemporaryFiles() {

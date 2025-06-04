@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.function.Consumer;
 
-/*
+/**
  * Class which implements IPC service, to run multiple processes and share data.
  */
 public class IPCService {
@@ -14,7 +14,7 @@ public class IPCService {
     private Thread errorListenerThread;
     private volatile boolean running = false;
 
-    /*
+    /**
      * Method to start the IPC Listeners.
      */
     public void startIPCListeners(Process process, 
@@ -53,7 +53,7 @@ public class IPCService {
         errorListenerThread.start();
     }
     
-    /*
+    /**
      * Method to stop the IPC Listeners.
      */
     public void stopListeners() {

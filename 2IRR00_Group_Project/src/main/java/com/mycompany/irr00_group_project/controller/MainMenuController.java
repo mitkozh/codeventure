@@ -28,7 +28,7 @@ public class MainMenuController {
     @FXML private Button exitButton;
     Stage primaryStage;
 
-    /*
+    /**
      * This method is called when the level selection button is clicked.
      * It loads the level selection screen and displays it.
      *
