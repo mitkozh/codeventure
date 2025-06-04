@@ -21,6 +21,7 @@ public class SpriteCharacterView {
     private Polygon directionArrow;
     private StackPane stackPane;
     private SettingsService settingsService;
+    
     /**
      * Constructs a SpriteCharacterView and initializes the sprite image.
      */

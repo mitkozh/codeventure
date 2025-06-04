@@ -40,10 +40,6 @@ public class UserCodeRunner {
 
         } catch (Exception e) {
             e.printStackTrace(System.err);
-            try (PrintWriter commandSender = new PrintWriter(System.out, true)) {
-            } catch (Exception ignored) {
-                // If we can't write to the command sender
-            }
         }
     }
 
