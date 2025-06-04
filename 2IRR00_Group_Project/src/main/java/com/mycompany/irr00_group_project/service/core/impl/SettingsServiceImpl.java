@@ -108,7 +108,6 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public synchronized void saveCurrentSettings() {
-        System.out.println("SettingsServiceImpl: Saving settings to " + SETTINGS_FILENAME + "...");
         Properties props = new Properties();
         props.setProperty("avatar", selectedAvatar);
         props.setProperty("masterVolume", String.valueOf(masterVolume));
@@ -120,8 +119,6 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     public synchronized void loadPersistedSettings() {
-        System.out.println("SettingsServiceImpl: Loading settings from " 
-            + SETTINGS_FILENAME + "...");
         Properties props = persistenceManager.loadProperties();
 
         try {
@@ -134,7 +131,6 @@ public class SettingsServiceImpl implements SettingsService {
             setMusicVolume(this.musicVolume);
             setSfxVolume(this.sfxVolume);
 
-            System.out.println("SettingsServiceImpl: Settings loaded successfully.");
         } catch (NumberFormatException e) {
             System.err.println("SettingsServiceImpl: Settings load failed, using defaults. Error: " 
                 + e.getMessage());

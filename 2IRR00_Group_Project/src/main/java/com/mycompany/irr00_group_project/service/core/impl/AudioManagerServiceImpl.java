@@ -52,11 +52,6 @@ public class AudioManagerServiceImpl implements AudioManagerService {
                     setSfxVolume(newVolume);
                 }
             });
-
-            System.out.println("AudioManagerServiceImpl: Initialized internal"
-                + " volumes from SettingsService: M=" 
-                + this.masterVolume + ", Mu=" + this.musicVolume 
-                + ", S=" + this.sfxVolume);
         } catch (Exception e) {
             System.err.println("AudioManagerServiceImpl: Error getting"
                 + " initial settings from SettingsService. Using internal"
@@ -73,8 +68,6 @@ public class AudioManagerServiceImpl implements AudioManagerService {
                 updateMusicClipVolume(); 
                 mainMenuMusicClip.loop(Clip.LOOP_CONTINUOUSLY); 
                 mainMenuMusicClip.start();
-            } else {
-                System.err.println("Background sound file not found: " + soundPath);
             }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.err.println("Failed to play background sound: " + e.getMessage());
@@ -112,9 +105,6 @@ public class AudioManagerServiceImpl implements AudioManagerService {
                 }
             }
             volumeControl.setValue(dB);
-            System.out.println("Updating music clip volume. Master: " 
-                + masterVolume + ", Music: " + musicVolume);
-            System.out.println("Calculated dB: " + dB);
         }
     }
 
@@ -122,19 +112,16 @@ public class AudioManagerServiceImpl implements AudioManagerService {
     public void setMasterVolume(double newVolume) {
         this.masterVolume = Math.max(0.0, Math.min(1.0, newVolume));
         updateMusicClipVolume();
-        System.out.println("Master volume set to: " + this.masterVolume);
     }
 
     @Override
     public void setMusicVolume(double newVolume) {
         this.musicVolume = Math.max(0.0, Math.min(1.0, newVolume));
         updateMusicClipVolume();
-        System.out.println("Music volume set to: " + this.musicVolume);
     }
 
     @Override
     public void setSfxVolume(double newVolume) {
         this.sfxVolume = Math.max(0.0, Math.min(1.0, newVolume));
-        System.out.println("SFX volume set to: " + this.sfxVolume);
     }
 }

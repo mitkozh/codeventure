@@ -33,17 +33,14 @@ public class UserCodeRunner {
 
             if (userInstance instanceof UserCode) {
                 ((UserCode) userInstance).execute(characterProxy);
-                commandSender.println("CMD:EXECUTION_COMPLETE");
             } else {
                 System.err.println("User class " + userClassName
                         + " does not implement UserCode.");
-                commandSender.println("CMD:ERROR:User class does not implement UserCode.");
             }
 
         } catch (Exception e) {
             e.printStackTrace(System.err);
             try (PrintWriter commandSender = new PrintWriter(System.out, true)) {
-                commandSender.println("CMD:ERROR:" + e.getMessage());
             } catch (Exception ignored) {
                 // If we can't write to the command sender
             }

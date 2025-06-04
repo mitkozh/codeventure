@@ -38,10 +38,8 @@ public class MainMenuController {
         try {
             LevelSelectionScreen levels = new LevelSelectionScreen();
             NavigationManager.getInstance().navigateTo(levels.getView());
-            System.out.println("Level selection screen loaded");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error loading level selection screen");
         }
     }
 
@@ -70,10 +68,8 @@ public class MainMenuController {
         try {
             HelpScreen helpScreen = new HelpScreen();
             NavigationManager.getInstance().navigateTo(helpScreen.getView());
-            System.out.println("Help screen loaded successfully");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error loading help screen");
         }   
     }   
 

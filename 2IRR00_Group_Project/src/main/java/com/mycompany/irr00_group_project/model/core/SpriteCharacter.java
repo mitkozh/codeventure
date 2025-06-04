@@ -57,17 +57,9 @@ public class SpriteCharacter implements Character {
         int nextRow = nextPosition[0];
         int nextCol = nextPosition[1];
 
-        // for debug
-        System.out.println("Sprite is attempting to move forward to:"
-            + " (" + nextRow + ", " + nextCol + ")");
-
         // Update the sprite's position
         setCurrentRow(nextRow);
         setCurrentCol(nextCol);
-
-        // for future debugging
-        System.out.println("Sprite moved forward. New position is:"
-            + " (" + currentRow + ", " + currentCol + ")");
     }
 
     @Override
@@ -88,9 +80,6 @@ public class SpriteCharacter implements Character {
             default:
                 throw new IllegalArgumentException("Unexpected value: " + currentDirection);
         }
-        // for debug
-        System.out.println("Sprite turned left. New orientation is: " + currentDirection);
-
     }
 
     @Override
@@ -110,9 +99,7 @@ public class SpriteCharacter implements Character {
                 break;
             default:
                 throw new IllegalArgumentException("Unexpected value: " + currentDirection);
-        }
-        // for debug
-        System.out.println("Sprite turned right. New orientation is: " + currentDirection);
+        };
     }
 
     /**
@@ -156,7 +143,5 @@ public class SpriteCharacter implements Character {
     public void moveTo(int newRow, int newCol) {
         this.currentRow = newRow;
         this.currentCol = newCol;
-        // for future debugging
-        System.out.println("Sprite moved to: (" + currentRow + ", " + currentCol + ")");
     }
 }

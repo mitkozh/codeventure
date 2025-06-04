@@ -106,8 +106,6 @@ public class SettingsController {
             if (sfxSlider != null) {
                 sfxSlider.setValue(sfxVol * 100.0);
             }
-            System.out.println("SettingsController: Initial values "
-                + "loaded from SettingsService and applied.");
         } else {
             System.err.println("SettingsController: Cannot load "
                 + "settings to UI, services are null.");
@@ -131,8 +129,6 @@ public class SettingsController {
                         settingsService.getSelectedAvatar())) {
                     settingsService.setSelectedAvatar(selectedAvatar);
                     settingsService.saveCurrentSettings();
-                    System.out.println("Avatar changed to: " + selectedAvatar 
-                        + ". Settings saved.");
                 }
             });
         }
@@ -152,7 +148,6 @@ public class SettingsController {
                     if (wasChanging && !isChanging) {
                         settingsService.setMasterVolume(masterVolumeSlider.getValue() / 100.0);
                         settingsService.saveCurrentSettings();
-                        System.out.println("Master Vol changed. Saved.");
                     }
                 });
             masterVolumeSlider.setOnMouseReleased(event -> {
@@ -163,7 +158,6 @@ public class SettingsController {
                 if (!masterVolumeSlider.isValueChanging()) {
                     settingsService.setMasterVolume(masterVolumeSlider.getValue() / 100.0);
                     settingsService.saveCurrentSettings();
-                    System.out.println("Master Vol (click). Saved.");
                 }
             });
         }
@@ -183,8 +177,6 @@ public class SettingsController {
                 if (wasChanging && !isChanging) {
                     settingsService.setMusicVolume(musicSlider.getValue() / 100.0);
                     settingsService.saveCurrentSettings();
-                    System.out.println("Music Volume changed to " 
-                        + (musicSlider.getValue() / 100.0) + ". Settings saved.");
                 }
             });
             musicSlider.setOnMouseReleased(event -> {
@@ -194,8 +186,6 @@ public class SettingsController {
                 if (!musicSlider.isValueChanging()) {
                     settingsService.setMusicVolume(musicSlider.getValue() / 100.0);
                     settingsService.saveCurrentSettings();
-                    System.out.println("Music Volume (click) " 
-                        + (musicSlider.getValue() / 100.0) + ". Settings saved.");
                 }
             });
         }
@@ -215,8 +205,6 @@ public class SettingsController {
                 if (wasChanging && !isChanging) {
                     settingsService.setSfxVolume(sfxSlider.getValue() / 100.0);
                     settingsService.saveCurrentSettings();
-                    System.out.println("SFX Volume changed to " 
-                        + (sfxSlider.getValue() / 100.0) + ". Settings saved.");
                 }
             });
             sfxSlider.setOnMouseReleased(event -> {
@@ -226,8 +214,6 @@ public class SettingsController {
                 if (!sfxSlider.isValueChanging()) {
                     settingsService.setSfxVolume(sfxSlider.getValue() / 100.0);
                     settingsService.saveCurrentSettings();
-                    System.out.println("SFX Volume (click) " 
-                        + (sfxSlider.getValue() / 100.0) + ". Settings saved.");
                 }
             });
         }
