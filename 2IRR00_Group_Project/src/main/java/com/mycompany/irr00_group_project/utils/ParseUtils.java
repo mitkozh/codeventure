@@ -40,6 +40,14 @@ public class ParseUtils {
                     continue;
                 }
 
+                if (line.equals("OPTIMAL_STEPS")) {
+                    String stepsLine = reader.readLine();
+                    if (stepsLine != null) {
+                        levelData.setOptimalSteps(Integer.parseInt(stepsLine.trim()));
+                    }
+                    continue;
+                }
+                
                 if (line.equals("OBSTACLES") || line.equals("DOORS") || line.equals("KEYS")) {
                     currentSection = line;
                     continue;

@@ -12,7 +12,7 @@ import javafx.scene.effect.Light.Point;
  * The LevelData is responsible for storing the model of a game level.
  */
 public class LevelData {
-
+    
     public static class Point {
     public final int row;
     public final int col;
@@ -34,6 +34,7 @@ public class LevelData {
     private int endCol;
     private final List<Point> keys = new ArrayList<>();
     private final List<Point> doors = new ArrayList<>();
+    private int optimalSteps = -1;
 
     /**
      * Sets the size of the level grid and initializes it with NORMAL tiles.
@@ -141,5 +142,13 @@ public class LevelData {
 
     public List<Point> getDoors() {
         return doors;
+    }
+
+    public void setOptimalSteps(int steps) {
+        this.optimalSteps = steps;
+    }
+
+    public int getOptimalSteps() {
+        return optimalSteps;
     }
 }
