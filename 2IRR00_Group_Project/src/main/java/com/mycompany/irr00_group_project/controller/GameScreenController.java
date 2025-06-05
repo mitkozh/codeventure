@@ -14,6 +14,7 @@ import com.mycompany.irr00_group_project.service.sandbox.UserCodeCompilationServ
 import com.mycompany.irr00_group_project.service.sandbox.UserCodeExecutionService;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -349,6 +350,16 @@ public class GameScreenController {
             );
             SettingsController controller = loader.getController();
             controller.setOnExit(() -> NavigationManager.getInstance().navigateTo(rootPane));
+            controller.setOnGoBack(() -> {
+            try {
+                NavigationManager.getInstance().navigateTo(new LevelSelectionScreen().getView());
+            } catch (Exception e) {
+                e.printStackTrace();
+                consoleOutputController.logError("Error returning to level selection: " + e.getMessage());
+            }
+            });
+
+
             NavigationManager.getInstance().navigateTo(settingsView);
         } catch (Exception e) {
             e.printStackTrace();

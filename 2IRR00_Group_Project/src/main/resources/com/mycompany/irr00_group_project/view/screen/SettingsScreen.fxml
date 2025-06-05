@@ -55,7 +55,7 @@
                 </VBox>
             </HBox>
             <Separator/>
-            <Button fx:id="backToMenuButton" onAction="#backToMenu" styleClass="custom-button, back-to-menu-button" text="MAIN MENU" />
+            <Button fx:id="backToMenuButton" onAction="#backToMenu" styleClass="custom-button, back-to-menu-button" text="GO BACK" />
         </VBox>
     </VBox>
 </StackPane>

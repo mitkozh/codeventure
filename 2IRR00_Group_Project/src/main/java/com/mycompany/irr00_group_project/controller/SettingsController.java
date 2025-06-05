@@ -37,6 +37,7 @@ public class SettingsController {
     private SettingsService settingsService;
 
     private Runnable onExit;
+    private Runnable onGoBack;
 
     private final List<String> avatarOptions =
             Arrays.asList("Robot", "Robot kid", "Alien", "Cool alien");
@@ -276,6 +277,10 @@ public class SettingsController {
         this.onExit = onExit;
     }
 
+    public void setOnGoBack(Runnable onGoBack) {
+        this.onGoBack = onGoBack;
+    }
+
     /**
      * This method is called when the main menu button is clicked.
      * It navigates back to the main menu screen.
@@ -283,9 +288,13 @@ public class SettingsController {
      * @param actionEvent The action event triggered by the button click.
      */
     public void backToMenu(ActionEvent actionEvent) {
-        goToMenu();
+        if (onGoBack != null) { 
+            onGoBack.run();
+        } else {
+            goToMenu();
+        }   
     }
-
+    
     private static void goToMenu() {
         try {
             MainMenuScreen menuScreen = new MainMenuScreen();
