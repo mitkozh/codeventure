@@ -24,6 +24,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+
 /**
  * Controller for the main game screen, handling user interactions and game
  * logic.
@@ -56,6 +61,9 @@ public class GameScreenController {
     private UserCodeExecutionService executionService;
     private IPCService ipcService;
     private File resolvedSharedJarPath;
+
+    private final Queue<Runnable> commandQueue = new LinkedList<>();
+    private boolean isProcessingQueue = false;
 
     /**
      * Initialization of game screen.
@@ -236,28 +244,53 @@ public class GameScreenController {
         String cmdType = parts[1];
         String arg = (parts.length > 2) ? parts[2] : null;
 
+        Runnable command = null;
         switch (cmdType) {
             case "MOVE_FORWARD":
-                handleMoveForward();
+                command = this::handleMoveForward;
                 break;
             case "TURN_LEFT":
-                handleTurnLeft();
+                command = this::handleTurnLeft;
                 break;
             case "TURN_RIGHT":
-                handleTurnRight();
+                command = this::handleTurnRight;
                 break;
             case "LOG_MESSAGE":
-                handleLogMessage(arg);
+                command = () -> handleLogMessage(arg);
                 break;
             case "ERROR":
-                handleError(arg);
+                command = () -> handleError(arg);
                 break;
             case "EXECUTION_COMPLETE":
-                consoleOutputController.appendMessage("User script signaled completion.");
+                command = () -> consoleOutputController.appendMessage("User script signaled completion.");
                 break;
             default:
-                consoleOutputController.logError("Unknown IPC command: " + cmdType);
+                command = () -> consoleOutputController.logError("Unknown IPC command: " + cmdType);
         }
+        if (command != null) {
+            commandQueue.add(command);
+            processCommandQueue();
+        }
+    }
+
+    private void processCommandQueue() {
+        if (isProcessingQueue || commandQueue.isEmpty()) {
+            return;
+        }
+        isProcessingQueue = true;
+        Runnable command = commandQueue.poll();
+        if (command != null) {
+            command.run();
+        }
+        
+        PauseTransition pause = new PauseTransition(Duration.millis(300)); // adjust delay as needed
+        pause.setOnFinished(event -> {
+            isProcessingQueue = false;
+            if (!commandQueue.isEmpty()) {
+                processCommandQueue();
+            }
+        });
+        pause.play();
     }
 
     private void handleMoveForward() {
