@@ -100,9 +100,11 @@ public class ParseUtils {
                     break;
                 case "DOORS":
                     levelData.setTile(row, col, TileType.DOOR_CLOSED);
+                    levelData.addDoor(row, col); // <-- Add this line
                     break;
                 case "KEYS":
                     levelData.setTile(row, col, TileType.KEY);
+                    levelData.addKey(row, col); // <-- Add this line
                     break;
                 default:
                     break;

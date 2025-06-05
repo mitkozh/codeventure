@@ -1,12 +1,29 @@
 package com.mycompany.irr00_group_project.model.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mycompany.irr00_group_project.model.enums.Direction;
 import com.mycompany.irr00_group_project.model.enums.TileType;
+
+import javafx.scene.effect.Light.Point;
 
 /**
  * The LevelData is responsible for storing the model of a game level.
  */
 public class LevelData {
+
+    public static class Point {
+    public final int row;
+    public final int col;
+    public Point(int row, int col) {
+        this.row = row;
+        this.col = col;
+    }
+}
+
+
+
     private int width;
     private int height;
     private TileType[][] grid;
@@ -15,6 +32,8 @@ public class LevelData {
     private Direction startDirection;
     private int endRow;
     private int endCol;
+    private final List<Point> keys = new ArrayList<>();
+    private final List<Point> doors = new ArrayList<>();
 
     /**
      * Sets the size of the level grid and initializes it with NORMAL tiles.
@@ -106,5 +125,21 @@ public class LevelData {
 
     public int getEndCol() {
         return endCol;
+    }
+
+    public void addKey(int row, int col) {
+        keys.add(new Point(row, col));
+    }
+
+    public void addDoor(int row, int col) {
+        doors.add(new Point(row, col));
+    }
+
+    public List<Point> getKeys() {
+        return keys;
+    }
+
+    public List<Point> getDoors() {
+        return doors;
     }
 }
