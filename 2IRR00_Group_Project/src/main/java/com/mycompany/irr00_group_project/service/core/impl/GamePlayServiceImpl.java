@@ -1,22 +1,36 @@
 package com.mycompany.irr00_group_project.service.core.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.GamePlayService;
 
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * Implementation of the GamePlayService interface.
+ * This class provides methods to calculate stars based on player performance,
+ * record level results, retrieve best steps for levels,
+ * and handle level completion logic.
+ */
 public class GamePlayServiceImpl implements GamePlayService {
     private final Map<Integer, Integer> bestStepsPerLevel = new HashMap<>();
 
     @Override
     public int calculateStars(LevelData levelData, int playerSteps) {
         int optimal = levelData.getOptimalSteps();
-        if (playerSteps <= 0) return 0; // Not solved
-        if (playerSteps <= optimal) return 3;
-        if (playerSteps <= optimal * 1.2) return 2;
-        if (playerSteps <= optimal * 1.5) return 1;
+        if (playerSteps <= 0) {
+            return 0;
+        } // Not solved
+        if (playerSteps <= optimal) {
+            return 3;
+        }
+        if (playerSteps <= optimal * 1.2) {
+            return 2;
+        }
+        if (playerSteps <= optimal * 1.5) {
+            return 1;
+        }
         return 1;
     }
 
