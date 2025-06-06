@@ -56,6 +56,7 @@ public class ParseUtils {
                 String[] parts = line.split(" ");
 
                 handleIndividualPart(parts, levelData, currentSection);
+                levelData.addDoorKeyPairs();
             }
         }
 

@@ -46,6 +46,15 @@ public class GameGridController {
     public void loadLevelFromGameState(GameState gameState) {
         this.gameState = gameState;
         setupGridConstraints();
+        renderGridAndSprite();
+    }
+
+    /**
+     * Renders the game grid and updates the sprite character position.
+     * This method is called to refresh the grid display and ensure the sprite is
+     * correctly positioned.
+     */
+    public void renderGridAndSprite() {
         renderGrid();
         updateSpritePosition();
     }
@@ -115,7 +124,7 @@ public class GameGridController {
      * It removes the old sprite image and adds it to the new position
      * based on the sprite's current row and column.
      */
-    public void updateSpritePosition() {
+    private void updateSpritePosition() {
         SpriteCharacter sprite = gameState.getSprite();
         if (sprite != null) {
             spriteCharacterView.updateDirection(sprite.getCurrentDirection());
@@ -127,25 +136,6 @@ public class GameGridController {
 
         }
 
-    }
-
-    public boolean isValidMove(int row, int col) {
-        return gameState.isValidPosition(row, col);
-    }
-
-    /**
-     * Moves the sprite character to a new position if the move is valid.
-     * It checks if the new position is valid and updates the sprite's position
-     * accordingly.
-     *
-     * @param newRow The new row index for the sprite.
-     * @param newCol The new column index for the sprite.
-     */
-    public void moveSprite(int newRow, int newCol) {
-        if (isValidMove(newRow, newCol)) {
-            gameState.getSprite().moveTo(newRow, newCol);
-            updateSpritePosition();
-        }
     }
 
     public GameState getGameState() {

@@ -1,26 +1,19 @@
 package com.mycompany.irr00_group_project.model.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mycompany.irr00_group_project.model.enums.Direction;
 import com.mycompany.irr00_group_project.model.enums.TileType;
-
-import javafx.scene.effect.Light.Point;
 
 /**
  * The LevelData is responsible for storing the model of a game level.
  */
 public class LevelData {
-    
-    public static class Point {
-    public final int row;
-    public final int col;
-    public Point(int row, int col) {
-        this.row = row;
-        this.col = col;
-    }
-}
+
+
 
 
 
@@ -34,6 +27,7 @@ public class LevelData {
     private int endCol;
     private final List<Point> keys = new ArrayList<>();
     private final List<Point> doors = new ArrayList<>();
+    private final Map<Point, Point> doorKeyPair = new HashMap<>();
     private int optimalSteps = -1;
 
     /**
@@ -143,6 +137,23 @@ public class LevelData {
     public List<Point> getDoors() {
         return doors;
     }
+
+    public void addDoorKeyPairs() {
+        for (int i = 0; i < Math.min(doors.size(), keys.size()); i++) {
+            Point door = doors.get(i);
+            Point key = keys.get(i);
+            addDoorKeyPair(door, key);
+        }
+    }
+
+    private void addDoorKeyPair(Point door, Point key) {
+        doorKeyPair.put(door, key);
+    }
+
+    public Map<Point, Point> getDoorKeyPair() {
+        return doorKeyPair;
+    }
+
 
     public void setOptimalSteps(int steps) {
         this.optimalSteps = steps;

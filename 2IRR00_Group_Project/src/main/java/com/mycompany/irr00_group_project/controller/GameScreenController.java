@@ -8,12 +8,16 @@ import com.mycompany.irr00_group_project.controller.components.ConsoleOutputCont
 import com.mycompany.irr00_group_project.controller.components.GameGridController;
 import com.mycompany.irr00_group_project.model.core.CompilationResult;
 import com.mycompany.irr00_group_project.model.core.GameState;
+import com.mycompany.irr00_group_project.model.core.MovementResult;
+import com.mycompany.irr00_group_project.service.core.MovementService;
+import com.mycompany.irr00_group_project.service.core.impl.MovementServiceImpl;
 import com.mycompany.irr00_group_project.service.ipc.IPCService;
 import com.mycompany.irr00_group_project.service.resources.impl.SharedJarServiceImpl;
 import com.mycompany.irr00_group_project.service.sandbox.UserCodeCompilationService;
 import com.mycompany.irr00_group_project.service.sandbox.UserCodeExecutionService;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.view.components.ConsoleOutputArea;
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 
 import javafx.application.Platform;
@@ -56,6 +60,7 @@ public class GameScreenController {
     private GameState gameState;
     private String levelFile;
 
+    private MovementService movementService;
     private SharedJarServiceImpl sharedJarService;
     private UserCodeCompilationService compilationService;
     private UserCodeExecutionService executionService;
@@ -73,6 +78,7 @@ public class GameScreenController {
         gameState = new GameState(levelFile);
         sharedJarService = new SharedJarServiceImpl();
         compilationService = new UserCodeCompilationService();
+        movementService = new MovementServiceImpl();
         executionService = new UserCodeExecutionService();
         ipcService = new IPCService();
 
@@ -88,8 +94,8 @@ public class GameScreenController {
                                 + resolvedSharedJarPath.getAbsolutePath());
             }
         } catch (IOException e) {
-            consoleOutputController.logError("CRITICAL: Error resolving shared.jar: " 
-                + e.getMessage());
+            consoleOutputController.logError("CRITICAL: Error resolving shared.jar: "
+                    + e.getMessage());
             e.printStackTrace();
             runCodeButton.setDisable(true);
         }
@@ -100,9 +106,7 @@ public class GameScreenController {
     }
 
     private void loadLevel(String levelFile) {
-        if (gameState == null) {
-            gameState = new GameState(levelFile);
-        }
+        gameState = new GameState(levelFile);
         gameState.loadFromFile(levelFile);
         gameGridController.loadLevelFromGameState(gameState);
         consoleOutputController.appendMessage("Loaded level: " + levelFile);
@@ -144,8 +148,8 @@ public class GameScreenController {
     }
 
     private void compileAndExecuteCode(String code) {
-        CompilationResult result = compilationService.compile(code, 
-            resolvedSharedJarPath.getAbsolutePath());
+        CompilationResult result = compilationService.compile(code,
+                resolvedSharedJarPath.getAbsolutePath());
 
         if (!isCompilationSuccessful(result)) {
             return;
@@ -189,11 +193,11 @@ public class GameScreenController {
             Platform.runLater(() -> {
                 if (process.exitValue() == 0) {
                     finishExecution("User code "
-                        + "execution finished successfully.");
+                            + "execution finished successfully.");
                 } else {
                     finishExecution(
-                            "User code execution finished with errors (Exit code: " 
-                                + process.exitValue() + ").");
+                            "User code execution finished with errors (Exit code: "
+                                    + process.exitValue() + ").");
                 }
                 executionService.cleanupTemporaryFiles();
             });
@@ -282,7 +286,7 @@ public class GameScreenController {
         if (command != null) {
             command.run();
         }
-        
+
         PauseTransition pause = new PauseTransition(Duration.millis(300)); // adjust delay as needed
         pause.setOnFinished(event -> {
             isProcessingQueue = false;
@@ -294,24 +298,25 @@ public class GameScreenController {
     }
 
     private void handleMoveForward() {
-        if (gameState.getSprite() != null) {
-            gameState.getSprite().moveForward();
+        MovementResult movementResult = movementService.tryMoveForward(gameState);
+        if (movementResult.isSuccessful()) {
+            if (movementResult.isLevelCompleted()) {
+                finishExecution("Level completed.");
+            }
+        } else {
+            finishExecution("Movement failed");
         }
-        gameGridController.updateSpritePosition();
+        gameGridController.renderGridAndSprite();
     }
 
     private void handleTurnLeft() {
-        if (gameState.getSprite() != null) {
-            gameState.getSprite().turnLeft();
-        }
-        gameGridController.updateSpritePosition();
+        movementService.turnLeft(gameState);
+        gameGridController.renderGridAndSprite();
     }
 
     private void handleTurnRight() {
-        if (gameState.getSprite() != null) {
-            gameState.getSprite().turnRight();
-        }
-        gameGridController.updateSpritePosition();
+        movementService.turnRight(gameState);
+        gameGridController.renderGridAndSprite();
     }
 
     private void handleLogMessage(String arg) {
@@ -368,30 +373,29 @@ public class GameScreenController {
 
     /**
      * fxml method to open the in-game settings.
+     * 
      * @param actionEvent .
      */
     public void onSettingsClick(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                "/com/mycompany/irr00_group_project/view/screen/SettingsScreen.fxml"));
+                    "/com/mycompany/irr00_group_project/view/screen/SettingsScreen.fxml"));
             Parent settingsView = loader.load();
             // Apply CSS for in-game settings look
             settingsView.getStylesheets().add(
-                getClass().getResource("/com/mycompany/"
-                + "irr00_group_project/assets/css/"
-                + "settingsMenuStyle.css").toExternalForm()
-            );
+                    getClass().getResource("/com/mycompany/"
+                            + "irr00_group_project/assets/css/"
+                            + "settingsMenuStyle.css").toExternalForm());
             SettingsController controller = loader.getController();
             controller.setOnExit(() -> NavigationManager.getInstance().navigateTo(rootPane));
             controller.setOnGoBack(() -> {
-            try {
-                NavigationManager.getInstance().navigateTo(new LevelSelectionScreen().getView());
-            } catch (Exception e) {
-                e.printStackTrace();
-                consoleOutputController.logError("Error returning to level selection: " + e.getMessage());
-            }
+                try {
+                    NavigationManager.getInstance().navigateTo(new LevelSelectionScreen().getView());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    consoleOutputController.logError("Error returning to level selection: " + e.getMessage());
+                }
             });
-
 
             NavigationManager.getInstance().navigateTo(settingsView);
         } catch (Exception e) {

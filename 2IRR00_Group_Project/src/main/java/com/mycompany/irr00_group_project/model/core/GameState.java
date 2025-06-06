@@ -4,14 +4,20 @@ import com.mycompany.irr00_group_project.model.enums.TileType;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * The GameState class is responsible for managing the current state of the
  * game/level.
  */
 public class GameState {
+    List<Point> collectedKeys = new ArrayList<>();
     private final LevelService levelService;
     private LevelData levelData;
     private TileType[][] grid;
+    private Map<Point, Point> doorKeyPair;
     private int size;
     private SpriteCharacter sprite;
 
@@ -43,6 +49,7 @@ public class GameState {
         levelData = levelService.getLevelDataByFileName(filename);
         this.size = Math.max(levelData.getWidth(), levelData.getHeight());
         this.grid = levelData.getGrid();
+        this.doorKeyPair = levelData.getDoorKeyPair();
         this.sprite = new SpriteCharacter(
                 levelData.getStartRow(),
                 levelData.getStartCol(),
@@ -106,5 +113,17 @@ public class GameState {
 
     public SpriteCharacter getSprite() {
         return sprite;
+    }
+
+    public Map<Point, Point> getDoorKeyPair() {
+        return doorKeyPair;
+    }
+
+    public List<Point> getCollectedKeys() {
+        return collectedKeys;
+    }
+
+    public void setCollectedKeys(List<Point> collectedKeys) {
+        this.collectedKeys = collectedKeys;
     }
 }

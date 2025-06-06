@@ -4,10 +4,10 @@ import com.mycompany.irr00_group_project.model.enums.Direction;
 
 /**
  * Sprite declaration and movement.
- * The class is aiming on establishing the sprite at the start of
- *       the level, while also handles its movement along the grid.
+ * This class represents a sprite character in the game,
+ * including its position and direction.
  */
-public class SpriteCharacter implements Character {
+public class SpriteCharacter {
     private int currentRow;
     private int currentCol;
     private Direction currentDirection; // enum: NORTH, EAST, SOUTH, WEST
@@ -39,97 +39,16 @@ public class SpriteCharacter implements Character {
     }
 
     // setters
-    private void setCurrentRow(int currentRow) {
+    public void setCurrentRow(int currentRow) {
         this.currentRow = currentRow;
     }
 
-    private void setCurrentCol(int currentCol) {
+    public void setCurrentCol(int currentCol) {
         this.currentCol = currentCol;
     }
 
-    private void setCurrentDirection(Direction currentDirection) {
+    public void setCurrentDirection(Direction currentDirection) {
         this.currentDirection = currentDirection;
-    }
-
-    @Override
-    public void moveForward() {
-        int[] nextPosition = calculateNextPosition();
-        int nextRow = nextPosition[0];
-        int nextCol = nextPosition[1];
-
-        // Update the sprite's position
-        setCurrentRow(nextRow);
-        setCurrentCol(nextCol);
-    }
-
-    @Override
-    public void turnLeft() {
-        switch (currentDirection) {
-            case NORTH:
-                currentDirection = Direction.WEST;
-                break;
-            case WEST:
-                currentDirection = Direction.SOUTH;
-                break;
-            case SOUTH:
-                currentDirection = Direction.EAST;
-                break;
-            case EAST:
-                currentDirection = Direction.NORTH;
-                break;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + currentDirection);
-        }
-    }
-
-    @Override
-    public void turnRight() {
-        switch (currentDirection) {
-            case NORTH:
-                currentDirection = Direction.EAST;
-                break;
-            case EAST:
-                currentDirection = Direction.SOUTH;
-                break;
-            case SOUTH:
-                currentDirection = Direction.WEST;
-                break;
-            case WEST:
-                currentDirection = Direction.NORTH;
-                break;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + currentDirection);
-        };
-    }
-
-    /**
-     * Attempts to move the sprite one step forward in its current orientation.
-     * This method itself does not check for any collisions or boundaries.
-     * It returns the potential new coordinates.
-     *
-     * @return An array [newRow, newCol] representing the potential next position.
-     */
-    private int[] calculateNextPosition() {
-        int nextRow = currentRow;
-        int nextCol = currentCol;
-
-        switch (currentDirection) {
-            case NORTH:
-                nextRow--;
-                break;
-            case EAST:
-                nextCol++;
-                break;
-            case SOUTH:
-                nextRow++;
-                break;
-            case WEST:
-                nextCol--;
-                break;
-            default:
-                throw new IllegalArgumentException("Unexpected value: " + currentDirection);
-        }
-        return new int[] { nextRow, nextCol };
     }
 
     /**
