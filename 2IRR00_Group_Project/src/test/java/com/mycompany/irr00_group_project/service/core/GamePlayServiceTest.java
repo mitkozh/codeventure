@@ -58,6 +58,36 @@ public class GamePlayServiceTest {
     }
 
     @Test
+    void testCalculateStars_NegativeSteps() {
+        int stars = gamePlayService.calculateStars(levelData, -5);
+        assertEquals(0, stars);
+    }
+
+    @Test
+    void testCalculateStars_At120Percent() {
+        int stars = gamePlayService.calculateStars(levelData, 12); // 120% of 10
+        assertEquals(2, stars);
+    }
+
+    @Test
+    void testCalculateStars_At150Percent() {
+        int stars = gamePlayService.calculateStars(levelData, 15); // 150% of 10
+        assertEquals(1, stars);
+    }
+
+    @Test
+    void testCalculateStars_Above150Percent() {
+        int stars = gamePlayService.calculateStars(levelData, 16); // above 150%
+        assertEquals(0, stars);
+    }
+
+    @Test
+    void testCalculateStars_NullLevelData() {
+        int stars = gamePlayService.calculateStars(null, 10);
+        assertEquals(0, stars);
+    }
+
+    @Test
     void testRecordLevelResultAndGetBestSteps() {
         int levelNumber = 1;
         gamePlayService.recordLevelResult(levelNumber, 15, levelData);
@@ -78,6 +108,12 @@ public class GamePlayServiceTest {
     }
 
     @Test
+    void testRecordLevelResult_InvalidLevelNumber() {
+        gamePlayService.recordLevelResult(-1, 10, levelData);
+        assertEquals(-1, gamePlayService.getBestStepsForLevel(-1));
+    }
+
+    @Test
     void testHandleLevelCompletion() {
         int levelNumber = 2;
         int playerSteps = 10;
@@ -85,5 +121,19 @@ public class GamePlayServiceTest {
         assertEquals(levelNumber, dto.getLevelNumber());
         assertEquals(3, dto.getStars());
         assertTrue(dto.isUnlocked());
+    }
+
+    @Test
+    void testHandleLevelCompletion_ZeroStars() {
+        int levelNumber = 3;
+        int playerSteps = 100; // way above optimal
+        LevelDTO dto = gamePlayService.handleLevelCompletion(levelNumber, playerSteps, levelData);
+        assertEquals(0, dto.getStars());
+    }
+
+    @Test
+    void testHandleLevelCompletion_NullLevelData() {
+        LevelDTO dto = gamePlayService.handleLevelCompletion(1, 10, null);
+        assertEquals(0, dto.getStars());
     }
 }

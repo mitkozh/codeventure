@@ -9,7 +9,7 @@ import com.mycompany.irr00_group_project.utils.Constants;
 
 /**
  * Class which implements the respective interface and handles 
- *      the changes on the volumes of the game.
+ * the changes on the volumes of the game.
  * Loads the settings of the game in the properties file and saves them.
  * Is able to reload the latest saved game settings from the properties file.
  */
