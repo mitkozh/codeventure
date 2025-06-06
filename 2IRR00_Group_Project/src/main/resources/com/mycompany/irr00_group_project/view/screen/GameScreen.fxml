@@ -26,11 +26,11 @@
                                 <Button fx:id="runCodeButton" text="RUN CODE" styleClass="custom-button, run-button"
                                         onAction="#runCode" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                                 <Button fx:id="stopExecutionButton" text="STOP EXECUTION" styleClass="custom-button, stop-button"
-                                        onAction="#stopExecution" disable="true" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                                        onAction="#stopExecutionOnClick" disable="true" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                             </HBox>
                             <HBox spacing="8">
                                 <Button fx:id="resetLevelButton" text="RESET LEVEL" styleClass="custom-button, reset-button"
-                                        onAction="#resetLevel" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                                        onAction="#resetLevelOnClick" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                                 <Button fx:id="settingsButton" onAction="#onSettingsClick" styleClass="custom-button, settings-button" text="SETTINGS"
                                         HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
                             </HBox>

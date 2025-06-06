@@ -138,6 +138,12 @@ public class LevelData {
         return doors;
     }
 
+    /**
+     * Adds pairs of doors and keys to the doorKeyPair map.
+     * The first door corresponds to the first key, and so on.
+     * If there are more doors than keys, the extra doors will not be paired.
+     * If there are more keys than doors, the extra keys will not be paired.
+     */
     public void addDoorKeyPairs() {
         for (int i = 0; i < Math.min(doors.size(), keys.size()); i++) {
             Point door = doors.get(i);
@@ -153,7 +159,6 @@ public class LevelData {
     public Map<Point, Point> getDoorKeyPair() {
         return doorKeyPair;
     }
-
 
     public void setOptimalSteps(int steps) {
         this.optimalSteps = steps;

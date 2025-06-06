@@ -23,4 +23,6 @@ public class Constants {
             + "        character.moveForward();\n"
             + "    }\n"
             + "}\n";
+    public static final String GAME_SETTINGS_FILE =  "game_settings.properties";
+    public static final String GAME_PROGRESS_FILE = "game_progress.properties";
 }

@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.service.core.impl;
 
 import com.mycompany.irr00_group_project.model.core.LevelData;
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.GamePlayService;
 
 import java.util.HashMap;
@@ -30,5 +31,12 @@ public class GamePlayServiceImpl implements GamePlayService {
     @Override
     public int getBestStepsForLevel(int levelNumber) {
         return bestStepsPerLevel.getOrDefault(levelNumber, -1);
+    }
+
+    @Override
+    public LevelDTO handleLevelCompletion(int levelNumber, int playerSteps, LevelData levelData) {
+        recordLevelResult(levelNumber, playerSteps, levelData);
+        int stars = calculateStars(levelData, playerSteps);
+        return new LevelDTO(levelNumber, stars, true);
     }
 }

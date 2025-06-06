@@ -9,15 +9,24 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.mycompany.irr00_group_project.service.resources.PersistenceService;
+import com.mycompany.irr00_group_project.utils.StringUtils;
 
 /**
  * Class for maintaining persistency of settings properties file.
  */
 public class PersistenceServiceImpl implements PersistenceService {
-    private String filePath = "game_settings.properties";
+    private String filePath;
 
+    /**
+     * Constructor for PersistenceServiceImpl.
+     * @param settingsFilename the path to the settings file
+     */
     public PersistenceServiceImpl(String settingsFilename) {
-        //TODO Auto-generated constructor stub
+        if (!StringUtils.isNullOrEmpty(settingsFilename)) {
+            this.filePath = settingsFilename;
+        } else {
+            throw new IllegalArgumentException("PersistenceServiceImpl: Invalid file path.");
+        }
     }
 
     /*

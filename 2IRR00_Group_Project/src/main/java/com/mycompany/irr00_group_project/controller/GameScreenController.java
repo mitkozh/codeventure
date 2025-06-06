@@ -9,7 +9,13 @@ import com.mycompany.irr00_group_project.controller.components.GameGridControlle
 import com.mycompany.irr00_group_project.model.core.CompilationResult;
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.MovementResult;
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
+import com.mycompany.irr00_group_project.model.enums.GameResult;
+import com.mycompany.irr00_group_project.service.core.GamePlayService;
+import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.MovementService;
+import com.mycompany.irr00_group_project.service.core.impl.GamePlayServiceImpl;
+import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.MovementServiceImpl;
 import com.mycompany.irr00_group_project.service.ipc.IPCService;
 import com.mycompany.irr00_group_project.service.resources.impl.SharedJarServiceImpl;
@@ -17,7 +23,6 @@ import com.mycompany.irr00_group_project.service.sandbox.UserCodeCompilationServ
 import com.mycompany.irr00_group_project.service.sandbox.UserCodeExecutionService;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
-import com.mycompany.irr00_group_project.view.components.ConsoleOutputArea;
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 
 import javafx.application.Platform;
@@ -30,6 +35,7 @@ import javafx.scene.control.Label;
 
 import java.util.LinkedList;
 import java.util.Queue;
+
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
@@ -64,7 +70,9 @@ public class GameScreenController {
     private SharedJarServiceImpl sharedJarService;
     private UserCodeCompilationService compilationService;
     private UserCodeExecutionService executionService;
+    private GamePlayService gamePlayService;
     private IPCService ipcService;
+    private LevelService levelService;
     private File resolvedSharedJarPath;
 
     private final Queue<Runnable> commandQueue = new LinkedList<>();
@@ -79,6 +87,8 @@ public class GameScreenController {
         sharedJarService = new SharedJarServiceImpl();
         compilationService = new UserCodeCompilationService();
         movementService = new MovementServiceImpl();
+        gamePlayService = new GamePlayServiceImpl();
+        levelService = new LevelServiceImpl();
         executionService = new UserCodeExecutionService();
         ipcService = new IPCService();
 
@@ -119,7 +129,7 @@ public class GameScreenController {
      */
     @FXML
     public void runCode(ActionEvent event) {
-        if (isExecuting) {
+        if (isExecuting || !gameState.isGamePlaying()) {
             return;
         }
 
@@ -171,7 +181,7 @@ public class GameScreenController {
 
         if (!result.getFormattedDiagnostics().isEmpty()
                 && !result.getFormattedDiagnostics()
-                        .startsWith("Compilation successful")) {
+                .startsWith("Compilation successful")) {
             consoleOutputController.appendMessage(
                     result.getFormattedDiagnostics());
         } else {
@@ -266,7 +276,7 @@ public class GameScreenController {
                 command = () -> handleError(arg);
                 break;
             case "EXECUTION_COMPLETE":
-                command = () -> consoleOutputController.appendMessage("User script signaled completion.");
+                command = () -> handleExecutionComplete();
                 break;
             default:
                 command = () -> consoleOutputController.logError("Unknown IPC command: " + cmdType);
@@ -298,23 +308,34 @@ public class GameScreenController {
     }
 
     private void handleMoveForward() {
+        if (!gameState.isGamePlaying()) {
+            return;
+        }
         MovementResult movementResult = movementService.tryMoveForward(gameState);
         if (movementResult.isSuccessful()) {
+            gameState.incrementPlayerSteps();
             if (movementResult.isLevelCompleted()) {
-                finishExecution("Level completed.");
+                handleLevelWon();
             }
         } else {
-            finishExecution("Movement failed");
+            handleLoss();
+            finishExecution("You lose!");
         }
         gameGridController.renderGridAndSprite();
     }
 
     private void handleTurnLeft() {
+        if (!gameState.isGamePlaying()) {
+            return;
+        }
         movementService.turnLeft(gameState);
         gameGridController.renderGridAndSprite();
     }
 
     private void handleTurnRight() {
+        if (!gameState.isGamePlaying()) {
+            return;
+        }
         movementService.turnRight(gameState);
         gameGridController.renderGridAndSprite();
     }
@@ -335,7 +356,11 @@ public class GameScreenController {
      * fxml method to stop executing the code of the user.
      */
     @FXML
-    public void stopExecution(ActionEvent event) {
+    public void stopExecutionOnClick(ActionEvent event) {
+        stopExecution();
+    }
+
+    private void stopExecution() {
         if (!isExecuting) {
             return;
         }
@@ -352,7 +377,11 @@ public class GameScreenController {
      * fxml method to reset the level.
      */
     @FXML
-    public void resetLevel(ActionEvent event) {
+    public void resetLevelOnClick(ActionEvent event) {
+        resetLevel();
+    }
+
+    private void resetLevel() {
         if (isExecuting) {
             consoleOutputController.logError("Stop execution first before resetting.");
             return;
@@ -373,7 +402,7 @@ public class GameScreenController {
 
     /**
      * fxml method to open the in-game settings.
-     * 
+     *
      * @param actionEvent .
      */
     public void onSettingsClick(ActionEvent actionEvent) {
@@ -401,6 +430,46 @@ public class GameScreenController {
         } catch (Exception e) {
             e.printStackTrace();
             consoleOutputController.logError("Error opening settings: " + e.getMessage());
+        }
+    }
+
+    private void handleLevelWon() {
+        gameState.setGameResult(GameResult.WON);
+        int levelNumber = extractLevelNumber(levelFile);
+        int playerSteps = gameState.getPlayerSteps();
+
+        LevelDTO levelDTO = gamePlayService.handleLevelCompletion(levelNumber,
+                playerSteps, gameState.getLevelData());
+        levelService.completeLevelAndSave(levelDTO);
+        int stars = gamePlayService.calculateStars(gameState.getLevelData(),
+                playerSteps);
+        finishExecution(String.format("Level completed!"
+                        + " Steps: %d, Stars: %d/3",
+                playerSteps, stars));
+        stopExecution();
+
+    }
+
+    private void handleLoss() {
+        gameState.setGameResult(GameResult.LOST);
+        finishExecution("You lost! Try again.");
+        stopExecution();
+        resetLevel();
+    }
+
+    private int extractLevelNumber(String levelFile) {
+        try {
+            return Integer.parseInt(levelFile
+                    .replace("level", "").replace(".txt", ""));
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Level number is invalid: " + levelFile);
+
+        }
+    }
+
+    private void handleExecutionComplete() {
+        if (gameState.isGamePlaying()) {
+            handleLoss();
         }
     }
 

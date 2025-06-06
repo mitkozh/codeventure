@@ -5,6 +5,7 @@ import java.util.Properties;
 import com.mycompany.irr00_group_project.service.core.SettingsService;
 import com.mycompany.irr00_group_project.service.resources.PersistenceService;
 import com.mycompany.irr00_group_project.service.resources.impl.PersistenceServiceImpl;
+import com.mycompany.irr00_group_project.utils.Constants;
 
 /**
  * Class which implements the respective interface and handles 
@@ -33,13 +34,12 @@ public class SettingsServiceImpl implements SettingsService {
     private double musicVolume = 1.0;
     private double sfxVolume = 1.0;
 
-    private static final String SETTINGS_FILENAME = "game_settings.properties";
     private final PersistenceService persistenceManager;
 
     private static SettingsServiceImpl instance;
 
     private SettingsServiceImpl() {
-        this.persistenceManager = new PersistenceServiceImpl(SETTINGS_FILENAME);
+        this.persistenceManager = new PersistenceServiceImpl(Constants.GAME_SETTINGS_FILE);
         loadPersistedSettings();
     }
 

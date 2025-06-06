@@ -1,5 +1,6 @@
 package com.mycompany.irr00_group_project.model.core;
 
+import com.mycompany.irr00_group_project.model.enums.GameResult;
 import com.mycompany.irr00_group_project.model.enums.TileType;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
@@ -13,6 +14,8 @@ import java.util.Map;
  * game/level.
  */
 public class GameState {
+    private GameResult gameResult = GameResult.PLAYING;
+    private int playerSteps = 0;
     List<Point> collectedKeys = new ArrayList<>();
     private final LevelService levelService;
     private LevelData levelData;
@@ -125,5 +128,33 @@ public class GameState {
 
     public void setCollectedKeys(List<Point> collectedKeys) {
         this.collectedKeys = collectedKeys;
+    }
+
+    public LevelData getLevelData() {
+        return levelData;
+    }
+
+    public void incrementPlayerSteps() {
+        playerSteps++;
+    }
+
+    public void resetPlayerSteps() {
+        playerSteps = 0;
+    }
+
+    public int getPlayerSteps() {
+        return playerSteps;
+    }
+
+    public GameResult getGameResult() {
+        return gameResult;
+    }
+
+    public void setGameResult(GameResult gameResult) {
+        this.gameResult = gameResult;
+    }
+
+    public boolean isGamePlaying() {
+        return gameResult == GameResult.PLAYING;
     }
 }

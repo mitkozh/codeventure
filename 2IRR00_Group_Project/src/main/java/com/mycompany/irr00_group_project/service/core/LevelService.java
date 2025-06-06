@@ -10,6 +10,14 @@ import java.util.List;
  */
 public interface LevelService {
     List<LevelDTO> getAllLevelsDTO();
-    
+
     LevelData getLevelDataByFileName(String fileName);
+
+    void completeLevelAndSave(LevelDTO levelNewData);
+
+    LevelDTO getLevelProgress(int levelNumber);
+
+    void unlockNextLevel(int levelNumber);
+
+    boolean isLevelUnlocked(int levelNumber);
 }
