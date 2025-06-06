@@ -7,7 +7,10 @@ import org.junit.jupiter.api.Test;
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 
 /**
- * Test class for SettingsService.
+ * Junit test class for SettingsService.
+ * This class tests the functionality of the SettingsService,
+ * including setting and getting avatar, volume levels,
+ * and ensuring persistence of settings.
  */
 public class SettingsServiceTest {
 

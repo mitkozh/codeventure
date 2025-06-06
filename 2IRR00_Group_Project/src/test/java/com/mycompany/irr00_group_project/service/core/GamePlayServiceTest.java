@@ -1,0 +1,89 @@
+package com.mycompany.irr00_group_project.service.core;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.mycompany.irr00_group_project.model.core.LevelData;
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
+import com.mycompany.irr00_group_project.service.core.impl.GamePlayServiceImpl;
+
+/**
+ * Junit test class for GamePlayService.
+ * This class tests the functionality of the GamePlayService,
+ * including star calculation based on player steps,
+ * recording level results, retrieving best steps for levels,
+ * and handling level completion logic.
+ */
+public class GamePlayServiceTest {
+
+    private GamePlayService gamePlayService;
+    private LevelData levelData;
+
+    /**
+     * Sets up the GamePlayService instance and LevelData before each test.
+     * This method initializes the service and mocks the LevelData with an optimal step count.
+     */
+    @BeforeEach
+    void setUp() {
+        gamePlayService = new GamePlayServiceImpl();
+        // Mock LevelData with optimal steps = 10
+        levelData = new LevelData();
+        levelData.setOptimalSteps(10);
+    }
+
+    @Test
+    void testCalculateStars_OptimalSteps() {
+        int stars = gamePlayService.calculateStars(levelData, 10);
+        assertEquals(3, stars);
+    }
+
+    @Test
+    void testCalculateStars_JustAboveOptimal() {
+        int stars = gamePlayService.calculateStars(levelData, 12); // within 20%
+        assertEquals(2, stars);
+    }
+
+    @Test
+    void testCalculateStars_Above120Percent() {
+        int stars = gamePlayService.calculateStars(levelData, 15); // within 50%
+        assertEquals(1, stars);
+    }
+
+    @Test
+    void testCalculateStars_ZeroSteps() {
+        int stars = gamePlayService.calculateStars(levelData, 0);
+        assertEquals(0, stars);
+    }
+
+    @Test
+    void testRecordLevelResultAndGetBestSteps() {
+        int levelNumber = 1;
+        gamePlayService.recordLevelResult(levelNumber, 15, levelData);
+        assertEquals(15, gamePlayService.getBestStepsForLevel(levelNumber));
+
+        // Record better result
+        gamePlayService.recordLevelResult(levelNumber, 12, levelData);
+        assertEquals(12, gamePlayService.getBestStepsForLevel(levelNumber));
+
+        // Record worse result, should not update
+        gamePlayService.recordLevelResult(levelNumber, 20, levelData);
+        assertEquals(12, gamePlayService.getBestStepsForLevel(levelNumber));
+    }
+
+    @Test
+    void testGetBestStepsForLevel_NoResult() {
+        assertEquals(-1, gamePlayService.getBestStepsForLevel(99));
+    }
+
+    @Test
+    void testHandleLevelCompletion() {
+        int levelNumber = 2;
+        int playerSteps = 10;
+        LevelDTO dto = gamePlayService.handleLevelCompletion(levelNumber, playerSteps, levelData);
+        assertEquals(levelNumber, dto.getLevelNumber());
+        assertEquals(3, dto.getStars());
+        assertTrue(dto.isUnlocked());
+    }
+}
