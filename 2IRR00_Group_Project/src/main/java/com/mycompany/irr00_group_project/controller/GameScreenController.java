@@ -419,10 +419,13 @@ public class GameScreenController {
             controller.setOnExit(() -> NavigationManager.getInstance().navigateTo(rootPane));
             controller.setOnGoBack(() -> {
                 try {
-                    NavigationManager.getInstance().navigateTo(new LevelSelectionScreen().getView());
+                    NavigationManager.getInstance()
+                        .navigateTo(new LevelSelectionScreen().getView());
                 } catch (Exception e) {
                     e.printStackTrace();
-                    consoleOutputController.logError("Error returning to level selection: " + e.getMessage());
+                    consoleOutputController.logError(
+                        "Error returning to level selection: "
+                         + e.getMessage());
                 }
             });
 
