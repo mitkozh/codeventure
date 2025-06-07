@@ -74,6 +74,7 @@ public class GameScreenController {
     private IPCService ipcService;
     private LevelService levelService;
     private File resolvedSharedJarPath;
+    private final boolean DEBUG_MODE_LOGGING = false;
 
     private final Queue<Runnable> commandQueue = new LinkedList<>();
     private boolean isProcessingQueue = false;
@@ -99,9 +100,11 @@ public class GameScreenController {
                         + " shared.jar not found or accessible!");
                 runCodeButton.setDisable(true);
             } else {
-                consoleOutputController
-                        .appendMessage("Resolved shared.jar to: "
-                                + resolvedSharedJarPath.getAbsolutePath());
+                if (DEBUG_MODE_LOGGING) {
+                    consoleOutputController
+                            .appendMessage("Resolved shared.jar to: "
+                                    + resolvedSharedJarPath.getAbsolutePath());
+                }
             }
         } catch (IOException e) {
             consoleOutputController.logError("CRITICAL: Error resolving shared.jar: "
@@ -119,7 +122,9 @@ public class GameScreenController {
         gameState = new GameState(levelFile);
         gameState.loadFromFile(levelFile);
         gameGridController.loadLevelFromGameState(gameState);
-        consoleOutputController.appendMessage("Loaded level: " + levelFile);
+        if (DEBUG_MODE_LOGGING) {
+            consoleOutputController.appendMessage("Loaded level: " + levelFile);
+        }
         levelTitle.setText("Level: "
                 + levelFile.replace(".txt", ""));
     }
@@ -185,13 +190,17 @@ public class GameScreenController {
             consoleOutputController.appendMessage(
                     result.getFormattedDiagnostics());
         } else {
+            if (DEBUG_MODE_LOGGING) {
             consoleOutputController.appendMessage("Compilation successful.");
+            }
         }
         return true;
     }
 
     private void executeUserCode(CompilationResult result) throws IOException {
+        if (DEBUG_MODE_LOGGING) {
         consoleOutputController.appendMessage("Starting user code process...");
+        }
         Process userProcess = executionService.startUserCodeProcess(result.getCompiledClasses(),
                 resolvedSharedJarPath.getAbsolutePath());
 
@@ -245,10 +254,14 @@ public class GameScreenController {
     }
 
     private void handleIPCCommand(String command) {
-        consoleOutputController.appendMessage("IPC Command: " + command);
+        if (DEBUG_MODE_LOGGING) {
+            consoleOutputController.appendMessage("IPC Command: " + command);
+        }
         String[] parts = command.split(":", 3);
         if (parts.length < 2) {
-            consoleOutputController.logError("Malformed IPC command: " + command);
+            if (DEBUG_MODE_LOGGING) {
+                consoleOutputController.logError("Malformed IPC command: " + command);
+            }
             return;
         }
         processIPCCommand(parts);
@@ -388,7 +401,9 @@ public class GameScreenController {
         }
         setExecutionState(false);
         loadLevel(levelFile);
-        consoleOutputController.appendMessage("Level reset.");
+        if (DEBUG_MODE_LOGGING) {
+            consoleOutputController.appendMessage("Level reset.");
+        }
     }
 
     private void finishExecution(String message) {
