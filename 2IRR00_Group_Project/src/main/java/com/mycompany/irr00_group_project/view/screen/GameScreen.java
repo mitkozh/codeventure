@@ -32,13 +32,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     @Override
-    public Parent getView() throws IOException {
-        loadFxmlCustom();
-        applyCssToRoot();
-        return root;
-    }
-
-    private void loadFxmlCustom() throws IOException {
+    protected void loadFxml() throws IOException {
         controller = new GameScreenController();
         String path = getFxmlPath();
         if (StringUtils.isNullOrWhiteSpace(path)) {

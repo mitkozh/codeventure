@@ -44,9 +44,6 @@ public class SettingsController {
 
     private boolean isInitializingView = true;
 
-    public void setAudioManagerService(AudioManagerService audioManagerService) {
-        this.audioManagerService = audioManagerService;
-    }
 
     /**
      * Initializes the settings screen.
