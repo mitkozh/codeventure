@@ -65,35 +65,6 @@ class CoreServiceTest {
     }
 
     @Test
-    void testGetAllLevelsDTO() {
-        TestLevelServiceUtil levelService = new TestLevelServiceUtil();
-        List<LevelDTO> levels = levelService.getAllLevelsDTO();
-        assertEquals(50, levels.size());
-        assertEquals(1, levels.get(0).getLevelNumber());
-        assertTrue(levels.get(0).isUnlocked());
-        assertEquals(0, levels.get(0).getStars());
-    }
-
-    @Test
-    void testGetLevelProgress_FirstLevelUnlockedByDefault() {
-        TestLevelServiceUtil levelService = new TestLevelServiceUtil();
-        LevelDTO progress = levelService.getLevelProgress(1);
-        assertEquals(1, progress.getLevelNumber());
-        assertTrue(progress.isUnlocked());
-        assertEquals(0, progress.getStars());
-    }
-
-    @Test
-    void testCompleteLevelAndSave_UnlocksNextLevel() {
-        TestLevelServiceUtil levelService = new TestLevelServiceUtil();
-        LevelDTO newData = new LevelDTO(1, 3, true);
-        levelService.completeLevelAndSave(newData);
-        LevelDTO nextLevel = levelService.getLevelProgress(2);
-        assertTrue(nextLevel.isUnlocked());
-        assertEquals(0, nextLevel.getStars());
-    }
-
-    @Test
     void testCalculateStars() {
         GamePlayServiceImpl gamePlayService = new GamePlayServiceImpl();
         LevelData levelData = new LevelData() {
