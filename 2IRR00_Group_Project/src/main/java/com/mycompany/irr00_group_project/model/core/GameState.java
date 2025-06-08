@@ -1,13 +1,13 @@
 package com.mycompany.irr00_group_project.model.core;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.mycompany.irr00_group_project.model.enums.GameResult;
 import com.mycompany.irr00_group_project.model.enums.TileType;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * The GameState class is responsible for managing the current state of the
@@ -41,6 +41,18 @@ public class GameState {
         levelService = new LevelServiceImpl();
         this.size = 3; // default size
         loadFromFile(filename);
+    }
+
+    /**
+     * Constructor that initializes the game state with a grid and sprite.
+     *
+     * @param grid   a 2D array of TileType representing the game grid
+     * @param sprite the SpriteCharacter representing the player in the game
+     */
+    public GameState(TileType[][] grid, SpriteCharacter sprite) {
+        this.levelService = new LevelServiceImpl();
+        this.grid = grid;
+        this.sprite = sprite;
     }
     
     /**
@@ -116,6 +128,10 @@ public class GameState {
 
     public SpriteCharacter getSprite() {
         return sprite;
+    }
+
+    public void setDoorKeyPair(Map<Point, Point> doorKeyPair) {
+        this.doorKeyPair = doorKeyPair;
     }
 
     public Map<Point, Point> getDoorKeyPair() {

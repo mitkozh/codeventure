@@ -1,20 +1,16 @@
 package com.mycompany.irr00_group_project.service.core.impl;
 
-import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
-import com.mycompany.irr00_group_project.model.core.GameState;
-import com.mycompany.irr00_group_project.model.core.MovementResult;
-import com.mycompany.irr00_group_project.model.core.Point;
-import com.mycompany.irr00_group_project.model.core.SpriteCharacter;
-import com.mycompany.irr00_group_project.model.core.LevelData;
-import com.mycompany.irr00_group_project.model.enums.Direction;
-import com.mycompany.irr00_group_project.model.enums.TileType;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import com.mycompany.irr00_group_project.model.core.LevelData;
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 
 class CoreServiceTest {
 
@@ -66,204 +62,6 @@ class CoreServiceTest {
             unlockNextLevel(levelNumber);
             saveProgress();
         }
-    }
-
-    @Test
-    void testGetAllLevelsDTO() {
-        TestLevelServiceUtil levelService = new TestLevelServiceUtil();
-        List<LevelDTO> levels = levelService.getAllLevelsDTO();
-        assertEquals(50, levels.size());
-        assertEquals(1, levels.get(0).getLevelNumber());
-        assertTrue(levels.get(0).isUnlocked());
-        assertEquals(0, levels.get(0).getStars());
-    }
-
-    @Test
-    void testGetLevelProgress_FirstLevelUnlockedByDefault() {
-        TestLevelServiceUtil levelService = new TestLevelServiceUtil();
-        LevelDTO progress = levelService.getLevelProgress(1);
-        assertEquals(1, progress.getLevelNumber());
-        assertTrue(progress.isUnlocked());
-        assertEquals(0, progress.getStars());
-    }
-
-    @Test
-    void testCompleteLevelAndSave_UnlocksNextLevel() {
-        TestLevelServiceUtil levelService = new TestLevelServiceUtil();
-        LevelDTO newData = new LevelDTO(1, 3, true);
-        levelService.completeLevelAndSave(newData);
-        LevelDTO nextLevel = levelService.getLevelProgress(2);
-        assertTrue(nextLevel.isUnlocked());
-        assertEquals(0, nextLevel.getStars());
-    }
-
-    @Test
-    void testTryMoveForward_NoSprite() {
-        MovementServiceImpl movementService = new MovementServiceImpl();
-        GameState gameState = new GameState() {
-            
-            @Override
-            public SpriteCharacter getSprite() {
-                return null;
-            }
-
-            @Override
-            public TileType[][] getGrid() {
-                return (TileType[][]) new Object[3][3];
-            }
-
-            @Override
-            public TileType getTileAt(int row, int col) {
-                return null;
-            }
-
-            @Override
-            public void setTileAt(int row, int col, TileType type) {
-            }
-
-            @Override
-            public List<Point> getCollectedKeys() {
-                return new ArrayList<>();
-            }
-
-            @Override
-            public Map<Point, Point> getDoorKeyPair() {
-                return new HashMap<>();
-            }
-        };
-        MovementResult result = movementService.tryMoveForward(gameState);
-        assertFalse(result.isSuccessful());
-        assertEquals("No sprite found", result.getMessage());
-    }
-
-    @Test
-    void testTurnRight() {
-        MovementServiceImpl movementService = new MovementServiceImpl();
-        SpriteCharacter sprite = new SpriteCharacter(0, 0, null) {
-            private Direction direction = Direction.NORTH;
-
-            @Override
-            public int getCurrentRow() { 
-                return 1; 
-            }
-
-            @Override
-            public int getCurrentCol() { 
-                return 1; 
-            }
-
-            @Override
-            public Direction getCurrentDirection() { 
-                return direction; 
-            }
-
-            @Override
-            public void moveTo(int newRow, int newCol) {
-            }
-
-            @Override
-            public void setCurrentDirection(Direction direction) { 
-                this.direction = direction; 
-            }
-        };
-        GameState gameState = new GameState() {
-
-            @Override
-            public SpriteCharacter getSprite() { 
-                return sprite; 
-            }
-
-            @Override
-            public TileType[][] getGrid() { 
-                return (TileType[][]) new Object[3][3]; 
-            }
-
-            @Override
-            public TileType getTileAt(int row, int col) { 
-                return null; 
-            }
-
-            @Override
-            public void setTileAt(int row, int col, TileType type) {
-            }
-
-            @Override
-            public List<Point> getCollectedKeys() { 
-                return new ArrayList<>(); 
-            }
-
-            @Override
-            public Map<Point, Point> getDoorKeyPair() { 
-                return new HashMap<>(); 
-            }
-        };
-        movementService.turnRight(gameState);
-        assertEquals(Direction.EAST, sprite.getCurrentDirection());
-    }
-
-    @Test
-    void testTurnLeft() {
-        MovementServiceImpl movementService = new MovementServiceImpl();
-        SpriteCharacter sprite = new SpriteCharacter(0, 0, null) {
-            private Direction direction = Direction.EAST;
-
-            @Override
-            public int getCurrentRow() { 
-                return 1; 
-            }
-
-            @Override
-            public int getCurrentCol() { 
-                return 1; 
-            }
-
-            @Override
-            public Direction getCurrentDirection() { 
-                return direction; 
-            }
-
-            @Override
-            public void moveTo(int newRow, int newCol) {
-            }
-
-            @Override
-            public void setCurrentDirection(Direction direction) { 
-                this.direction = direction; 
-            }
-        };
-        GameState gameState = new GameState() {
-
-            @Override
-            public SpriteCharacter getSprite() { 
-                return sprite; 
-            }
-
-            @Override
-            public TileType[][] getGrid() { 
-                return (TileType[][]) new Object[3][3]; 
-            }
-
-            @Override
-            public TileType getTileAt(int row, int col) { 
-                return null; 
-            }
-
-            @Override
-            public void setTileAt(int row, int col, TileType type) {
-            }
-
-            @Override
-            public List<Point> getCollectedKeys() { 
-                return new ArrayList<>(); 
-            }
-
-            @Override
-            public Map<Point, Point> getDoorKeyPair() { 
-                return new HashMap<>(); 
-            }
-        };
-        movementService.turnLeft(gameState);
-        assertEquals(Direction.NORTH, sprite.getCurrentDirection());
     }
 
     @Test

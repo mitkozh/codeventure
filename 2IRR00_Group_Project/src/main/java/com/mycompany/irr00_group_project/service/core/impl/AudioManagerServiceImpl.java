@@ -123,4 +123,16 @@ public class AudioManagerServiceImpl implements AudioManagerService {
     public void setSfxVolume(double newVolume) {
         this.sfxVolume = Math.max(0.0, Math.min(1.0, newVolume));
     }
+
+    public double getMasterVolume() {
+        return masterVolume;
+    }
+    
+    public double getMusicVolume() {
+        return musicVolume;
+    }
+
+    public double getSfxVolume() {
+        return sfxVolume;
+    }
 }

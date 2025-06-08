@@ -1,0 +1,76 @@
+package com.mycompany.irr00_group_project.service.core;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
+import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
+
+/**
+ * JUnit test class for LevelService.
+ * This class tests the functionality of the LevelService,
+ * including retrieving all levels, checking level progress,
+ * completing levels, and unlocking next levels.
+ */
+public class LevelServiceTest {
+
+    private LevelService levelService;
+
+    @BeforeEach
+    void setUp() {
+        levelService = new LevelServiceImpl();
+    }
+
+    @Test
+    void testGetAllLevelsDTO() {
+        List<LevelDTO> levels = levelService.getAllLevelsDTO();
+        assertEquals(50, levels.size());
+        assertEquals(1, levels.get(0).getLevelNumber());
+        assertTrue(levels.get(0).isUnlocked());
+        assertEquals(0, levels.get(0).getStars());
+    }
+
+    @Test
+    void testGetLevelProgress_FirstLevelUnlockedByDefault() {
+        LevelDTO progress = levelService.getLevelProgress(1);
+        assertEquals(1, progress.getLevelNumber());
+        assertTrue(progress.isUnlocked());
+        assertEquals(0, progress.getStars());
+    }
+
+    @Test
+    void testCompleteLevelAndSave_UnlocksNextLevel() {
+        LevelDTO newData = new LevelDTO(1, 3, true);
+        levelService.completeLevelAndSave(newData);
+        LevelDTO nextLevel = levelService.getLevelProgress(2);
+        assertTrue(nextLevel.isUnlocked());
+        assertEquals(0, nextLevel.getStars());
+    }
+
+    @Test
+    void testCompleteLevelAndSave_StarsNotDowngraded() {
+        LevelDTO newData = new LevelDTO(1, 3, true);
+        levelService.completeLevelAndSave(newData);
+        LevelDTO worseData = new LevelDTO(1, 1, true);
+        levelService.completeLevelAndSave(worseData);
+        LevelDTO progress = levelService.getLevelProgress(1);
+        assertEquals(3, progress.getStars());
+    }
+
+    @Test
+    void testUnlockNextLevel() {
+        levelService.unlockNextLevel(1);
+        assertTrue(levelService.isLevelUnlocked(2));
+    }
+
+    @Test
+    void testIsLevelUnlocked() {
+        assertTrue(levelService.isLevelUnlocked(1));
+        assertFalse(levelService.isLevelUnlocked(50));
+    }
+}

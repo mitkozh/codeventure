@@ -127,7 +127,6 @@ public class GameScreenController {
         gameState = new GameState(levelFile);
         gameState.loadFromFile(levelFile);
         gameGridController.loadLevelFromGameState(gameState);
-        consoleOutputController.appendMessage("Loaded level: " + levelFile);
         levelTitle.setText("Level: "
                 + levelFile.replace(".txt", ""));
     }
@@ -184,7 +183,6 @@ public class GameScreenController {
         }
         setExecutionState(false);
         loadLevel(levelFile);
-        consoleOutputController.appendMessage("Level reset.");
     }
 
     private void finishExecution(String message) {
