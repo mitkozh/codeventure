@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.service.core.impl;
 
 import com.mycompany.irr00_group_project.model.core.LevelData;
+import com.mycompany.irr00_group_project.model.core.dto.GameProgressDTO;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.resources.PersistenceService;
@@ -17,7 +18,7 @@ import java.util.*;
 public class LevelServiceImpl implements LevelService {
 
     private final PersistenceService persistenceService;
-    private final Map<Integer, LevelDTO> levelProgress = new HashMap<>();
+    private final GameProgressDTO gameProgressDTO = new GameProgressDTO();
 
     /**
      * Default constructor that initializes the persistence service and loads the game progress.
@@ -51,9 +52,9 @@ public class LevelServiceImpl implements LevelService {
     public void completeLevelAndSave(LevelDTO levelNewData) {
         int levelNumber = levelNewData.getLevelNumber();
         int levelNewDataStars = levelNewData.getStars();
-        LevelDTO currentProgress = levelProgress.get(levelNumber);
+        LevelDTO currentProgress = gameProgressDTO.getLevel(levelNumber);
         if (currentProgress == null || levelNewDataStars > currentProgress.getStars()) {
-            levelProgress.put(levelNumber, levelNewData);
+            gameProgressDTO.putLevel(levelNumber, levelNewData);
         }
 
         unlockNextLevel(levelNumber);
@@ -62,29 +63,27 @@ public class LevelServiceImpl implements LevelService {
 
     @Override
     public LevelDTO getLevelProgress(int levelNumber) {
-        boolean firstUnlockedByDefault = levelNumber == 1;
-        return levelProgress.getOrDefault(levelNumber,
-                new LevelDTO(levelNumber, 0, firstUnlockedByDefault));
+        return gameProgressDTO.getLevelOrDefault(levelNumber);
     }
 
     @Override
     public void unlockNextLevel(int levelNumber) {
         int nextLevel = levelNumber + 1;
-        if (!levelProgress.containsKey(nextLevel)) {
-            levelProgress.put(nextLevel,
+        if (!gameProgressDTO.containsLevel(nextLevel)) {
+            gameProgressDTO.putLevel(nextLevel,
                     new LevelDTO(nextLevel, 0, true));
         }
     }
 
     @Override
     public boolean isLevelUnlocked(int levelNumber) {
-        LevelDTO progress = levelProgress.get(levelNumber);
+        LevelDTO progress = gameProgressDTO.getLevel(levelNumber);
         return progress != null && progress.isUnlocked();
     }
 
     private void loadProgress() {
         Properties props = persistenceService.loadProperties();
-        levelProgress.put(1, new LevelDTO(1,
+        gameProgressDTO.putLevel(1, new LevelDTO(1,
                 0, true));
 
         for (String key : props.stringPropertyNames()) {
@@ -97,7 +96,7 @@ public class LevelServiceImpl implements LevelService {
                             props.getProperty(key, "0"));
                     boolean unlocked = Boolean.parseBoolean(
                             props.getProperty("level_" + levelNum + "_unlocked", "false"));
-                    levelProgress.put(levelNum,
+                    gameProgressDTO.putLevel(levelNum,
                             new LevelDTO(levelNum, stars, unlocked));
                 } catch (NumberFormatException e) {
                     System.err.println("Error parsing progress data for: " + key);
@@ -108,7 +107,7 @@ public class LevelServiceImpl implements LevelService {
 
     private void saveProgress() {
         Properties props = new Properties();
-        for (Map.Entry<Integer, LevelDTO> entry : levelProgress.entrySet()) {
+        for (Map.Entry<Integer, LevelDTO> entry : gameProgressDTO.getEntrySet()) {
             LevelDTO level = entry.getValue();
             props.setProperty("level_" + level.getLevelNumber() + "_stars",
                     String.valueOf(level.getStars()));

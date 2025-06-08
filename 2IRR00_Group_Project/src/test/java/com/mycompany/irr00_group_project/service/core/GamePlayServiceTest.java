@@ -1,11 +1,10 @@
 package com.mycompany.irr00_group_project.service.core;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.impl.GamePlayServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,8 +58,9 @@ public class GamePlayServiceTest {
 
     @Test
     void testCalculateStars_NegativeSteps() {
-        int stars = gamePlayService.calculateStars(levelData, -5);
-        assertEquals(0, stars);
+        assertThrows(IllegalArgumentException.class,
+                () -> gamePlayService.calculateStars(levelData, -1)
+        );
     }
 
     @Test
@@ -105,7 +105,9 @@ public class GamePlayServiceTest {
 
     @Test
     void testGetBestStepsForLevel_NoResult() {
-        assertEquals(-1, gamePlayService.getBestStepsForLevel(99));
+        assertThrows(IllegalArgumentException.class, () -> {
+            gamePlayService.getBestStepsForLevel(99);
+        });
     }
 
     @Test
