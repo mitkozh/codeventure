@@ -4,6 +4,9 @@ import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.GameProgressDTO;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
+import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
+import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
+import com.mycompany.irr00_group_project.service.observable.ObservableRegistry;
 import com.mycompany.irr00_group_project.service.resources.PersistenceService;
 import com.mycompany.irr00_group_project.service.resources.impl.PersistenceServiceImpl;
 import com.mycompany.irr00_group_project.utils.Constants;
@@ -15,17 +18,38 @@ import java.util.*;
 /**
  * Implementation of the LevelService interface.
  */
-public class LevelServiceImpl implements LevelService {
+public class LevelServiceImpl implements LevelService, ObservableProvider {
 
     private final PersistenceService persistenceService;
     private final GameProgressDTO gameProgressDTO = new GameProgressDTO();
+    private final ObservableRegistry observableRegistry = new ObservableRegistry();
+
 
     /**
      * Default constructor that initializes the persistence service and loads the game progress.
      */
     public LevelServiceImpl() {
         this.persistenceService = new PersistenceServiceImpl(Constants.GAME_PROGRESS_FILE);
+        initializeObservables();
         loadProgress();
+    }
+
+    private void initializeObservables() {
+        observableRegistry.register(LevelSelectionObservables.class,
+                new LevelSelectionObservables());
+    }
+
+    @Override
+    public ObservableRegistry getObservableRegistry() {
+        return observableRegistry;
+    }
+
+    /**
+     * Publishes a level selection event to the observable registry.
+     */
+    public void selectLevel(LevelDTO level) {
+        LevelSelectionObservables levelObs = getObservableOrThrow(LevelSelectionObservables.class);
+        levelObs.setSelectedLevel(level);
     }
 
     @Override
@@ -39,12 +63,12 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
-    public LevelData getLevelDataByFileName(String fileName) {
+    public LevelData getLevelDataByLevelDTO(LevelDTO levelDTO) {
         try {
-            return ParseUtils.parseLevel(fileName);
+            return ParseUtils.parseLevel(levelDTO);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Error loading level from file: " + fileName, e);
+            throw new IllegalArgumentException("Error loading level from file: " + levelDTO, e);
         }
     }
 
@@ -79,6 +103,16 @@ public class LevelServiceImpl implements LevelService {
     public boolean isLevelUnlocked(int levelNumber) {
         LevelDTO progress = gameProgressDTO.getLevel(levelNumber);
         return progress != null && progress.isUnlocked();
+    }
+
+    @Override
+    public LevelDTO getFirstLevel() {
+        LevelDTO firstLevel = gameProgressDTO.getLevelOrDefault(1);
+        if (firstLevel == null) {
+            firstLevel = new LevelDTO(1, 0, true);
+            gameProgressDTO.putLevel(1, firstLevel);
+        }
+        return firstLevel;
     }
 
     private void loadProgress() {

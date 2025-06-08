@@ -11,7 +11,7 @@ import java.util.List;
 public interface LevelService {
     List<LevelDTO> getAllLevelsDTO();
 
-    LevelData getLevelDataByFileName(String fileName);
+    LevelData getLevelDataByLevelDTO(LevelDTO fileName);
 
     void completeLevelAndSave(LevelDTO levelNewData);
 
@@ -20,4 +20,6 @@ public interface LevelService {
     void unlockNextLevel(int levelNumber);
 
     boolean isLevelUnlocked(int levelNumber);
+
+    LevelDTO getFirstLevel();
 }

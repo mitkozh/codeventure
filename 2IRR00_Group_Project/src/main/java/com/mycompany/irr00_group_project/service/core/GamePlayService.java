@@ -26,41 +26,42 @@ public interface GamePlayService {
     /**
      * Records the result of a level completion.
      *
-     * @param levelNumber The number of the level completed.
+     * @param levelDTO The number of the level completed.
      * @param playerSteps The number of steps taken by the player to complete the
      *                    level.
      * @param levelData   The data associated with the level,
      *                    including optimal steps and other metrics.
-     * @pre {@code levelNumber} must be a valid level number (1-50),
+     * @pre {@code levelDTO} must be a non-null LevelDTO object
+     * with a valid level number (1-50),
      *      {@code playerSteps} must be non-negative, and {@code levelData} must not be null.
      * @throws IllegalArgumentException if the arguments are invalid.
      */
-    void recordLevelResult(int levelNumber, int playerSteps, LevelData levelData)
+    void recordLevelResult(LevelDTO levelDTO, int playerSteps, LevelData levelData)
             throws IllegalArgumentException;
 
     /**
      * Retrieves the best steps taken by the player for a specific level.
      *
-     * @param levelNumber The number of the level to retrieve the best steps for.
+     * @param levelDTO The LevelDTO object containing the level number.
      * @return The best number of steps recorded for the specified level.
-     * @pre levelNumber must be a valid level number (1-50).
+     * @pre {@code levelDTO} must not be null and must have a valid level number (1-50).
      * @throws IllegalArgumentException if the level number is invalid.
      */
-    int getBestStepsForLevel(int levelNumber) throws IllegalArgumentException;
+    int getBestStepsForLevel(LevelDTO levelDTO) throws IllegalArgumentException;
 
     /**
      * Handles the completion of a level, updating the level's progress and
      * unlocking the next level (if possible).
      *
-     * @param levelNumber The number of the level being completed.
+     * @param levelDTO The number of the level being completed.
      * @param playerSteps The number of steps taken by the player to complete the
      *                    level.
      * @param levelData   The level data, including optimal steps and other metrics.
      * @return A {@code LevelDTO} object with information about the completed level.
-     * @pre {@code levelNumber} must be a valid level number
-     *      (1-50),{@code playerSteps} nonnegative, and {@code levelData} not null.
+     * @pre {@code levelDTO} must be not null and have a valid level number,
+     *      (1-50),{@code playerSteps} not negative, and {@code levelData} not null.
      * @throws IllegalArgumentException if the arguments are invalid,
      */
-    LevelDTO handleLevelCompletion(int levelNumber, int playerSteps, LevelData levelData)
+    LevelDTO handleLevelCompletion(LevelDTO levelDTO, int playerSteps, LevelData levelData)
             throws IllegalArgumentException;
 }

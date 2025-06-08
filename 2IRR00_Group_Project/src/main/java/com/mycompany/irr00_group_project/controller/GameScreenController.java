@@ -10,9 +10,11 @@ import com.mycompany.irr00_group_project.service.core.CommandService;
 import com.mycompany.irr00_group_project.service.core.UserCodeLifecycleService;
 import com.mycompany.irr00_group_project.service.core.impl.CommandServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.GameServiceManager;
+import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.UserCodeLifecycleServiceImpl;
 import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
 import com.mycompany.irr00_group_project.service.observable.GameStateObservables;
+import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.GameScreenNavigatorManager;
@@ -48,19 +50,18 @@ public class GameScreenController {
     private Parent rootPane;
 
     private GameState gameState;
-    private String levelFile;
     private GameServiceManager gameServiceManager;
     private CommandService commandService;
     private GameScreenNavigatorManager navigatorManager;
     private UserCodeLifecycleService userCodeLifecycleService;
-    private int levelNumber;
+    private LevelDTO levelDTO;
 
     /**
      * Initialization of game screen.
      */
     @FXML
     public void initialize() {
-        gameState = new GameState(levelFile);
+        gameState = new GameState(levelDTO);
         this.gameServiceManager =
                 new GameServiceManager();
         this.navigatorManager =
@@ -71,7 +72,7 @@ public class GameScreenController {
                 new UserCodeLifecycleServiceImpl(gameServiceManager, commandService);
         setupObservableBindings();
         setupUserCodeLifecycleService();
-        loadLevel(levelFile);
+        loadLevel(levelDTO);
         stopExecutionButton.setDisable(true);
     }
 
@@ -120,15 +121,25 @@ public class GameScreenController {
                     }
                 });
             });
+            if (gameServiceManager.getLevelService() instanceof LevelServiceImpl serviceImpl) {
+                LevelSelectionObservables levelObs = serviceImpl
+                        .getObservableOrThrow(LevelSelectionObservables.class);
+
+                levelObs.selectedLevelProperty().addListener((observable, oldLevel, newLevel) -> {
+                    if (newLevel != null) {
+                        loadLevel(newLevel);
+                    }
+                });
+            }
         }
     }
 
-    private void loadLevel(String levelFile) {
-        gameState = new GameState(levelFile);
-        gameState.loadFromFile(levelFile);
+    private void loadLevel(LevelDTO level) {
+        gameState = new GameState(level);
+        gameState.loadFromLevelDTO(level);
         gameGridController.loadLevelFromGameState(gameState);
         levelTitle.setText("Level: "
-                + levelFile.replace(".txt", ""));
+                + levelDTO.getLevelNumber());
     }
 
     /**
@@ -182,7 +193,7 @@ public class GameScreenController {
             return;
         }
         setExecutionState(false);
-        loadLevel(levelFile);
+        loadLevel(levelDTO);
     }
 
     private void finishExecution(String message) {
@@ -208,7 +219,7 @@ public class GameScreenController {
         int playerSteps = gameState.getPlayerSteps();
 
         LevelDTO levelDTO = gameServiceManager.getGamePlayService()
-                .handleLevelCompletion(levelNumber,
+                .handleLevelCompletion(this.levelDTO,
                 playerSteps, gameState.getLevelData());
         gameServiceManager.getLevelService().completeLevelAndSave(levelDTO);
         int stars = gameServiceManager.getGamePlayService().calculateStars(gameState.getLevelData(),
@@ -227,11 +238,7 @@ public class GameScreenController {
         resetLevel();
     }
 
-    public void setLevelFile(String levelFile) {
-        this.levelFile = levelFile;
-    }
-
-    public void setLevelNumber(int levelNumber) {
-        this.levelNumber = levelNumber;
+    public void setLevelDTO(LevelDTO levelDTO) {
+        this.levelDTO = levelDTO;
     }
 }

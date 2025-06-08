@@ -37,16 +37,16 @@ public class GamePlayServiceImpl implements GamePlayService {
     }
 
     @Override
-    public void recordLevelResult(int levelNumber, int playerSteps, LevelData levelData) {
-        checkValidArgumentsAll(levelNumber, playerSteps, levelData);
-        int prevBest = bestStepsPerLevel.getOrDefault(levelNumber, Integer.MAX_VALUE);
+    public void recordLevelResult(LevelDTO levelDTO, int playerSteps, LevelData levelData) {
+        checkValidArgumentsAll(levelDTO, playerSteps, levelData);
+        int prevBest = bestStepsPerLevel.getOrDefault(levelDTO.getLevelNumber(), Integer.MAX_VALUE);
         if (playerSteps > 0 && playerSteps < prevBest) {
-            bestStepsPerLevel.put(levelNumber, playerSteps);
+            bestStepsPerLevel.put(levelDTO.getLevelNumber(), playerSteps);
         }
     }
 
-    private void checkValidArgumentsAll(int levelNumber, int playerSteps, LevelData levelData) {
-        checkValidLevel(levelNumber);
+    private void checkValidArgumentsAll(LevelDTO levelDTO, int playerSteps, LevelData levelData) {
+        checkValidLevel(levelDTO);
         checkValidSteps(playerSteps);
         checkValidLevelData(levelData);
     }
@@ -63,23 +63,25 @@ public class GamePlayServiceImpl implements GamePlayService {
         }
     }
 
-    private static void checkValidLevel(int levelNumber) {
-        if (levelNumber < 1 || levelNumber > 50) {
-            throw new IllegalArgumentException("Invalid level number: " + levelNumber);
+    private static void checkValidLevel(LevelDTO levelDTO) {
+        if (levelDTO == null || levelDTO.getLevelNumber() <= 0
+                || levelDTO.getLevelNumber() > 50) {
+            throw new IllegalArgumentException("Invalid LevelDTO provided: " + levelDTO);
         }
     }
 
     @Override
-    public int getBestStepsForLevel(int levelNumber) {
-        checkValidLevel(levelNumber);
-        return bestStepsPerLevel.getOrDefault(levelNumber, -1);
+    public int getBestStepsForLevel(LevelDTO levelDTO) {
+        checkValidLevel(levelDTO);
+        return bestStepsPerLevel.getOrDefault(levelDTO.getLevelNumber(), -1);
     }
 
     @Override
-    public LevelDTO handleLevelCompletion(int levelNumber, int playerSteps, LevelData levelData) {
-        checkValidArgumentsAll(levelNumber, playerSteps, levelData);
-        recordLevelResult(levelNumber, playerSteps, levelData);
+    public LevelDTO handleLevelCompletion(LevelDTO levelDTO, int playerSteps, LevelData levelData) {
+        checkValidArgumentsAll(levelDTO, playerSteps, levelData);
+        recordLevelResult(levelDTO, playerSteps, levelData);
         int stars = calculateStars(levelData, playerSteps);
-        return new LevelDTO(levelNumber, stars, true);
+        levelDTO.setStars(stars);
+        return levelDTO;
     }
 }

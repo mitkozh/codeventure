@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.utils;
 
 import com.mycompany.irr00_group_project.model.core.LevelData;
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.model.enums.Direction;
 import com.mycompany.irr00_group_project.model.enums.TileType;
 
@@ -16,18 +17,19 @@ public class ParseUtils {
 
     /**
      * Parses a level file and returns a LevelData object.
-     * @param filename the name of the level file to parse
+     * @param levelDTO the name of the level file to parse
      * @return a LevelData object containing the parsed level data
      * @throws IOException if a file cannot be found or read
      */
-    public static LevelData parseLevel(String filename)
+    public static LevelData parseLevel(LevelDTO levelDTO)
             throws IOException {
         LevelData levelData = new LevelData();
-
+        String levelFileName = "level" + levelDTO.getLevelNumber() + ".txt";
         InputStream inputStream = ParseUtils.class
-                .getResourceAsStream("/com/mycompany/irr00_group_project/data/levels/" + filename);
+                .getResourceAsStream("/com/mycompany/irr00_group_project/data/levels/"
+                        + levelFileName);
         if (inputStream == null) {
-            throw new IOException("Could not find level file: " + filename);
+            throw new IOException("Could not find level file: " + levelFileName);
         }
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
@@ -109,11 +111,11 @@ public class ParseUtils {
                     break;
                 case "DOORS":
                     levelData.setTile(row, col, TileType.DOOR_CLOSED);
-                    levelData.addDoor(row, col); // <-- Add this line
+                    levelData.addDoor(row, col);
                     break;
                 case "KEYS":
                     levelData.setTile(row, col, TileType.KEY);
-                    levelData.addKey(row, col); // <-- Add this line
+                    levelData.addKey(row, col);
                     break;
                 default:
                     break;
