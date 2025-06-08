@@ -24,6 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+
 /**
  * Controller for the main game screen, handling user interactions and game
  * logic.
