@@ -53,6 +53,7 @@ public class GameScreenController {
     private CommandService commandService;
     private GameScreenNavigatorManager navigatorManager;
     private UserCodeLifecycleService userCodeLifecycleService;
+    private int levelNumber;
 
     /**
      * Initialization of game screen.
@@ -204,7 +205,6 @@ public class GameScreenController {
 
     private void handleLevelWon() {
         gameState.setGameResult(GameResult.WON);
-        int levelNumber = extractLevelNumber(levelFile);
         int playerSteps = gameState.getPlayerSteps();
 
         LevelDTO levelDTO = gameServiceManager.getGamePlayService()
@@ -227,17 +227,11 @@ public class GameScreenController {
         resetLevel();
     }
 
-    private int extractLevelNumber(String levelFile) {
-        try {
-            return Integer.parseInt(levelFile
-                    .replace("level", "").replace(".txt", ""));
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException("Level number is invalid: " + levelFile);
-
-        }
-    }
-
     public void setLevelFile(String levelFile) {
         this.levelFile = levelFile;
+    }
+
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
     }
 }

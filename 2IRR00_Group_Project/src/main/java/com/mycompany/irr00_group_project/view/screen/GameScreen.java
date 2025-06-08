@@ -8,17 +8,25 @@ import com.mycompany.irr00_group_project.controller.GameScreenController;
 
 import com.mycompany.irr00_group_project.utils.StringUtils;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 
 /**
  * Class for implementing game screen.
  */
 public class GameScreen extends AbstractScreen {
+    private final int levelNumber;
     private String levelFile;
     private GameScreenController controller;
 
-    public GameScreen(String levelFile) {
+    /**
+     * Constructor for the GameScreen class.
+     * It initializes the screen with a specific level file and level number.
+     *
+     * @param levelFile   The file path of the level to be loaded.
+     * @param levelNumber The number of the level to be displayed.
+     */
+    public GameScreen(String levelFile, int levelNumber) {
         this.levelFile = levelFile;
+        this.levelNumber = levelNumber;
     }
 
     @Override
@@ -43,6 +51,7 @@ public class GameScreen extends AbstractScreen {
             throw new FileNotFoundException("FXML file not found: " + path);
         }
         controller.setLevelFile(levelFile);
+        controller.setLevelNumber(levelNumber);
         fxmlLoader = new FXMLLoader(fxmlUrl);
         fxmlLoader.setController(controller);
         this.root = fxmlLoader.load();
