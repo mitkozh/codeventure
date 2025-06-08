@@ -1,5 +1,6 @@
 package com.mycompany.irr00_group_project.controller.components;
 
+import com.mycompany.irr00_group_project.utils.Constants;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.TextArea;
@@ -18,6 +19,7 @@ public class CodeEditorAreaController {
     }
 
     private void setupCodeEditor() {
+        codeEditor.setText(Constants.DEFAULT_CODE);
         codeEditor.setWrapText(true);
         codeEditor.setPrefHeight(400);
     }

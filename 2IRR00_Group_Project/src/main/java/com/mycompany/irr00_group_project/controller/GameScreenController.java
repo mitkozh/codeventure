@@ -71,7 +71,6 @@ public class GameScreenController {
         setupObservableBindings();
         setupUserCodeLifecycleService();
         loadLevel(levelFile);
-        codeEditorController.setCode(Constants.DEFAULT_CODE);
         stopExecutionButton.setDisable(true);
     }
 
@@ -140,7 +139,7 @@ public class GameScreenController {
             return;
         }
 
-        String code = codeEditorController.getCode();
+        String code = Constants.INITIAL_IMPORTS_CODE + codeEditorController.getCode();
         consoleOutputController.clear();
         setExecutionState(true);
         userCodeLifecycleService.executeCode(code, gameState,
