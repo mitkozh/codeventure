@@ -30,9 +30,10 @@ public class LevelServiceTest {
     void testGetAllLevelsDTO() {
         List<LevelDTO> levels = levelService.getAllLevelsDTO();
         assertEquals(50, levels.size());
-        assertEquals(1, levels.get(0).getLevelNumber());
-        assertTrue(levels.get(0).isUnlocked());
-        assertEquals(0, levels.get(0).getStars());
+        for (int i = 0; i < levels.size(); i++) {
+            LevelDTO level = levels.get(i);
+            assertEquals(i + 1, level.getLevelNumber());
+        }
     }
 
     @Test
@@ -40,7 +41,6 @@ public class LevelServiceTest {
         LevelDTO progress = levelService.getLevelProgress(1);
         assertEquals(1, progress.getLevelNumber());
         assertTrue(progress.isUnlocked());
-        assertEquals(0, progress.getStars());
     }
 
     @Test

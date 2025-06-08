@@ -18,8 +18,10 @@ public class GamePlayServiceImpl implements GamePlayService {
 
     @Override
     public int calculateStars(LevelData levelData, int playerSteps) {
+        checkValidSteps(playerSteps);
+        checkValidLevelData(levelData);
         int optimal = levelData.getOptimalSteps();
-        if (playerSteps <= 0) {
+        if (playerSteps == 0) {
             return 0;
         } // Not solved
         if (playerSteps <= optimal) {
@@ -36,19 +38,46 @@ public class GamePlayServiceImpl implements GamePlayService {
 
     @Override
     public void recordLevelResult(int levelNumber, int playerSteps, LevelData levelData) {
+        checkValidArgumentsAll(levelNumber, playerSteps, levelData);
         int prevBest = bestStepsPerLevel.getOrDefault(levelNumber, Integer.MAX_VALUE);
         if (playerSteps > 0 && playerSteps < prevBest) {
             bestStepsPerLevel.put(levelNumber, playerSteps);
         }
     }
 
+    private void checkValidArgumentsAll(int levelNumber, int playerSteps, LevelData levelData) {
+        checkValidLevel(levelNumber);
+        checkValidSteps(playerSteps);
+        checkValidLevelData(levelData);
+    }
+
+    private static void checkValidLevelData(LevelData levelData) {
+        if (levelData == null) {
+            throw new IllegalArgumentException("Level data cannot be null");
+        }
+    }
+
+    private static void checkValidSteps(int playerSteps) {
+        if (playerSteps < 0) {
+            throw new IllegalArgumentException("Player steps cannot be negative: " + playerSteps);
+        }
+    }
+
+    private static void checkValidLevel(int levelNumber) {
+        if (levelNumber < 1 || levelNumber > 50) {
+            throw new IllegalArgumentException("Invalid level number: " + levelNumber);
+        }
+    }
+
     @Override
     public int getBestStepsForLevel(int levelNumber) {
+        checkValidLevel(levelNumber);
         return bestStepsPerLevel.getOrDefault(levelNumber, -1);
     }
 
     @Override
     public LevelDTO handleLevelCompletion(int levelNumber, int playerSteps, LevelData levelData) {
+        checkValidArgumentsAll(levelNumber, playerSteps, levelData);
         recordLevelResult(levelNumber, playerSteps, levelData);
         int stars = calculateStars(levelData, playerSteps);
         return new LevelDTO(levelNumber, stars, true);

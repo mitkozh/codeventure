@@ -126,6 +126,9 @@ public class SpriteCharacterView {
         return spriteImageView;
     }
 
+    /**
+     * Updates the sprite image based on the selected avatar in settings.
+     */
     public void updateSpriteImage() {
         loadSpriteImages();
         spriteImageView.setImage(sprite);

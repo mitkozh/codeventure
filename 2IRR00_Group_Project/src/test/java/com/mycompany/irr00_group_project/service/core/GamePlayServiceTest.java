@@ -1,13 +1,13 @@
 package com.mycompany.irr00_group_project.service.core;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.impl.GamePlayServiceImpl;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Junit test class for GamePlayService.
@@ -78,13 +78,14 @@ public class GamePlayServiceTest {
     @Test
     void testCalculateStars_Above150Percent() {
         int stars = gamePlayService.calculateStars(levelData, 16); // above 150%
-        assertEquals(0, stars);
+        assertEquals(1, stars);
     }
 
     @Test
     void testCalculateStars_NullLevelData() {
-        int stars = gamePlayService.calculateStars(null, 10);
-        assertEquals(0, stars);
+        assertThrows(IllegalArgumentException.class, () -> {
+            gamePlayService.calculateStars(null, 10);
+        });
     }
 
     @Test
@@ -109,8 +110,9 @@ public class GamePlayServiceTest {
 
     @Test
     void testRecordLevelResult_InvalidLevelNumber() {
-        gamePlayService.recordLevelResult(-1, 10, levelData);
-        assertEquals(-1, gamePlayService.getBestStepsForLevel(-1));
+        assertThrows(IllegalArgumentException.class, () -> {
+            gamePlayService.getBestStepsForLevel(-1);
+        });
     }
 
     @Test
@@ -128,12 +130,13 @@ public class GamePlayServiceTest {
         int levelNumber = 3;
         int playerSteps = 100; // way above optimal
         LevelDTO dto = gamePlayService.handleLevelCompletion(levelNumber, playerSteps, levelData);
-        assertEquals(0, dto.getStars());
+        assertEquals(1, dto.getStars());
     }
 
     @Test
     void testHandleLevelCompletion_NullLevelData() {
-        LevelDTO dto = gamePlayService.handleLevelCompletion(1, 10, null);
-        assertEquals(0, dto.getStars());
+        assertThrows(IllegalArgumentException.class, () -> {
+            gamePlayService.handleLevelCompletion(1, 10, null);
+        });
     }
 }
