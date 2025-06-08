@@ -1,16 +1,23 @@
 package com.mycompany.irr00_group_project.service.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.MovementResult;
 import com.mycompany.irr00_group_project.model.core.Point;
 import com.mycompany.irr00_group_project.model.core.SpriteCharacter;
-import com.mycompany.irr00_group_project.model.enums.*;
+import com.mycompany.irr00_group_project.model.enums.Direction;
+import com.mycompany.irr00_group_project.model.enums.TileType;
 import com.mycompany.irr00_group_project.service.core.impl.MovementServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * JUnit test class for MovementService.
