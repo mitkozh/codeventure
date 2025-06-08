@@ -3,6 +3,11 @@ package com.mycompany.irr00_group_project.controller.components;
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.SpriteCharacter;
 import com.mycompany.irr00_group_project.model.enums.TileType;
+import com.mycompany.irr00_group_project.service.core.SettingsService;
+import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
+import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
+import com.mycompany.irr00_group_project.service.observable.SettingsObservables;
+import com.mycompany.irr00_group_project.utils.StringUtils;
 import com.mycompany.irr00_group_project.view.components.SpriteCharacterView;
 import javafx.fxml.FXML;
 import javafx.scene.layout.ColumnConstraints;
@@ -24,6 +29,7 @@ public class GameGridController {
 
     private GameState gameState;
     private SpriteCharacterView spriteCharacterView;
+    private SettingsService settingsService;
 
     /**
      * Initializes the game grid controller.
@@ -34,6 +40,20 @@ public class GameGridController {
         spriteCharacterView = new SpriteCharacterView();
         gameGrid.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         gameGrid.setAlignment(javafx.geometry.Pos.CENTER);
+        setupSettingsObservables();
+    }
+
+    private void setupSettingsObservables() {
+        settingsService = SettingsServiceImpl.getInstance();
+        if (settingsService instanceof ObservableProvider provider) {
+            provider.getObservable(SettingsObservables.class).ifPresent(settings -> {
+                settings.selectedAvatarProperty().addListener((obs, oldAvatar, newAvatar) -> {
+                    if (!StringUtils.isNullOrEmpty(newAvatar)) {
+                        spriteCharacterView.updateSpriteImage();
+                    }
+                });
+            });
+        }
     }
 
     /**

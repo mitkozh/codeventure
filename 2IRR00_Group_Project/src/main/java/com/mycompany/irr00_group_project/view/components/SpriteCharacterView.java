@@ -126,4 +126,8 @@ public class SpriteCharacterView {
         return spriteImageView;
     }
 
+    public void updateSpriteImage() {
+        loadSpriteImages();
+        spriteImageView.setImage(sprite);
+    }
 }

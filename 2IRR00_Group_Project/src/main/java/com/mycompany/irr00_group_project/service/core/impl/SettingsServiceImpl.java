@@ -3,6 +3,9 @@ package com.mycompany.irr00_group_project.service.core.impl;
 import java.util.Properties;
 
 import com.mycompany.irr00_group_project.service.core.SettingsService;
+import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
+import com.mycompany.irr00_group_project.service.observable.ObservableRegistry;
+import com.mycompany.irr00_group_project.service.observable.SettingsObservables;
 import com.mycompany.irr00_group_project.service.resources.PersistenceService;
 import com.mycompany.irr00_group_project.service.resources.impl.PersistenceServiceImpl;
 import com.mycompany.irr00_group_project.utils.Constants;
@@ -13,7 +16,7 @@ import com.mycompany.irr00_group_project.utils.Constants;
  * Loads the settings of the game in the properties file and saves them.
  * Is able to reload the latest saved game settings from the properties file.
  */
-public class SettingsServiceImpl implements SettingsService {
+public class SettingsServiceImpl implements SettingsService, ObservableProvider {
 
     /**
      * Interface for changing the volumes.
@@ -35,12 +38,23 @@ public class SettingsServiceImpl implements SettingsService {
     private double sfxVolume = 1.0;
 
     private final PersistenceService persistenceManager;
+    private final ObservableRegistry observableRegistry = new ObservableRegistry();
 
     private static SettingsServiceImpl instance;
 
     private SettingsServiceImpl() {
         this.persistenceManager = new PersistenceServiceImpl(Constants.GAME_SETTINGS_FILE);
+        initializeObservables();
         loadPersistedSettings();
+    }
+
+    private void initializeObservables() {
+        observableRegistry.register(SettingsObservables.class, new SettingsObservables());
+    }
+
+    @Override
+    public ObservableRegistry getObservableRegistry() {
+        return observableRegistry;
     }
 
     /**
@@ -80,6 +94,8 @@ public class SettingsServiceImpl implements SettingsService {
     @Override
     public void setSelectedAvatar(String avatarName) {
         this.selectedAvatar = avatarName;
+        SettingsObservables settingsObs = getObservableOrThrow(SettingsObservables.class);
+        settingsObs.setSelectedAvatar(avatarName);
     }
 
     @Override
@@ -127,6 +143,8 @@ public class SettingsServiceImpl implements SettingsService {
             this.musicVolume = Double.parseDouble(props.getProperty("musicVolume", "1.0"));
             this.sfxVolume = Double.parseDouble(props.getProperty("sfxVolume", "1.0"));
 
+            SettingsObservables settingsObs = getObservableOrThrow(SettingsObservables.class);
+            settingsObs.setSelectedAvatar(this.selectedAvatar);
             setMasterVolume(this.masterVolume);
             setMusicVolume(this.musicVolume);
             setSfxVolume(this.sfxVolume);
