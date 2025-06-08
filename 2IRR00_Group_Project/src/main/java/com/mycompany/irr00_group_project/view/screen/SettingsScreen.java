@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 public class SettingsScreen extends AbstractScreen {
     Runnable onExit;
     Runnable onBack;
+    String backButtonContent = "GO TO MENU";
 
     /**
      * Constructor for the SettingsScreen class.
@@ -21,9 +22,10 @@ public class SettingsScreen extends AbstractScreen {
      * @param onExit Runnable action to be executed when exiting the settings screen.
      * @param onBack Runnable action to be executed when going back from the settings screen.
      */
-    public SettingsScreen(Runnable onExit, Runnable onBack) {
+    public SettingsScreen(Runnable onExit, Runnable onBack, String content) {
         this.onExit = onExit;
         this.onBack = onBack;
+        this.backButtonContent = content;
     }
 
     /**
@@ -39,6 +41,7 @@ public class SettingsScreen extends AbstractScreen {
         SettingsController settingsController = fxmlLoader.getController();
         settingsController.setOnExit(onExit);
         settingsController.setOnGoBack(onBack);
+        settingsController.setBackToMenuButtonContent(backButtonContent);
         return root;
     }
 

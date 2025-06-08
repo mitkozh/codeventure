@@ -29,7 +29,7 @@ public class GameScreenNavigatorManager {
                 e.printStackTrace();
             }
         };
-        return new SettingsScreen(onExit, onGoBack);
+        return new SettingsScreen(onExit, onGoBack, "SELECT LEVEL");
     }
 
     /**

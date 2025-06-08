@@ -9,6 +9,7 @@ import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 
@@ -20,6 +21,9 @@ import java.util.List;
  * It manages the changes occurring in the sound lavels and character of the player.
  */
 public class SettingsController {
+
+    @FXML
+    private Button backToMenuButton;
 
     @FXML
     private ComboBox<String> characterComboBox;
@@ -299,5 +303,9 @@ public class SettingsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setBackToMenuButtonContent(String content) {
+        backToMenuButton.setText(content);
     }
 }
