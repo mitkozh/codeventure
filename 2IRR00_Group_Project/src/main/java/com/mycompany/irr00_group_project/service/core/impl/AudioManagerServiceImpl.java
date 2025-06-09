@@ -11,6 +11,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.mycompany.irr00_group_project.service.core.AudioManagerService;
+import com.mycompany.irr00_group_project.service.observable.SettingsObservables;
+import com.mycompany.irr00_group_project.utils.Constants;
 
 /**
  * Class which implements the respective interface and manages the sound levels of the game.
@@ -18,60 +20,50 @@ import com.mycompany.irr00_group_project.service.core.AudioManagerService;
 public class AudioManagerServiceImpl implements AudioManagerService {
 
     private Clip mainMenuMusicClip;
-    private double masterVolume = 1.0; 
-    private double musicVolume = 1.0; 
-    private double sfxVolume = 1.0;
-
+    private final SettingsObservables settingsObservables;
     private static AudioManagerServiceImpl instance;
 
     /**
-     * private method to create the AudioManagerServiceImpl.
+     * Private constructor to initialize the AudioManagerServiceImpl.
+     * It fetches the observable settings and sets up listeners to react to changes.
      */
     private AudioManagerServiceImpl() {
+        SettingsServiceImpl settingsService = SettingsServiceImpl.getInstance();
+        this.settingsObservables = settingsService.getObservableRegistry()
+                .getOrThrow(SettingsObservables.class);
+        setupObservables();
+        initializeBackgroundMusic();
+    }
 
+    /**
+     * Sets up listeners on the observable properties to automatically update volume.
+     */
+    private void setupObservables() {
+        settingsObservables.masterVolumeProperty().addListener(
+                (obs, oldVal, newVal) -> updateMusicClipVolume());
+        settingsObservables.musicVolumeProperty().addListener(
+                (obs, oldVal, newVal) -> updateMusicClipVolume());
+    }
+
+    /**
+     * Loads the main menu music, sets its initial volume, and plays it in a loop.
+     */
+    private void initializeBackgroundMusic() {
         try {
-            SettingsServiceImpl settings = SettingsServiceImpl.getInstance();
-            this.masterVolume = settings.getMasterVolume();
-            this.musicVolume = settings.getMusicVolume();
-            this.sfxVolume = settings.getSfxVolume();
-
-            settings.setVolumeChangeListener(new SettingsServiceImpl.VolumeChangeListener() {
-                @Override
-                public void onMasterVolumeChanged(double newVolume) {
-                    setMasterVolume(newVolume);
-                }
-
-                @Override
-                public void onMusicVolumeChanged(double newVolume) {
-                    setMusicVolume(newVolume);
-                }
-
-                @Override
-                public void onSfxVolumeChanged(double newVolume) {
-                    setSfxVolume(newVolume);
-                }
-            });
-        } catch (Exception e) {
-            System.err.println("AudioManagerServiceImpl: Error getting"
-                + " initial settings from SettingsService. Using internal"
-                + " defaults. Error: " + e.getMessage());
-        }
-
-        try {
-            String soundPath = "/com/mycompany/irr00_group_project/assets/sounds/MainMenuMusic.wav";
+            String soundPath = Constants.BACKGROUND_MUSIC_LOCATION;
             URL soundURL = getClass().getResource(soundPath);
             if (soundURL != null) {
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundURL);
                 mainMenuMusicClip = AudioSystem.getClip();
                 mainMenuMusicClip.open(audioIn);
-                updateMusicClipVolume(); 
-                mainMenuMusicClip.loop(Clip.LOOP_CONTINUOUSLY); 
+                updateMusicClipVolume();
+                mainMenuMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
                 mainMenuMusicClip.start();
             }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.err.println("Failed to play background sound: " + e.getMessage());
+            e.printStackTrace();
         }
-
     }
 
     /**
@@ -84,55 +76,24 @@ public class AudioManagerServiceImpl implements AudioManagerService {
         return instance;
     }
 
+    /**
+     * Updates the volume of the music clip based on the current master and music volume settings.
+     */
     private void updateMusicClipVolume() {
         if (mainMenuMusicClip != null && mainMenuMusicClip.isOpen()) {
+            double masterVolume = settingsObservables.getMasterVolume();
+            double musicVolume = settingsObservables.getMusicVolume();
             double effectiveVolume = masterVolume * musicVolume;
             FloatControl volumeControl = (FloatControl) 
                 mainMenuMusicClip.getControl(FloatControl.Type.MASTER_GAIN);
             float min = volumeControl.getMinimum();
             float max = volumeControl.getMaximum();
-            float dB;
-            if (effectiveVolume == 0.0) {
-                dB = min;
+            if (effectiveVolume > 0.0) {
+                float dB = (float) (Math.log10(effectiveVolume) * 20.0);
+                volumeControl.setValue(Math.max(min, Math.min(max, dB)));
             } else {
-                dB = (float) (Math.log10(effectiveVolume) * 20.0);
-                if (dB < min) {
-                    dB = min;
-                }
-                if (dB > max) {
-                    dB = max;
-                }
+                volumeControl.setValue(min);
             }
-            volumeControl.setValue(dB);
         }
-    }
-
-    @Override
-    public void setMasterVolume(double newVolume) {
-        this.masterVolume = Math.max(0.0, Math.min(1.0, newVolume));
-        updateMusicClipVolume();
-    }
-
-    @Override
-    public void setMusicVolume(double newVolume) {
-        this.musicVolume = Math.max(0.0, Math.min(1.0, newVolume));
-        updateMusicClipVolume();
-    }
-
-    @Override
-    public void setSfxVolume(double newVolume) {
-        this.sfxVolume = Math.max(0.0, Math.min(1.0, newVolume));
-    }
-
-    public double getMasterVolume() {
-        return masterVolume;
-    }
-    
-    public double getMusicVolume() {
-        return musicVolume;
-    }
-
-    public double getSfxVolume() {
-        return sfxVolume;
     }
 }

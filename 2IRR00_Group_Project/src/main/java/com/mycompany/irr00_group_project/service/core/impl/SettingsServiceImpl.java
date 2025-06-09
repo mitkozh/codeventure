@@ -2,6 +2,7 @@ package com.mycompany.irr00_group_project.service.core.impl;
 
 import java.util.Properties;
 
+import com.mycompany.irr00_group_project.model.core.dto.GameSettingsDTO;
 import com.mycompany.irr00_group_project.service.core.SettingsService;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
 import com.mycompany.irr00_group_project.service.observable.ObservableRegistry;
@@ -17,25 +18,7 @@ import com.mycompany.irr00_group_project.utils.Constants;
  * Is able to reload the latest saved game settings from the properties file.
  */
 public class SettingsServiceImpl implements SettingsService, ObservableProvider {
-
-    /**
-     * Interface for changing the volumes.
-     */
-    public interface VolumeChangeListener {
-        void onMasterVolumeChanged(double newVolume);
-
-        void onMusicVolumeChanged(double newVolume);
-
-        void onSfxVolumeChanged(double newVolume);
-    }
-
-    private VolumeChangeListener volumeChangeListener;
-
-    // default settings
-    private String selectedAvatar = "Robot";
-    private double masterVolume = 1.0;
-    private double musicVolume = 1.0;
-    private double sfxVolume = 1.0;
+    GameSettingsDTO gameSettingsDTO = new GameSettingsDTO();
 
     private final PersistenceService persistenceManager;
     private final ObservableRegistry observableRegistry = new ObservableRegistry();
@@ -58,7 +41,7 @@ public class SettingsServiceImpl implements SettingsService, ObservableProvider 
     }
 
     /**
-     * method to publicly generate SettingsServiceImpl.
+     * Singleton to get the instance of SettingsServiceImpl.
      */
     public static synchronized SettingsServiceImpl getInstance() {
         if (instance == null) {
@@ -67,68 +50,62 @@ public class SettingsServiceImpl implements SettingsService, ObservableProvider 
         return instance;
     }
 
-    public void setVolumeChangeListener(VolumeChangeListener listener) {
-        this.volumeChangeListener = listener;
+    @Override
+    public GameSettingsDTO getSettings() {
+        return gameSettingsDTO;
     }
 
     @Override
     public String getSelectedAvatar() {
-        return this.selectedAvatar;
+        return getObservableOrThrow(SettingsObservables.class).getSelectedAvatar();
     }
 
     @Override
     public double getMasterVolume() {
-        return this.masterVolume;
+        return getObservableOrThrow(SettingsObservables.class).getMasterVolume();
     }
 
     @Override
     public double getMusicVolume() {
-        return this.musicVolume;
+        return getObservableOrThrow(SettingsObservables.class).getMusicVolume();
     }
 
     @Override
     public double getSfxVolume() {
-        return this.sfxVolume;
+        return getObservableOrThrow(SettingsObservables.class).getSfxVolume();
     }
 
     @Override
     public void setSelectedAvatar(String avatarName) {
-        this.selectedAvatar = avatarName;
-        SettingsObservables settingsObs = getObservableOrThrow(SettingsObservables.class);
-        settingsObs.setSelectedAvatar(avatarName);
+        getObservableOrThrow(SettingsObservables.class).setSelectedAvatar(avatarName);
     }
 
     @Override
     public void setMasterVolume(double volume) {
-        this.masterVolume = Math.max(0.0, Math.min(1.0, volume));
-        if (volumeChangeListener != null) {
-            volumeChangeListener.onMasterVolumeChanged(this.masterVolume);
-        }
+        double clampedVolume = Math.max(0.0, Math.min(1.0, volume));
+        getObservableOrThrow(SettingsObservables.class).setMasterVolume(clampedVolume);
     }
 
     @Override
     public void setMusicVolume(double volume) {
-        this.musicVolume = Math.max(0.0, Math.min(1.0, volume));
-        if (volumeChangeListener != null) {
-            volumeChangeListener.onMusicVolumeChanged(this.musicVolume);
-        }
+        double clampedVolume = Math.max(0.0, Math.min(1.0, volume));
+        getObservableOrThrow(SettingsObservables.class).setMusicVolume(clampedVolume);
     }
 
     @Override
     public void setSfxVolume(double volume) {
-        this.sfxVolume = Math.max(0.0, Math.min(1.0, volume));
-        if (volumeChangeListener != null) {
-            volumeChangeListener.onSfxVolumeChanged(this.sfxVolume);
-        }
+        double clampedVolume = Math.max(0.0, Math.min(1.0, volume));
+        getObservableOrThrow(SettingsObservables.class).setSfxVolume(clampedVolume);
     }
 
     @Override
     public synchronized void saveCurrentSettings() {
+        SettingsObservables settingsObs = getObservableOrThrow(SettingsObservables.class);
         Properties props = new Properties();
-        props.setProperty("avatar", selectedAvatar);
-        props.setProperty("masterVolume", String.valueOf(masterVolume));
-        props.setProperty("musicVolume", String.valueOf(musicVolume));
-        props.setProperty("sfxVolume", String.valueOf(sfxVolume));
+        props.setProperty("avatar", settingsObs.getSelectedAvatar());
+        props.setProperty("masterVolume", String.valueOf(settingsObs.getMasterVolume()));
+        props.setProperty("musicVolume", String.valueOf(settingsObs.getMusicVolume()));
+        props.setProperty("sfxVolume", String.valueOf(settingsObs.getSfxVolume()));
 
         persistenceManager.saveProperties(props, "Game Application Settings");
     }
@@ -136,23 +113,19 @@ public class SettingsServiceImpl implements SettingsService, ObservableProvider 
     @Override
     public synchronized void loadPersistedSettings() {
         Properties props = persistenceManager.loadProperties();
-
         try {
-            this.selectedAvatar = props.getProperty("avatar", "Robot"); // default if key not found
-            this.masterVolume = Double.parseDouble(props.getProperty("masterVolume", "1.0"));
-            this.musicVolume = Double.parseDouble(props.getProperty("musicVolume", "1.0"));
-            this.sfxVolume = Double.parseDouble(props.getProperty("sfxVolume", "1.0"));
-
-            SettingsObservables settingsObs = getObservableOrThrow(SettingsObservables.class);
-            settingsObs.setSelectedAvatar(this.selectedAvatar);
-            setMasterVolume(this.masterVolume);
-            setMusicVolume(this.musicVolume);
-            setSfxVolume(this.sfxVolume);
-
+            setSelectedAvatar(props.getProperty("avatar", "Robot"));
+            setMasterVolume(Double.parseDouble(props.getProperty("masterVolume", "1.0")));
+            setMusicVolume(Double.parseDouble(props.getProperty("musicVolume", "1.0")));
+            setSfxVolume(Double.parseDouble(props.getProperty("sfxVolume", "1.0")));
         } catch (NumberFormatException e) {
-            System.err.println("SettingsServiceImpl: Settings load failed, using defaults. Error: " 
-                + e.getMessage());
+            System.err.println("SettingsServiceImpl: Settings load failed, using defaults. Error: "
+                    + e.getMessage());
             e.printStackTrace();
+            setSelectedAvatar("Robot");
+            setMasterVolume(1.0);
+            setMusicVolume(1.0);
+            setSfxVolume(1.0);
         }
     }
 }

@@ -9,7 +9,7 @@ import com.mycompany.irr00_group_project.model.enums.GameResult;
 import com.mycompany.irr00_group_project.service.core.CommandService;
 import com.mycompany.irr00_group_project.service.core.UserCodeLifecycleService;
 import com.mycompany.irr00_group_project.service.core.impl.CommandServiceImpl;
-import com.mycompany.irr00_group_project.service.core.impl.GameServiceManager;
+import com.mycompany.irr00_group_project.utils.GameServiceManager;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.UserCodeLifecycleServiceImpl;
 import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;

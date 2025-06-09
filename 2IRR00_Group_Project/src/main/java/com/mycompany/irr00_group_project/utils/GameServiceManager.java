@@ -1,8 +1,11 @@
-package com.mycompany.irr00_group_project.service.core.impl;
+package com.mycompany.irr00_group_project.utils;
 
 import com.mycompany.irr00_group_project.service.core.GamePlayService;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.MovementService;
+import com.mycompany.irr00_group_project.service.core.impl.GamePlayServiceImpl;
+import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
+import com.mycompany.irr00_group_project.service.core.impl.MovementServiceImpl;
 import com.mycompany.irr00_group_project.service.ipc.IPCService;
 import com.mycompany.irr00_group_project.service.resources.impl.SharedJarServiceImpl;
 import com.mycompany.irr00_group_project.service.sandbox.UserCodeCompilationService;

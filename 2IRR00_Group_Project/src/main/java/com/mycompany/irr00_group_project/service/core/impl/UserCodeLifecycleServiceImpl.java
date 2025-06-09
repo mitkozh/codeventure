@@ -4,6 +4,7 @@ import com.mycompany.irr00_group_project.model.core.CompilationResult;
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.service.core.CommandService;
 import com.mycompany.irr00_group_project.service.core.UserCodeLifecycleService;
+import com.mycompany.irr00_group_project.utils.GameServiceManager;
 import javafx.application.Platform;
 
 import java.io.File;

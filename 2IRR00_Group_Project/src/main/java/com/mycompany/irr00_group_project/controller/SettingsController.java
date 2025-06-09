@@ -1,12 +1,9 @@
 package com.mycompany.irr00_group_project.controller;
 
-import com.mycompany.irr00_group_project.service.core.AudioManagerService;
 import com.mycompany.irr00_group_project.service.core.SettingsService;
-import com.mycompany.irr00_group_project.service.core.impl.AudioManagerServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
 import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,7 +34,6 @@ public class SettingsController {
     @FXML
     private Slider sfxSlider;
 
-    private AudioManagerService audioManagerService;
     private SettingsService settingsService;
 
     private Runnable onExit;
@@ -48,7 +44,6 @@ public class SettingsController {
 
     private boolean isInitializingView = true;
 
-
     /**
      * Initializes the settings screen.
      */
@@ -58,20 +53,17 @@ public class SettingsController {
         initializeServices();
         configureSliders();
         loadSettings();
-        setupListeners();
+        setupObservableBindings();
         isInitializingView = false;
     }
 
     private void initializeServices() {
         try {
-            // attempt to get AudioManagerService instance if not already set by a setter
-            this.audioManagerService = AudioManagerServiceImpl.getInstance();
             this.settingsService = SettingsServiceImpl.getInstance();
         } catch (Exception e) {
             System.err.println("SettingsController: CRITICAL - Failed "
-                + "to initialize services: " + e.getMessage());
+                    + "to initialize services: " + e.getMessage());
             e.printStackTrace();
-            isInitializingView = false;
         }
     }
 
@@ -90,174 +82,82 @@ public class SettingsController {
     }
 
     private void loadSettings() {
-        if (settingsService == null || audioManagerService == null) {
-            handleNullServices();
+        if (settingsService == null) {
+            System.err.println("SettingsService is not initialized.");
             return;
         }
         loadAvatarSettings();
         loadVolumeSettings();
     }
 
-    private void handleNullServices() {
-        System.err.println("SettingsController: Cannot load "
-            + "settings to UI, services are null.");
-        if (characterComboBox != null && !avatarOptions.isEmpty()) {
-            characterComboBox.setValue(avatarOptions.get(0));
-        }
+    private void loadVolumeSettings() {
         if (masterVolumeSlider != null) {
-            masterVolumeSlider.setValue(100);
+            masterVolumeSlider.setValue(settingsService.getMasterVolume() * 100.0);
+        }
+        if (musicSlider != null) {
+            musicSlider.setValue(settingsService.getMusicVolume() * 100.0);
+        }
+        if (sfxSlider != null) {
+            sfxSlider.setValue(settingsService.getSfxVolume() * 100.0);
         }
     }
 
     private void loadAvatarSettings() {
+        String savedAvatar = settingsService.getSelectedAvatar();
+        if (isSavedAvatarValid(savedAvatar)) {
+            characterComboBox.setValue(savedAvatar);
+        } else if (characterComboBox != null && !avatarOptions.isEmpty()) {
+            characterComboBox.setValue(avatarOptions.getFirst());
+        }
+    }
+
+    private boolean isSavedAvatarValid(String savedAvatar) {
+        return characterComboBox != null && avatarOptions.contains(savedAvatar);
+    }
+
+    private void setupObservableBindings() {
+        if (settingsService == null) {
+            return;
+        }
         if (characterComboBox != null) {
-            String savedAvatar = settingsService.getSelectedAvatar();
-            if (avatarOptions.contains(savedAvatar)) {
-                characterComboBox.setValue(savedAvatar);
-            } else if (!avatarOptions.isEmpty()) {
-                characterComboBox.setValue(avatarOptions.getFirst());
+            characterComboBox.setOnAction(event -> handleAvatarChange());
+        }
+        bindSlider(masterVolumeSlider, (volume) -> settingsService.setMasterVolume(volume));
+        bindSlider(musicSlider, (volume) -> settingsService.setMusicVolume(volume));
+        bindSlider(sfxSlider, (volume) -> settingsService.setSfxVolume(volume));
+    }
+
+    private void handleAvatarChange() {
+        if (isInitializingView) {
+            return;
+        }
+
+        String selectedAvatar = characterComboBox.getValue();
+        if (selectedAvatar != null && !selectedAvatar.equals(settingsService.getSelectedAvatar())) {
+            settingsService.setSelectedAvatar(selectedAvatar);
+            settingsService.saveCurrentSettings();
+        }
+    }
+
+    private void bindSlider(Slider slider, java.util.function.Consumer<Double> volumeSetter) {
+        if (slider == null) {
+            return;
+        }
+        slider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (!isInitializingView) {
+                volumeSetter.accept(newVal.doubleValue() / 100.0);
             }
-        }
-    }
-
-    private void loadVolumeSettings() {
-        loadMasterVolume();
-        loadMusicVolume();
-        loadSfxVolume();
-    }
-
-    private void loadMasterVolume() {
-        double masterVol = settingsService.getMasterVolume();
-        audioManagerService.setMasterVolume(masterVol);
-        if (masterVolumeSlider != null) {
-            masterVolumeSlider.setValue(masterVol * 100.0);
-        }
-    }
-
-    private void loadMusicVolume() {
-        double musicVol = settingsService.getMusicVolume();
-        audioManagerService.setMusicVolume(musicVol);
-        if (musicSlider != null) {
-            musicSlider.setValue(musicVol * 100.0);
-        }
-    }
-
-    private void loadSfxVolume() {
-        double sfxVol = settingsService.getSfxVolume();
-        audioManagerService.setSfxVolume(sfxVol);
-        if (sfxSlider != null) {
-            sfxSlider.setValue(sfxVol * 100.0);
-        }
-    }
-
-    private void setupListeners() {
-        setupCharacterComboBoxListener();
-        setupMasterVolumeListeners();
-        setupMusicSliderListeners();
-        setupSfxSliderListeners();
-    }
-
-    private void setupCharacterComboBoxListener() {
-        if (characterComboBox != null) {
-            characterComboBox.setOnAction(event -> {
-                if (isInitializingView) {
-                    return;
-                }
-                String selectedAvatar = characterComboBox.getValue();
-                if (selectedAvatar != null && !selectedAvatar.equals(
-                        settingsService.getSelectedAvatar())) {
-                    settingsService.setSelectedAvatar(selectedAvatar);
-                    settingsService.saveCurrentSettings();
-                }
-            });
-        }
-    }
-
-    private void setupMasterVolumeListeners() {
-        if (masterVolumeSlider != null) {
-            masterVolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                if (audioManagerService != null) {
-                    audioManagerService.setMasterVolume(newVal.doubleValue() / 100.0);
-                }
-            });
-            masterVolumeSlider.valueChangingProperty().addListener(
-                (obs, wasChanging, isChanging) -> {
-                    if (isInitializingView || settingsService == null) {
-                        return;
-                    }
-                    if (wasChanging && !isChanging) {
-                        settingsService.setMasterVolume(masterVolumeSlider.getValue() / 100.0);
-                        settingsService.saveCurrentSettings();
-                    }
-                });
-            masterVolumeSlider.setOnMouseReleased(event -> {
-                if (isInitializingView || settingsService == null) {
-                    return;
-                }
-                if (!masterVolumeSlider.isValueChanging()) {
-                    settingsService.setMasterVolume(masterVolumeSlider.getValue() / 100.0);
-                    settingsService.saveCurrentSettings();
-                }
-            });
-        }
-    }
-
-    private void setupMusicSliderListeners() {
-        if (musicSlider != null) {
-            musicSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                double value = newVal.doubleValue() / 100.0;
-                settingsService.setMusicVolume(value);
-                AudioManagerServiceImpl.getInstance().setMusicVolume(value);
-                audioManagerService.setMusicVolume(value);
-            });
-            musicSlider.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
-                if (isInitializingView || settingsService == null) {
-                    return;
-                }
-                if (wasChanging && !isChanging) {
-                    settingsService.setMusicVolume(musicSlider.getValue() / 100.0);
-                    settingsService.saveCurrentSettings();
-                }
-            });
-            musicSlider.setOnMouseReleased(event -> {
-                if (isInitializingView || settingsService == null) {
-                    return;
-                }
-                if (!musicSlider.isValueChanging()) {
-                    settingsService.setMusicVolume(musicSlider.getValue() / 100.0);
-                    settingsService.saveCurrentSettings();
-                }
-            });
-        }
-    }
-
-    private void setupSfxSliderListeners() {
-        if (sfxSlider != null) {
-            sfxSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-                double value = newVal.doubleValue() / 100.0;
-                settingsService.setSfxVolume(value);
-                AudioManagerServiceImpl.getInstance().setSfxVolume(value);
-                audioManagerService.setSfxVolume(value);
-            });
-            sfxSlider.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
-                if (isInitializingView || settingsService == null) {
-                    return;
-                }
-                if (wasChanging && !isChanging) {
-                    settingsService.setSfxVolume(sfxSlider.getValue() / 100.0);
-                    settingsService.saveCurrentSettings();
-                }
-            });
-            sfxSlider.setOnMouseReleased(event -> {
-                if (isInitializingView || settingsService == null) {
-                    return;
-                }
-                if (!sfxSlider.isValueChanging()) {
-                    settingsService.setSfxVolume(sfxSlider.getValue() / 100.0);
-                    settingsService.saveCurrentSettings();
-                }
-            });
-        }
+        });
+        slider.valueChangingProperty().addListener((obs, wasChanging, isChanging) -> {
+            if (!isInitializingView && wasChanging && !isChanging) {
+                settingsService.saveCurrentSettings();
+            }
+        });
+        slider.setOnMouseReleased(event -> {
+            if (!isInitializingView && !slider.isValueChanging()) {
+                settingsService.saveCurrentSettings();
+            }
+        });
     }
 
     /**
@@ -289,13 +189,13 @@ public class SettingsController {
      * @param actionEvent The action event triggered by the button click.
      */
     public void backToMenu(ActionEvent actionEvent) {
-        if (onGoBack != null) { 
+        if (onGoBack != null) {
             onGoBack.run();
         } else {
             goToMenu();
-        }   
+        }
     }
-    
+
     private static void goToMenu() {
         try {
             MainMenuScreen menuScreen = new MainMenuScreen();
