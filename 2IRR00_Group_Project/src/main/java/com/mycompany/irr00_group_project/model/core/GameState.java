@@ -34,6 +34,14 @@ public class GameState {
         this.size = 3; // default size
         loadFromLevelDTO(levelDTO);
     }
+    
+    /**
+     * Constructor that initializes the game state with a grid and a sprite.
+     */
+    public GameState(TileType[][] grid2, SpriteCharacter sprite2) {
+        this.levelService = null;
+        //TODO Auto-generated constructor stub
+    }
 
     /**
      * Loads the game state from a level file.
