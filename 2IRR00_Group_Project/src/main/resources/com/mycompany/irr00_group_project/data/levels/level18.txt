@@ -1,9 +1,32 @@
-# Level 18 - 
-SIZE 5 5
+# Level 18 -
+SIZE 11 11
 START 0 0 NORTH
-END 0 4
+END 3 0
 OBSTACLES
+1 0
+2 0
+2 1
+3 1
+3 2
+4 2
+5 2
+6 2
+7 2
+7 3
+8 3
+9 3
+10 3
+7 7
+7 8
+7 9
+7 6
+7 5
+7 4
 DOORS
+5 2
+7 10
 KEYS
+9 7
+0 6
 OPTIMAL_STEPS
-10
+41
