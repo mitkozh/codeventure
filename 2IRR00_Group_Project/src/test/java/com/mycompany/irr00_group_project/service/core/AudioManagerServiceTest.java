@@ -25,7 +25,8 @@ public class AudioManagerServiceTest {
     void setUp() {
         audioManagerService = AudioManagerServiceImpl.getInstance();
         try {
-            Field settingsField = AudioManagerServiceImpl.class.getDeclaredField("settingsObservables");
+            Field settingsField = AudioManagerServiceImpl
+                .class.getDeclaredField("settingsObservables");
             settingsField.setAccessible(true);
             settingsObservables = (SettingsObservables) settingsField.get(audioManagerService);
             settingsObservables.setMasterVolume(1.0);
