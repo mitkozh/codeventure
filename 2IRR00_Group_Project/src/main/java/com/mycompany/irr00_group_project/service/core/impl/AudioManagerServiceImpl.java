@@ -96,4 +96,35 @@ public class AudioManagerServiceImpl implements AudioManagerService {
             }
         }
     }
+
+    @Override
+    public void playSfx(String soundPath) {
+        try {
+            URL soundURL = getClass().getResource(soundPath);
+            if (soundURL != null) {
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundURL);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+
+                // Set volume based on master and sfx volume
+                double masterVolume = settingsObservables.getMasterVolume();
+                double sfxVolume = settingsObservables.getSfxVolume();
+                double effectiveVolume = masterVolume * sfxVolume;
+                FloatControl volumeControl = (FloatControl) clip.getControl(
+                    FloatControl.Type.MASTER_GAIN);
+                float min = volumeControl.getMinimum();
+                float max = volumeControl.getMaximum();
+                if (effectiveVolume > 0.0) {
+                    float dB = (float) (Math.log10(effectiveVolume) * 20.0);
+                    volumeControl.setValue(Math.max(min, Math.min(max, dB)));
+                } else {
+                    volumeControl.setValue(min);
+                }
+
+                clip.start();
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to play SFX: " + e.getMessage());
+        }
+    }
 }

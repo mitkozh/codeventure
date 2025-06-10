@@ -1,6 +1,9 @@
 package com.mycompany.irr00_group_project.service.core.impl;
 
 
+import java.util.List;
+import java.util.Map;
+
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.MovementResult;
 import com.mycompany.irr00_group_project.model.core.Point;
@@ -9,14 +12,14 @@ import com.mycompany.irr00_group_project.model.enums.Direction;
 import com.mycompany.irr00_group_project.model.enums.TileType;
 import com.mycompany.irr00_group_project.service.core.MovementService;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Implementation of the MovementService interface.
  * This class handles the movement logic for the sprite character in the game.
  */
 public class MovementServiceImpl implements MovementService {
+
+    private static final String WALK_SOUND_PATH = 
+        "/com/mycompany/irr00_group_project/assets/sounds/WalkSound.wav";
 
     @Override
     public MovementResult tryMoveForward(GameState gameState) {
@@ -36,6 +39,10 @@ public class MovementServiceImpl implements MovementService {
         return handleTileInteraction(gameState, sprite, nextRow, nextCol, nextTile);
     }
 
+    private void playWalkSound() {
+        AudioManagerServiceImpl.getInstance().playSfx(WALK_SOUND_PATH);
+    }
+
     /**
      * Handles the interaction with the tile at the next position.
      * This method checks the tile type and performs the appropriate action.
@@ -51,33 +58,37 @@ public class MovementServiceImpl implements MovementService {
                                                  int nextRow, int nextCol, TileType nextTile) {
         switch (nextTile) {
             case OBSTACLE:
-                return new MovementResult(false, "Obstacle in the way",
-                        nextTile, false);
+                return new MovementResult(
+                    false, "Obstacle in the way", nextTile, false);
 
             case DOOR_CLOSED:
                 if (!canOpenDoor(gameState, nextRow, nextCol)) {
-                    return new MovementResult(false, "Door is locked",
-                            nextTile, false);
+                    return new MovementResult(
+                        false, "Door is locked", nextTile, false);
                 }
                 gameState.setTileAt(nextRow, nextCol, TileType.DOOR_OPENED);
                 sprite.moveTo(nextRow, nextCol);
-                return new MovementResult(true, "Door opened and moved forward",
-                        TileType.DOOR_CLOSED, false);
+                playWalkSound();
+                return new MovementResult(
+                    true, "Door opened and moved forward", TileType.DOOR_CLOSED, false);
 
             case KEY:
                 if (canCollectKey(gameState, nextRow, nextCol)) {
                     gameState.setTileAt(nextRow, nextCol, TileType.NORMAL);
                 }
                 sprite.moveTo(nextRow, nextCol);
+                playWalkSound();
                 return new MovementResult(true, "Key collected", nextTile, false);
 
             case END:
                 sprite.moveTo(nextRow, nextCol);
+                playWalkSound();
                 boolean levelComplete = isLevelComplete(gameState, nextRow, nextCol);
                 return new MovementResult(true, "Reached the end", nextTile, levelComplete);
 
             default:
                 sprite.moveTo(nextRow, nextCol);
+                playWalkSound();
                 return new MovementResult(true, "Moved forward", nextTile, false);
         }
     }
