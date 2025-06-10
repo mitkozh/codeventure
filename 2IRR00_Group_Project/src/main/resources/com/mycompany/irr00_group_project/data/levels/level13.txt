@@ -1,9 +1,45 @@
 # Level 13 - 
-SIZE 5 5
+SIZE 10 10
 START 0 0 NORTH
-END 0 4
+END 9 9
 OBSTACLES
+3 0 
+3 1 
+3 2 
+3 3 
+3 4 
+3 5 
+3 6 
+3 7 
+3 8 
+3 9
+7 0 
+7 1 
+7 2 
+7 3 
+7 4 
+7 5 
+7 6 
+7 7 
+7 8 
+7 9
+1 4 
+2 4 
+4 4 
+5 4 
+6 4 
+8 4 
+9 4
 DOORS
+2 3
+5 0 
+5 9 
+8 3
+8 5
 KEYS
-OPTIMAL_STEPS
-10
+0 9 
+4 3
+6 5
+9 0 
+OPTIMAL_STEPS 
+22
