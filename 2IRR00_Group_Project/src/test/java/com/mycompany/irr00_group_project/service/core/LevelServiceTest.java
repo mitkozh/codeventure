@@ -49,7 +49,7 @@ public class LevelServiceTest {
         levelService.completeLevelAndSave(newData);
         LevelDTO nextLevel = levelService.getLevelProgress(2);
         assertTrue(nextLevel.isUnlocked());
-        assertEquals(0, nextLevel.getStars());
+        assertEquals(3, nextLevel.getStars());
     }
 
     @Test
