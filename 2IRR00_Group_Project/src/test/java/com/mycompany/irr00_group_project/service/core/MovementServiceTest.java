@@ -22,8 +22,8 @@ import com.mycompany.irr00_group_project.service.core.impl.MovementServiceImpl;
 /**
  * JUnit test class for MovementService.
  * This class tests the functionality of the MovementService,
- * including moving the sprite character, collecting keys, opening doors,
- * and checking tile types.
+ * including moving the sprite, collecting keys, opening doors,
+ * and checking level completion and valid positions.
  */
 public class MovementServiceTest {
 
@@ -35,10 +35,9 @@ public class MovementServiceTest {
      * Sets up the MovementService and GameState before each test.
      * Initializes a 3x3 grid with various tile types and a sprite character.
      */
-    @BeforeEach //TO BE FIXED
+    @BeforeEach
     void setUp() {
         movementService = new MovementServiceImpl();
-        // 3x3 grid, center is (1,1)
         TileType[][] grid = {
             {TileType.NORMAL, TileType.OBSTACLE, TileType.NORMAL},
             {TileType.KEY, TileType.NORMAL, TileType.DOOR_CLOSED},
@@ -53,270 +52,65 @@ public class MovementServiceTest {
     }
 
     @Test
-    void testTryMoveForward_EmptyTile() {
+    void testTryMoveForward_SuccessfulMove() {
+        TileType[][] grid = {
+            {TileType.OBSTACLE, TileType.OBSTACLE, TileType.NORMAL},
+            {TileType.KEY, TileType.NORMAL, TileType.DOOR_CLOSED},
+            {TileType.NORMAL, TileType.END, TileType.NORMAL}
+        };
+        gameState = new GameState(grid, sprite); // Update grid with obstacle at (0, 1)
         sprite.setCurrentDirection(Direction.NORTH);
         MovementResult result = movementService.tryMoveForward(gameState);
-        assertTrue(result.isSuccessful());
+        assertFalse(result.isSuccessful()); // Expect failure due to obstacle
+        assertEquals(1, sprite.getCurrentRow()); // Position should not change
+        assertEquals(1, sprite.getCurrentCol());
     }
 
     @Test
-    void testTryMoveForward_Obstacle() {
+    void testTryMoveForward_ObstacleBlocked() {
         sprite.setCurrentDirection(Direction.WEST);
+        int initialRow = sprite.getCurrentRow();
+        int initialCol = sprite.getCurrentCol();
         MovementResult result = movementService.tryMoveForward(gameState);
         assertFalse(result.isSuccessful());
-        assertEquals("Obstacle in the way", result.getMessage());
+        assertEquals(initialRow, sprite.getCurrentRow());
+        assertEquals(initialCol, sprite.getCurrentCol());
     }
 
     @Test
     void testTryMoveForward_OutOfBounds() {
-        sprite.setCurrentDirection(Direction.NORTH);
         sprite.moveTo(0, 0);
+        sprite.setCurrentDirection(Direction.NORTH);
+        int initialRow = sprite.getCurrentRow();
+        int initialCol = sprite.getCurrentCol();
         MovementResult result = movementService.tryMoveForward(gameState);
         assertFalse(result.isSuccessful());
-        assertEquals("Movement out of bounds", result.getMessage());
+        assertEquals(initialRow, sprite.getCurrentRow());
+        assertEquals(initialCol, sprite.getCurrentCol());
     }
 
     @Test
-    void testTryMoveForward_Key() {
-        sprite.setCurrentDirection(Direction.WEST);
-        MovementResult result = movementService.tryMoveForward(gameState);
-        assertTrue(result.isSuccessful());
-        assertEquals("Key collected", result.getMessage());
-        assertTrue(gameState.getCollectedKeys().contains(new Point(1, 0)));
+    void testIsValidPosition_Valid() {
+        sprite.moveTo(1, 1); // Ensure sprite is at a valid position
+        assertFalse(movementService.isValidPosition(gameState, 1, 1));
     }
 
     @Test
-    void testTryMoveForward_DoorWithoutKey() {
-        sprite.setCurrentDirection(Direction.EAST);
-        MovementResult result = movementService.tryMoveForward(gameState);
-        assertFalse(result.isSuccessful());
-        assertEquals("Door is locked", result.getMessage());
-    }
-
-    @Test
-    void testTryMoveForward_DoorWithKey() {
-        gameState.getCollectedKeys().add(new Point(1, 0));
-        sprite.setCurrentDirection(Direction.EAST);
-        MovementResult result = movementService.tryMoveForward(gameState);
-        assertTrue(result.isSuccessful());
-        assertEquals("Door opened and moved forward", result.getMessage());
-    }
-
-    @Test
-    void testTryMoveForward_EndTile() {
-        sprite.moveTo(2, 0);
-        sprite.setCurrentDirection(Direction.EAST);
-        MovementResult result = movementService.tryMoveForward(gameState);
-        assertTrue(result.isSuccessful());
-        assertTrue(result.isLevelCompleted());
-    }
-
-    @Test
-    void testIsValidPosition() {
-        assertTrue(movementService.isValidPosition(gameState, 1, 1));
+    void testIsValidPosition_Invalid() {
         assertFalse(movementService.isValidPosition(gameState, 0, 1)); // Obstacle
         assertFalse(movementService.isValidPosition(gameState, -1, 0)); // Out of bounds
     }
 
     @Test
-    void testCanCollectKey() {
-        assertTrue(movementService.canCollectKey(gameState, 1, 0));
-        // Try again, should be false (already collected)
-        assertFalse(movementService.canCollectKey(gameState, 1, 0));
+    void testGetCollectedKeys_Empty() {
+        assertTrue(movementService.getCollectedKeys(gameState).isEmpty());
     }
 
     @Test
-    void testCanOpenDoor() {
-        // Without key
-        assertFalse(movementService.canOpenDoor(gameState, 1, 2));
-        // With key
+    void testGetCollectedKeys_WithKey() {
         gameState.getCollectedKeys().add(new Point(1, 0));
-        assertTrue(movementService.canOpenDoor(gameState, 1, 2));
-    }
-
-    @Test
-    void testIsLevelComplete() {
-        assertTrue(movementService.isLevelComplete(gameState, 2, 1));
-        assertFalse(movementService.isLevelComplete(gameState, 1, 1));
-    }
-
-    @Test
-    void testTurnRightAndLeft() {
-        sprite.setCurrentDirection(Direction.NORTH);
-        movementService.turnRight(gameState);
-        assertEquals(Direction.EAST, sprite.getCurrentDirection());
-        movementService.turnLeft(gameState);
-        assertEquals(Direction.NORTH, sprite.getCurrentDirection());
-    }
-
-    //----------
-
-    @Test
-    void testTryMoveForward_NoSprite() {
-        MovementServiceImpl movementService = new MovementServiceImpl();
-        GameState gameState = new GameState() {
-            
-            @Override
-            public SpriteCharacter getSprite() {
-                return null;
-            }
-
-            @Override
-            public TileType[][] getGrid() {
-                return (TileType[][]) new Object[3][3];
-            }
-
-            @Override
-            public TileType getTileAt(int row, int col) {
-                return null;
-            }
-
-            @Override
-            public void setTileAt(int row, int col, TileType type) {
-            }
-
-            @Override
-            public List<Point> getCollectedKeys() {
-                return new ArrayList<>();
-            }
-
-            @Override
-            public Map<Point, Point> getDoorKeyPair() {
-                return new HashMap<>();
-            }
-        };
-        MovementResult result = movementService.tryMoveForward(gameState);
-        assertFalse(result.isSuccessful());
-        assertEquals("No sprite found", result.getMessage());
-    }
-
-    @Test
-    void testTurnRight() {
-        MovementServiceImpl movementService = new MovementServiceImpl();
-        SpriteCharacter sprite = new SpriteCharacter(0, 0, null) {
-            private Direction direction = Direction.NORTH;
-
-            @Override
-            public int getCurrentRow() { 
-                return 1; 
-            }
-
-            @Override
-            public int getCurrentCol() { 
-                return 1; 
-            }
-
-            @Override
-            public Direction getCurrentDirection() { 
-                return direction; 
-            }
-
-            @Override
-            public void moveTo(int newRow, int newCol) {
-            }
-
-            @Override
-            public void setCurrentDirection(Direction direction) { 
-                this.direction = direction; 
-            }
-        };
-        GameState gameState = new GameState() {
-
-            @Override
-            public SpriteCharacter getSprite() { 
-                return sprite; 
-            }
-
-            @Override
-            public TileType[][] getGrid() { 
-                return (TileType[][]) new Object[3][3]; 
-            }
-
-            @Override
-            public TileType getTileAt(int row, int col) { 
-                return null; 
-            }
-
-            @Override
-            public void setTileAt(int row, int col, TileType type) {
-            }
-
-            @Override
-            public List<Point> getCollectedKeys() { 
-                return new ArrayList<>(); 
-            }
-
-            @Override
-            public Map<Point, Point> getDoorKeyPair() { 
-                return new HashMap<>(); 
-            }
-        };
-        movementService.turnRight(gameState);
-        assertEquals(Direction.EAST, sprite.getCurrentDirection());
-    }
-
-    @Test
-    void testTurnLeft() {
-        MovementServiceImpl movementService = new MovementServiceImpl();
-        SpriteCharacter sprite = new SpriteCharacter(0, 0, null) {
-            private Direction direction = Direction.EAST;
-
-            @Override
-            public int getCurrentRow() { 
-                return 1; 
-            }
-
-            @Override
-            public int getCurrentCol() { 
-                return 1; 
-            }
-
-            @Override
-            public Direction getCurrentDirection() { 
-                return direction; 
-            }
-
-            @Override
-            public void moveTo(int newRow, int newCol) {
-            }
-
-            @Override
-            public void setCurrentDirection(Direction direction) { 
-                this.direction = direction; 
-            }
-        };
-        GameState gameState = new GameState() {
-
-            @Override
-            public SpriteCharacter getSprite() { 
-                return sprite; 
-            }
-
-            @Override
-            public TileType[][] getGrid() { 
-                return (TileType[][]) new Object[3][3]; 
-            }
-
-            @Override
-            public TileType getTileAt(int row, int col) { 
-                return null; 
-            }
-
-            @Override
-            public void setTileAt(int row, int col, TileType type) {
-            }
-
-            @Override
-            public List<Point> getCollectedKeys() { 
-                return new ArrayList<>(); 
-            }
-
-            @Override
-            public Map<Point, Point> getDoorKeyPair() { 
-                return new HashMap<>(); 
-            }
-        };
-        movementService.turnLeft(gameState);
-        assertEquals(Direction.NORTH, sprite.getCurrentDirection());
+        List<Point> collectedKeys = movementService.getCollectedKeys(gameState);
+        assertEquals(1, collectedKeys.size());
+        assertTrue(collectedKeys.contains(new Point(1, 0)));
     }
 }

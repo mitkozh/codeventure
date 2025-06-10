@@ -33,4 +33,16 @@ public class LevelDTO {
     public boolean isUnlocked() {
         return unlocked;
     }
+
+    /**
+     * Sets the stars for the level.
+     * @param stars the number of stars to set
+     * @pre {@code stars} must be non-negative.
+     */
+    public void setStars(int stars) {
+        if (stars < 0) {
+            throw new IllegalArgumentException("Stars cannot be negative");
+        }
+        this.stars = stars;
+    }
 }

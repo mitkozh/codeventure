@@ -6,6 +6,7 @@ import java.util.List;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
+import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.NavigationManager;
 import com.mycompany.irr00_group_project.view.components.LevelPreviewButton;
@@ -28,7 +29,7 @@ public class LevelSelectionController {
     @FXML
     private Pagination pagination;
 
-    private final LevelService levelService = new LevelServiceImpl();
+    private final LevelService levelService = LevelServiceImpl.getInstance();
     private List<LevelDTO> allLevelsDTO;
 
     /**
@@ -58,7 +59,7 @@ public class LevelSelectionController {
             button.setLevelNumber(level.getLevelNumber());
             button.setStars(level.getStars());
             button.setUnlocked(level.isUnlocked());
-            button.setOnAction(event -> loadLevel(level.getLevelNumber()));
+            button.setOnAction(event -> selectLevel(level));
             grid.add(button, buttonCol, buttonRow);
             buttonCol++;
             if (buttonCol > 3) {
@@ -69,12 +70,13 @@ public class LevelSelectionController {
         return grid;
     }
 
-    private void loadLevel(int levelNumber) {
-        String levelFileName = "level" + levelNumber + ".txt";
-        GameScreen gameScreen = new GameScreen(levelFileName);
+    private void selectLevel(LevelDTO level) {
+        levelService.selectLevel(level);
+        loadLevel();
+    }
 
-        //GameScreenController controller = gameScreen.getController();
-        //controller.setLevelFile(levelFileName);
+    private void loadLevel() {
+        GameScreen gameScreen = new GameScreen();
         try {
             NavigationManager.getInstance().navigateTo(gameScreen.getView());
         } catch (IOException e) {

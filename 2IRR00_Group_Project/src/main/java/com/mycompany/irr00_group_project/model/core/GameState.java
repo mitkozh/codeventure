@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.model.enums.GameResult;
 import com.mycompany.irr00_group_project.model.enums.TileType;
 import com.mycompany.irr00_group_project.service.core.LevelService;
@@ -17,7 +18,6 @@ public class GameState {
     private GameResult gameResult = GameResult.PLAYING;
     private int playerSteps = 0;
     List<Point> collectedKeys = new ArrayList<>();
-    private final LevelService levelService;
     private LevelData levelData;
     private TileType[][] grid;
     private Map<Point, Point> doorKeyPair;
@@ -25,43 +25,26 @@ public class GameState {
     private SpriteCharacter sprite;
 
     /**
-     * Default constructor initializes the game state with a default level.
-     */
-    public GameState() {
-        levelService = new LevelServiceImpl();
-        this.size = 3; // just a default size
-        loadFromFile("level1.txt");
-    }
-
-    /**
      * Constructor that takes appropriate filename and 
      * initializes the game state with the appropriate level.
      */
-    public GameState(String filename) {
-        levelService = new LevelServiceImpl();
+    public GameState(LevelData levelData) {
         this.size = 3; // default size
-        loadFromFile(filename);
-    }
-
-    /**
-     * Constructor that initializes the game state with a grid and sprite.
-     *
-     * @param grid   a 2D array of TileType representing the game grid
-     * @param sprite the SpriteCharacter representing the player in the game
-     */
-    public GameState(TileType[][] grid, SpriteCharacter sprite) {
-        this.levelService = new LevelServiceImpl();
-        this.grid = grid;
-        this.sprite = sprite;
+        loadFromLevelData(levelData);
     }
     
     /**
-     * Loads the game state from a level file.
-     * @param filename the name of the level file to load
+     * Constructor that initializes the game state with a grid and a sprite.
      */
-    public void loadFromFile(String filename) {
-        assert levelService != null;
-        levelData = levelService.getLevelDataByFileName(filename);
+    public GameState(TileType[][] grid2, SpriteCharacter sprite2) {
+        //TODO Auto-generated constructor stub
+    }
+
+    /**
+     * Loads the game state from a level file.
+     * @param levelData the LevelData object containing the level information
+     */
+    private void loadFromLevelData(LevelData levelData) {
         this.size = Math.max(levelData.getWidth(), levelData.getHeight());
         this.grid = levelData.getGrid();
         this.doorKeyPair = levelData.getDoorKeyPair();
@@ -80,11 +63,7 @@ public class GameState {
      * @return true if the position is valid, false otherwise
      */
     public boolean isValidPosition(int row, int col) {
-        if (row < 0 || row >= size || col < 0 || col >= size) {
-            return false;
-        }
-
-        return grid[row][col] != TileType.OBSTACLE;
+        return row >= 0 && row < size && col >= 0 && col < size;
     }
 
     /**
@@ -92,13 +71,16 @@ public class GameState {
      *
      * @param row the row index of the tile
      * @param col the column index of the tile
+     * @pre {@code row} and {@code col} must be within the bounds of the grid.
      * @return the TileType at the specified position, or null if out of bounds
      */
     public TileType getTileAt(int row, int col) {
-        if (row >= 0 && row < size && col >= 0 && col < size) {
+        if (isValidPosition(row, col)) {
             return grid[row][col];
+        } else {
+            throw new IllegalArgumentException("Invalid position: ("
+                    + row + ", " + col + ")");
         }
-        return null;
     }
 
     /**

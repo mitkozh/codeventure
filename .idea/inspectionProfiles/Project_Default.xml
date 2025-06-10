@@ -12,5 +12,8 @@
         </value>
       </option>
     </inspection_tool>
+    <inspection_tool class="JavadocDeclaration" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ADDITIONAL_TAGS" value="pre" />
+    </inspection_tool>
   </profile>
 </component>
