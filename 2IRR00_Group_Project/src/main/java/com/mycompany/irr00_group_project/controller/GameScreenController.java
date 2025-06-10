@@ -4,6 +4,7 @@ import com.mycompany.irr00_group_project.controller.components.CodeEditorAreaCon
 import com.mycompany.irr00_group_project.controller.components.ConsoleOutputController;
 import com.mycompany.irr00_group_project.controller.components.GameGridController;
 import com.mycompany.irr00_group_project.model.core.GameState;
+import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.model.enums.GameResult;
 import com.mycompany.irr00_group_project.service.core.CommandService;
@@ -61,7 +62,6 @@ public class GameScreenController {
      */
     @FXML
     public void initialize() {
-        gameState = new GameState(levelDTO);
         this.gameServiceManager =
                 new GameServiceManager();
         this.navigatorManager =
@@ -71,16 +71,19 @@ public class GameScreenController {
         this.userCodeLifecycleService =
                 new UserCodeLifecycleServiceImpl(gameServiceManager, commandService);
         setupObservableBindings();
-        setupUserCodeLifecycleService();
-        loadLevel(levelDTO);
         stopExecutionButton.setDisable(true);
+        getCurrentLevel();
     }
 
-    private void setupUserCodeLifecycleService() {
-        if (!userCodeLifecycleService.isReady()) {
-            consoleOutputController.logError(
-                    userCodeLifecycleService.getInitializationError());
-            runCodeButton.setDisable(true);
+    private void getCurrentLevel() {
+        if (gameServiceManager.getLevelService() instanceof LevelServiceImpl serviceImpl) {
+            LevelSelectionObservables levelObs = serviceImpl
+                    .getObservableOrThrow(LevelSelectionObservables.class);
+            LevelDTO currentLevel = levelObs.getSelectedLevel();
+            if (currentLevel != null) {
+                levelDTO = currentLevel;
+                loadLevel(currentLevel);
+            }
         }
     }
 
@@ -127,6 +130,7 @@ public class GameScreenController {
 
                 levelObs.selectedLevelProperty().addListener((observable, oldLevel, newLevel) -> {
                     if (newLevel != null) {
+                        levelDTO = newLevel;
                         loadLevel(newLevel);
                     }
                 });
@@ -135,8 +139,9 @@ public class GameScreenController {
     }
 
     private void loadLevel(LevelDTO level) {
-        gameState = new GameState(level);
-        gameState.loadFromLevelDTO(level);
+        LevelData levelDataByLevelDTO = gameServiceManager.getLevelService()
+                .getLevelDataByLevelDTO(level);
+        gameState = new GameState(levelDataByLevelDTO);
         gameGridController.loadLevelFromGameState(gameState);
         levelTitle.setText("Level: "
                 + levelDTO.getLevelNumber());
@@ -238,7 +243,4 @@ public class GameScreenController {
         resetLevel();
     }
 
-    public void setLevelDTO(LevelDTO levelDTO) {
-        this.levelDTO = levelDTO;
-    }
 }

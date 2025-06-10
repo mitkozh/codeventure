@@ -23,7 +23,7 @@ public class LevelServiceTest {
 
     @BeforeEach
     void setUp() {
-        levelService = new LevelServiceImpl();
+        levelService = LevelServiceImpl.getInstance();
     }
 
     @Test

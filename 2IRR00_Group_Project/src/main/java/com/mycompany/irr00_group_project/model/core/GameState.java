@@ -18,7 +18,6 @@ public class GameState {
     private GameResult gameResult = GameResult.PLAYING;
     private int playerSteps = 0;
     List<Point> collectedKeys = new ArrayList<>();
-    private final LevelService levelService;
     private LevelData levelData;
     private TileType[][] grid;
     private Map<Point, Point> doorKeyPair;
@@ -29,26 +28,23 @@ public class GameState {
      * Constructor that takes appropriate filename and 
      * initializes the game state with the appropriate level.
      */
-    public GameState(LevelDTO levelDTO) {
-        levelService = new LevelServiceImpl();
+    public GameState(LevelData levelData) {
         this.size = 3; // default size
-        loadFromLevelDTO(levelDTO);
+        loadFromLevelData(levelData);
     }
     
     /**
      * Constructor that initializes the game state with a grid and a sprite.
      */
     public GameState(TileType[][] grid2, SpriteCharacter sprite2) {
-        this.levelService = null;
         //TODO Auto-generated constructor stub
     }
 
     /**
      * Loads the game state from a level file.
-     * @param levelDTO the LevelDTO object containing the level data
+     * @param levelData the LevelData object containing the level information
      */
-    public void loadFromLevelDTO(LevelDTO levelDTO) {
-        levelData = levelService.getLevelDataByLevelDTO(levelDTO);
+    private void loadFromLevelData(LevelData levelData) {
         this.size = Math.max(levelData.getWidth(), levelData.getHeight());
         this.grid = levelData.getGrid();
         this.doorKeyPair = levelData.getDoorKeyPair();

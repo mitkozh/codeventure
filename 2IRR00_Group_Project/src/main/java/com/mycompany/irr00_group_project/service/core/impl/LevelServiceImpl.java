@@ -23,15 +23,27 @@ public class LevelServiceImpl implements LevelService, ObservableProvider {
     private final PersistenceService persistenceService;
     private final GameProgressDTO gameProgressDTO = new GameProgressDTO();
     private final ObservableRegistry observableRegistry = new ObservableRegistry();
+    private static LevelServiceImpl instance;
 
 
     /**
-     * Default constructor that initializes the persistence service and loads the game progress.
+     * Default private constructor that initializes the persistence
+     * service and loads the game progress.
      */
-    public LevelServiceImpl() {
+    private LevelServiceImpl() {
         this.persistenceService = new PersistenceServiceImpl(Constants.GAME_PROGRESS_FILE);
         initializeObservables();
         loadProgress();
+    }
+
+    /**
+     * Singleton to get the instance of LevelServiceImpl.
+     */
+    public static synchronized LevelServiceImpl getInstance() {
+        if (instance == null) {
+            instance = new LevelServiceImpl();
+        }
+        return instance;
     }
 
     private void initializeObservables() {
@@ -47,6 +59,7 @@ public class LevelServiceImpl implements LevelService, ObservableProvider {
     /**
      * Publishes a level selection event to the observable registry.
      */
+    @Override
     public void selectLevel(LevelDTO level) {
         LevelSelectionObservables levelObs = getObservableOrThrow(LevelSelectionObservables.class);
         levelObs.setSelectedLevel(level);

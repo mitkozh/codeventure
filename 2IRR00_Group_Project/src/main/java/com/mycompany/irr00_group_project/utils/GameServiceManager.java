@@ -31,7 +31,7 @@ public class GameServiceManager {
     public GameServiceManager() {
         this.movementService = new MovementServiceImpl();
         this.gamePlayService = new GamePlayServiceImpl();
-        this.levelService = new LevelServiceImpl();
+        this.levelService = LevelServiceImpl.getInstance();
         this.sharedJarService = new SharedJarServiceImpl();
         this.compilationService = new UserCodeCompilationService();
         this.executionService = new UserCodeExecutionService();

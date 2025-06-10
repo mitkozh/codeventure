@@ -29,7 +29,7 @@ public class LevelSelectionController {
     @FXML
     private Pagination pagination;
 
-    private final LevelService levelService = new LevelServiceImpl();
+    private final LevelService levelService = LevelServiceImpl.getInstance();
     private List<LevelDTO> allLevelsDTO;
 
     /**
@@ -42,21 +42,6 @@ public class LevelSelectionController {
         int pageCount = (int) Math.ceil((double) allLevelsDTO.size() / Constants.LEVELS_PER_PAGE);
         pagination.setPageCount(pageCount);
         pagination.setPageFactory(this::createPage);
-        setupLevelSelectionListener();
-    }
-
-    private void setupLevelSelectionListener() {
-        if (levelService instanceof LevelServiceImpl) {
-            LevelServiceImpl serviceImpl = (LevelServiceImpl) levelService;
-            LevelSelectionObservables levelObs = serviceImpl
-                    .getObservableOrThrow(LevelSelectionObservables.class);
-
-            levelObs.selectedLevelProperty().addListener((observable, oldLevel, newLevel) -> {
-                if (newLevel != null) {
-                    loadLevel(newLevel);
-                }
-            });
-        }
     }
 
     private Node createPage(int pageIndex) {
@@ -74,7 +59,7 @@ public class LevelSelectionController {
             button.setLevelNumber(level.getLevelNumber());
             button.setStars(level.getStars());
             button.setUnlocked(level.isUnlocked());
-            button.setOnAction(event -> loadLevel(level));
+            button.setOnAction(event -> selectLevel(level));
             grid.add(button, buttonCol, buttonRow);
             buttonCol++;
             if (buttonCol > 3) {
@@ -85,8 +70,13 @@ public class LevelSelectionController {
         return grid;
     }
 
-    private void loadLevel(LevelDTO levelDTO) {
-        GameScreen gameScreen = new GameScreen(levelDTO);
+    private void selectLevel(LevelDTO level) {
+        levelService.selectLevel(level);
+        loadLevel();
+    }
+
+    private void loadLevel() {
+        GameScreen gameScreen = new GameScreen();
         try {
             NavigationManager.getInstance().navigateTo(gameScreen.getView());
         } catch (IOException e) {
