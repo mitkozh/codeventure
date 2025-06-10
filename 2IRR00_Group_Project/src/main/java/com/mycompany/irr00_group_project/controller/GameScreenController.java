@@ -223,7 +223,7 @@ public class GameScreenController {
         gameState.setGameResult(GameResult.WON);
         int playerSteps = gameState.getPlayerSteps();
 
-        LevelDTO levelDTO = gameServiceManager.getGamePlayService()
+        levelDTO = gameServiceManager.getGamePlayService()
                 .handleLevelCompletion(this.levelDTO,
                 playerSteps, gameState.getLevelData());
         gameServiceManager.getLevelService().completeLevelAndSave(levelDTO);

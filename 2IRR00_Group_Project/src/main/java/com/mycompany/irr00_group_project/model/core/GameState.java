@@ -45,6 +45,7 @@ public class GameState {
      * @param levelData the LevelData object containing the level information
      */
     private void loadFromLevelData(LevelData levelData) {
+        this.levelData = levelData;
         this.size = Math.max(levelData.getWidth(), levelData.getHeight());
         this.grid = levelData.getGrid();
         this.doorKeyPair = levelData.getDoorKeyPair();
