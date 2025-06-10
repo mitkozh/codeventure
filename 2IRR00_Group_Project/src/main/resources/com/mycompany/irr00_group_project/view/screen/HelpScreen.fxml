@@ -118,13 +118,13 @@
                         </VBox>
 
                         <VBox spacing="10">
-                            <Label text="Conditional movement" styleClass="code-description"/>
-                            <Label text="if (safe()) {&#10;    character.moveForward();&#10;}" styleClass="code-text"/>
+                            <Label text="While-Loop movement" styleClass="code-description"/>
+                            <Label text="while (true) {&#10;    character.moveForward();&#10;}" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
-                            <Label text="Loop movement" styleClass="code-description"/>
-                            <Label text="while (true) {&#10;    character.moveForward();&#10;}" styleClass="code-text"/>
+                            <Label text="For-loop movement" styleClass="code-description"/>
+                            <Label text="for (int i = 0; i &lt; 5; i++) {&#10;    character.moveForward();&#10;}" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="8">
