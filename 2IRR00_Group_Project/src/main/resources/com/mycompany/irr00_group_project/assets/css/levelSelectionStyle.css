@@ -65,6 +65,7 @@
 }
 
 .level-preview-button.locked {
+    -fx-background-image: url("../images/padlock.png");
     -fx-effect: innershadow( gaussian, rgba(255, 255, 255, 0.24), 50, 50, 50, 50 );
 }
 
