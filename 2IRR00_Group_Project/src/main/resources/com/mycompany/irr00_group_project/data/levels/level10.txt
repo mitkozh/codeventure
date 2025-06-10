@@ -1,4 +1,4 @@
-# Level 10 - 
+# Level 10 -
 SIZE 10 10
 START 0 0 NORTH
 END 9 9
@@ -34,4 +34,3 @@ KEYS
 5 4
 OPTIMAL_STEPS
 10
-
