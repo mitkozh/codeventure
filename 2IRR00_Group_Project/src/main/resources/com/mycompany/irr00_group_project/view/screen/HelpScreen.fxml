@@ -39,9 +39,15 @@
 
                         <VBox spacing="8">
                             <Label text="CODE EDITOR" styleClass="subsection-title"/>
-                            <Label text="• Write code to move the Robot" styleClass="help-text"/>
-                            <Label text="• Use commands on the robot's turn" styleClass="help-text"/>
+                            <ImageView fx:id="codeEditorImage" fitWidth="350" fitHeight="250">
+                                <image>
+                                    <Image url="@../../assets/images/code_editor_pic.png"/>
+                                </image>
+                            </ImageView>
+                            <Label text="• Write code here to move the Robot" styleClass="help-text"/>
+                            <Label text="• Use commands to guide the robot to the goal" styleClass="help-text"/>
                             <Label text="• The goal is to reach the Terminal" styleClass="help-text"/>
+                            <Label text="• Use Java syntax for the code" styleClass="help-text"/>
                         </VBox>
 
                         <VBox spacing="8">
@@ -87,6 +93,8 @@
                                     <Image url="@../../assets/images/tiles/door_closed.png"/>
                                 </image>
                             </ImageView>
+                            <Label text="• The keys are needed to unlock the doors" styleClass="help-text"/>
+                            <Label text="• You can't move through a door unless you have a key" styleClass="help-text"/>
                         </VBox>
                     </VBox>
 
@@ -96,27 +104,47 @@
 
                         <VBox spacing="10">
                             <Label text="Basic movement command" styleClass="code-description"/>
-                            <Label text="moveForward();" styleClass="code-text"/>
+                            <Label text="character.moveForward();" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
                             <Label text="Command for changing direction to left" styleClass="code-description"/>
-                            <Label text="turnLeft();" styleClass="code-text"/>
+                            <Label text="character.turnLeft();" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
                             <Label text="Command for changing direction to right" styleClass="code-description"/>
-                            <Label text="turnRight();" styleClass="code-text"/>
+                            <Label text="character.turnRight();" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
                             <Label text="Conditional movement" styleClass="code-description"/>
-                            <Label text="if (safe()) {&#10;    moveForward();&#10;}" styleClass="code-text"/>
+                            <Label text="if (safe()) {&#10;    character.moveForward();&#10;}" styleClass="code-text"/>
                         </VBox>
 
                         <VBox spacing="10">
                             <Label text="Loop movement" styleClass="code-description"/>
-                            <Label text="while (true) {&#10;    moveForward();&#10;}" styleClass="code-text"/>
+                            <Label text="while (true) {&#10;    character.moveForward();&#10;}" styleClass="code-text"/>
+                        </VBox>
+
+                        <VBox spacing="8">
+                            <Label text="FEEDBACK SCREEN" styleClass="section-title"/>
+                            <Label text="Positive feedback" styleClass="help-text"/>
+                            <ImageView fx:id="positiveFeedbackImage" fitWidth="300" fitHeight="75">
+                                <image>
+                                    <Image url="@../../assets/images/sucess_feedback_screen.png"/>
+                                </image>
+                            </ImageView>
+
+                            <Label text="Negative feedback" styleClass="help-text"/>
+                            <ImageView fx:id="negativeFeedbackImage" fitWidth="300" fitHeight="75">
+                                <image>
+                                    <Image url="@../../assets/images/non-sucess_feedback_screen.png"/>
+                                </image>
+                            </ImageView>
+
+                            <Label text="• Feedback shows step count and stars earned" styleClass="help-text"/>
+                            <Label text="• Fewer steps earn higher star ratings" styleClass="help-text"/>
                         </VBox>
                     </VBox>
                 </HBox>
