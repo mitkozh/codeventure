@@ -3,11 +3,10 @@ package com.mycompany.irr00_group_project.controller;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
-import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
 import com.mycompany.irr00_group_project.view.screen.GameScreen;
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
 import javafx.scene.control.Label;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package com.mycompany.irr00_group_project.controller;
 
-import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
 import com.mycompany.irr00_group_project.view.screen.HelpScreen;
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 import com.mycompany.irr00_group_project.view.screen.SettingsScreen;

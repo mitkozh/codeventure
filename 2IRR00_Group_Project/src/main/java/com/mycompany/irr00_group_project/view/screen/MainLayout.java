@@ -1,6 +1,6 @@
 package com.mycompany.irr00_group_project.view.screen;
 
-import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
 import com.mycompany.irr00_group_project.utils.StringUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

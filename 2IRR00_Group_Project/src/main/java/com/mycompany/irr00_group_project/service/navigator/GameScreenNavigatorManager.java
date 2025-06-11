@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.utils;
+package com.mycompany.irr00_group_project.service.navigator;
 
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 import com.mycompany.irr00_group_project.view.screen.LossScreen;
