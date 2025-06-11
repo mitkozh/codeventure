@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.utils;
 
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
+import com.mycompany.irr00_group_project.view.screen.LossScreen;
 import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
 import javafx.scene.Parent;
 
@@ -39,6 +40,15 @@ public class GameScreenNavigatorManager {
         SettingsScreen settingsScreen = getSettingsScreen();
         try {
             NavigationManager.getInstance().navigateTo(settingsScreen.getView());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void navigateToLossScreen() {
+        try {
+            LossScreen lossScreen = new LossScreen();
+            NavigationManager.getInstance().navigateTo(lossScreen.getView());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -11,6 +11,7 @@ import com.mycompany.irr00_group_project.service.core.CommandService;
 import com.mycompany.irr00_group_project.service.core.UserCodeLifecycleService;
 import com.mycompany.irr00_group_project.service.core.impl.CommandServiceImpl;
 import com.mycompany.irr00_group_project.utils.GameServiceManager;
+import com.mycompany.irr00_group_project.utils.NavigationManager;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.UserCodeLifecycleServiceImpl;
 import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
@@ -20,6 +21,8 @@ import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.GameScreenNavigatorManager;
 import com.mycompany.irr00_group_project.utils.StringUtils;
+import com.mycompany.irr00_group_project.view.screen.LossScreen;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -62,14 +65,10 @@ public class GameScreenController {
      */
     @FXML
     public void initialize() {
-        this.gameServiceManager =
-                new GameServiceManager();
-        this.navigatorManager =
-                new GameScreenNavigatorManager(rootPane);
-        this.commandService =
-                new CommandServiceImpl(gameServiceManager.getMovementService());
-        this.userCodeLifecycleService =
-                new UserCodeLifecycleServiceImpl(gameServiceManager, commandService);
+        this.gameServiceManager = new GameServiceManager();
+        this.navigatorManager = new GameScreenNavigatorManager(rootPane);
+        this.commandService = new CommandServiceImpl(gameServiceManager.getMovementService());
+        this.userCodeLifecycleService = new UserCodeLifecycleServiceImpl(gameServiceManager, commandService);
         setupObservableBindings();
         stopExecutionButton.setDisable(true);
         getCurrentLevel();
@@ -124,6 +123,7 @@ public class GameScreenController {
                     }
                 });
             });
+
             if (gameServiceManager.getLevelService() instanceof LevelServiceImpl serviceImpl) {
                 LevelSelectionObservables levelObs = serviceImpl
                         .getObservableOrThrow(LevelSelectionObservables.class);
@@ -162,8 +162,7 @@ public class GameScreenController {
         userCodeLifecycleService.executeCode(code, gameState,
                 consoleOutputController::appendMessage,
                 consoleOutputController::logError,
-                () -> setExecutionState(false)
-        );
+                () -> setExecutionState(false));
     }
 
     private void setExecutionState(boolean executing) {
@@ -182,7 +181,6 @@ public class GameScreenController {
         userCodeLifecycleService.stopExecution();
         setExecutionState(false);
     }
-
 
     /**
      * fxml method to reset the level.
@@ -225,12 +223,12 @@ public class GameScreenController {
 
         levelDTO = gameServiceManager.getGamePlayService()
                 .handleLevelCompletion(this.levelDTO,
-                playerSteps, gameState.getLevelData());
+                        playerSteps, gameState.getLevelData());
         gameServiceManager.getLevelService().completeLevelAndSave(levelDTO);
         int stars = gameServiceManager.getGamePlayService().calculateStars(gameState.getLevelData(),
                 playerSteps);
         finishExecution(String.format("Level completed!"
-                        + " Steps: %d, Stars: %d/3",
+                + " Steps: %d, Stars: %d/3",
                 playerSteps, stars));
         userCodeLifecycleService.stopExecution();
 
@@ -240,7 +238,6 @@ public class GameScreenController {
         gameState.setGameResult(GameResult.LOST);
         finishExecution("You lost! Try again.");
         userCodeLifecycleService.stopExecution();
-        resetLevel();
+        navigatorManager.navigateToLossScreen();
     }
-
 }
