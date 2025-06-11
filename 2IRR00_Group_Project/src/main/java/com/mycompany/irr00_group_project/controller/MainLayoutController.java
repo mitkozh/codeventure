@@ -1,6 +1,6 @@
 package com.mycompany.irr00_group_project.controller;
 
-import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;

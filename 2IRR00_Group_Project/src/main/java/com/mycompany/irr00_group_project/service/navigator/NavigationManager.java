@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.utils;
+package com.mycompany.irr00_group_project.service.navigator;
 
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;

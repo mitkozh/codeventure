@@ -11,7 +11,6 @@ import com.mycompany.irr00_group_project.service.core.CommandService;
 import com.mycompany.irr00_group_project.service.core.UserCodeLifecycleService;
 import com.mycompany.irr00_group_project.service.core.impl.CommandServiceImpl;
 import com.mycompany.irr00_group_project.utils.GameServiceManager;
-import com.mycompany.irr00_group_project.utils.NavigationManager;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.UserCodeLifecycleServiceImpl;
 import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
@@ -20,9 +19,8 @@ import com.mycompany.irr00_group_project.service.observable.LevelSelectionObserv
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
 import com.mycompany.irr00_group_project.utils.CodeEditorCache;
 import com.mycompany.irr00_group_project.utils.Constants;
-import com.mycompany.irr00_group_project.utils.GameScreenNavigatorManager;
+import com.mycompany.irr00_group_project.service.navigator.GameScreenNavigatorManager;
 import com.mycompany.irr00_group_project.utils.StringUtils;
-import com.mycompany.irr00_group_project.view.screen.LossScreen;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
