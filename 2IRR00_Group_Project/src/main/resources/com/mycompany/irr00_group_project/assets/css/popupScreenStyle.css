@@ -34,6 +34,14 @@
     -fx-text-fill: #ff1744; /* bright red for loss */
 }
 
+/* Stars label for win screen */
+.star-label {
+    -fx-font-size: 36px;
+    -fx-text-fill: #FFD700;  /* Gold color for stars */
+    -fx-padding: 10px 0;
+    -fx-alignment: center;
+}
+
 .popup-title.win {
     -fx-text-fill: #388e3c; /* green for win */
 }

@@ -9,13 +9,16 @@ import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-import java.awt.event.ActionEvent;
+import javafx.scene.control.Label;
 import java.io.IOException;
 
 /**
  * The WinScreenController class is responsible for handling the logic.
  */
 public class WinScreenController {
+
+    @FXML
+    private Label starsLabel;
 
     private LevelService levelService;
 
@@ -24,8 +27,14 @@ public class WinScreenController {
      */
     public void initialize() {
         levelService = LevelServiceImpl.getInstance();
+        updateStarsDisplay();
     }
 
+    private void updateStarsDisplay() {
+        int stars = getStars();
+        starsLabel.setText("★".repeat(stars));
+        starsLabel.getStyleClass().add("star-label");
+    }
 
     public void handleLevelSelectionButtonAction() {
         LevelSelectionScreen levelSelectionScreen = new LevelSelectionScreen();

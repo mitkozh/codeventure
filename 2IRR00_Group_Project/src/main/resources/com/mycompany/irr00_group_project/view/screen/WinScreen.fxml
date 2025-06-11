@@ -9,8 +9,9 @@
            fx:controller="com.mycompany.irr00_group_project.controller.WinScreenController"
            styleClass="popup-bg">
     <VBox alignment="CENTER" spacing="30" styleClass="popup-panel">
-        <Label text="You Win!" styleClass="popup-title loss"/>
-        <Label text="Better luck next time!" styleClass="popup-subtitle"/>
+        <Label text="You Win!" styleClass="popup-title win"/>
+        <Label fx:id="starsLabel" styleClass="star-label"/>
+        <Label fx:id="congratsLabel" text="Well done!" styleClass="popup-subtitle"/>
         <VBox spacing="15" alignment="CENTER">
             <Button text="Next Level" fx:id="nextLevelButton" styleClass="popup-button" onAction="#handleNextLevelButtonAction"/>
             <Button text="Restart" fx:id="restartButton" styleClass="popup-button" onAction="#handleRestartButtonAction"/>
