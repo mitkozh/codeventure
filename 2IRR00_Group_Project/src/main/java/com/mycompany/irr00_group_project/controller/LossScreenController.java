@@ -2,9 +2,12 @@ package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
-import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
+import com.mycompany.irr00_group_project.service.navigator.LossScreenNavigatorManager;
 import com.mycompany.irr00_group_project.view.screen.GameScreen;
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
+
+
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,10 +24,12 @@ public class LossScreenController {
 
     private LevelServiceImpl levelService;
     private LevelDTO currentLevelDTO;
+    private LossScreenNavigatorManager navigatorManager;
 
     @FXML
     public void initialize() {
         levelService = LevelServiceImpl.getInstance();
+        navigatorManager = new LossScreenNavigatorManager();
     }
 
     public void setCurrentLevelDTO(LevelDTO levelDTO) {
@@ -36,14 +41,7 @@ public class LossScreenController {
      */
     @FXML
     public void handleLevelSelectionButton(ActionEvent event) {
-
-        // Navigate to level selection screen
-        try {
-            LevelSelectionScreen levels = new LevelSelectionScreen();
-            NavigationManager.getInstance().navigateTo(levels.getView());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        navigatorManager.navigateToLevelSelection();
     }
 
     /**
@@ -51,14 +49,7 @@ public class LossScreenController {
      */
     @FXML
     public void handleRestartButton(ActionEvent event) {
-
         currentLevelDTO = levelService.getCurrentLevel();
-
-        try {
-            GameScreen game = new GameScreen();
-            NavigationManager.getInstance().navigateTo(game.getView());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        navigatorManager.navigateToSameGameScreen(currentLevelDTO);
     } 
 }

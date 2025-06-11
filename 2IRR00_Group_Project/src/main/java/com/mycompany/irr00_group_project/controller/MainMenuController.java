@@ -1,5 +1,6 @@
 package com.mycompany.irr00_group_project.controller;
 
+import com.mycompany.irr00_group_project.service.navigator.MainMenuScreenNavigatorManager;
 import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
 import com.mycompany.irr00_group_project.view.screen.HelpScreen;
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
@@ -28,20 +29,17 @@ public class MainMenuController {
     @FXML private Button exitButton;
     Stage primaryStage;
 
-    /**
-     * This method is called when the level selection button is clicked.
-     * It loads the level selection screen and displays it.
-     *
-     * @param actionEvent The action event triggered by the button click.
-     */
-    public void onLevelSelectClick(ActionEvent actionEvent) {
-        try {
-            LevelSelectionScreen levels = new LevelSelectionScreen();
-            NavigationManager.getInstance().navigateTo(levels.getView());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private MainMenuScreenNavigatorManager navigatorManager;
+
+    @FXML
+    private void initialize() {
+        this.navigatorManager = new MainMenuScreenNavigatorManager();
     }
+
+    public void onLevelSelectClick(ActionEvent actionEvent) {
+        navigatorManager.navigateToLevelSelection();
+    }
+
 
     /**
      * This method is called when the settings button is clicked.
@@ -50,12 +48,7 @@ public class MainMenuController {
      * @param actionEvent The action event triggered by the button click.
      */
     public void onSettingsClick(ActionEvent actionEvent) {
-        try {
-            SettingsScreen settings = new SettingsScreen();
-            NavigationManager.getInstance().navigateTo(settings.getView());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        navigatorManager.navigateToSettings();
     }
 
     /**

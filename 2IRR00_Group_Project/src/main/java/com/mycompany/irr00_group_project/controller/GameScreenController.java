@@ -77,7 +77,7 @@ public class GameScreenController {
         if (cachedCode != null && !cachedCode.isEmpty()) {
             codeEditorController.setCode(cachedCode);
         }
-    }
+    } 
 
     private void getCurrentLevel() {
         if (gameServiceManager.getLevelService() instanceof LevelServiceImpl serviceImpl) {

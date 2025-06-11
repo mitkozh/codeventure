@@ -1,10 +1,13 @@
 package com.mycompany.irr00_group_project.controller;
 
-import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
+import com.mycompany.irr00_group_project.service.navigator.HelpScreenNavigatorManager;
+
 import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
+
 
 /**
  * Controller for the help screen.
@@ -12,12 +15,19 @@ import javafx.fxml.FXML;
  */
 public class HelpController {
 
+    private HelpScreenNavigatorManager navigatorManager;
+
+    private boolean isInitializingView = true;
+    
+    
+
     /**
      * Initializes the controller. Can be used to set up
      * any initial data or bindings needed for the help screen.
      */
     @FXML
     public void initialize() {
+        navigatorManager = new HelpScreenNavigatorManager();
     }
 
     /**
@@ -26,20 +36,7 @@ public class HelpController {
      */
     @FXML
     public void backToMenu(ActionEvent actionEvent) {
-        goToMenu();
+        navigatorManager.navigateToMenu();
     }
-
-    /**
-     * Static method to navigate back to the main menu.
-     * Can be called from other parts of the application if needed.
-     */
-    @FXML
-    private static void goToMenu() {
-        try {
-            MainMenuScreen menuScreen = new MainMenuScreen();
-            NavigationManager.getInstance().navigateTo(menuScreen.getView());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    
 }

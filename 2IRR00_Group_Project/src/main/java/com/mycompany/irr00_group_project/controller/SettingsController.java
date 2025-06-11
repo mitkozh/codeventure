@@ -3,7 +3,9 @@ package com.mycompany.irr00_group_project.controller;
 import com.mycompany.irr00_group_project.service.core.SettingsService;
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
+import com.mycompany.irr00_group_project.service.navigator.SettingsScreenNavigatorManager;
 import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
+import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -39,6 +41,9 @@ public class SettingsController {
     private Runnable onExit;
     private Runnable onGoBack;
 
+    private SettingsScreenNavigatorManager navigatorManager;
+            
+
     private final List<String> avatarOptions =
             Arrays.asList("Robot", "Robot kid", "Alien", "Cool alien");
 
@@ -49,6 +54,7 @@ public class SettingsController {
      */
     @FXML
     private void initialize() {
+        navigatorManager = new SettingsScreenNavigatorManager();
         isInitializingView = true;
         initializeServices();
         configureSliders();
@@ -196,13 +202,8 @@ public class SettingsController {
         }
     }
 
-    private static void goToMenu() {
-        try {
-            MainMenuScreen menuScreen = new MainMenuScreen();
-            NavigationManager.getInstance().navigateTo(menuScreen.getView());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void goToMenu() {
+        navigatorManager.navigateToMenu();
     }
 
     public void setBackToMenuButtonContent(String content) {

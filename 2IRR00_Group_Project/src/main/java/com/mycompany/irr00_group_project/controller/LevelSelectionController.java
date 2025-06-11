@@ -3,13 +3,16 @@ package com.mycompany.irr00_group_project.controller;
 import java.io.IOException;
 import java.util.List;
 
+
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.utils.Constants;
+import com.mycompany.irr00_group_project.service.navigator.LevelSelectionScreenNavigatorManager;
 import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
 import com.mycompany.irr00_group_project.view.components.LevelPreviewButton;
 import com.mycompany.irr00_group_project.view.screen.GameScreen;
+import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
 
 import javafx.event.ActionEvent;
@@ -31,12 +34,15 @@ public class LevelSelectionController {
     private final LevelService levelService = LevelServiceImpl.getInstance();
     private List<LevelDTO> allLevelsDTO;
 
+    private LevelSelectionScreenNavigatorManager navigatorManager;
+
     /**
      * This method is called when the controller is initialized.
      * It retrieves all levels and sets up the pagination.
      */
     @FXML
     public void initialize() {
+        navigatorManager = new LevelSelectionScreenNavigatorManager();
         allLevelsDTO = levelService.getAllLevelsDTO();
         int pageCount = (int) Math.ceil((double) allLevelsDTO.size() / Constants.LEVELS_PER_PAGE);
         pagination.setPageCount(pageCount);
@@ -75,12 +81,7 @@ public class LevelSelectionController {
     }
 
     private void loadLevel() {
-        GameScreen gameScreen = new GameScreen();
-        try {
-            NavigationManager.getInstance().navigateTo(gameScreen.getView());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigatorManager.navigateToLevel();
     }
 
     /**
@@ -94,13 +95,7 @@ public class LevelSelectionController {
         goToMenu();
     }
 
-    @FXML
-    private static void goToMenu() {
-        try {
-            MainMenuScreen menuScreen = new MainMenuScreen();
-            NavigationManager.getInstance().navigateTo(menuScreen.getView());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void goToMenu() {
+        navigatorManager.navigateToMenu();
     }
 }
