@@ -1,8 +1,59 @@
 package com.mycompany.irr00_group_project.controller;
 
-/**
- * The LossScreenController class is responsible for handling the logic.
- */
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
+import com.mycompany.irr00_group_project.service.core.impl.CommandServiceImpl;
+import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
+import com.mycompany.irr00_group_project.service.core.impl.UserCodeLifecycleServiceImpl;
+import com.mycompany.irr00_group_project.utils.GameScreenNavigatorManager;
+import com.mycompany.irr00_group_project.utils.GameServiceManager;
+import com.mycompany.irr00_group_project.utils.NavigationManager;
+import com.mycompany.irr00_group_project.view.screen.GameScreen;
+import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+
 public class LossScreenController {
-    
+    @FXML
+    private Button restartButton;
+    @FXML
+    private Button levelSelectionButton;
+
+    private LevelServiceImpl levelService;
+    private LevelDTO currentLevelDTO;
+
+    @FXML
+    public void initialize() {
+        levelService = LevelServiceImpl.getInstance();
+    }
+
+    public void setCurrentLevelDTO(LevelDTO levelDTO) {
+        this.currentLevelDTO = levelDTO;
+    }
+
+    @FXML
+    public void handleLevelSelectionButton(ActionEvent event) {
+
+        // Navigate to level selection screen
+        try {
+            LevelSelectionScreen levels = new LevelSelectionScreen();
+            NavigationManager.getInstance().navigateTo(levels.getView());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void handleRestartButton(ActionEvent event) {
+
+        currentLevelDTO = levelService.getCurrentLevel();
+
+        try {
+            GameScreen game = new GameScreen();
+            NavigationManager.getInstance().navigateTo(game.getView());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
