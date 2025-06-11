@@ -172,4 +172,22 @@ public class LevelServiceImpl implements LevelService, ObservableProvider {
 
         persistenceService.saveProperties(props, "Game Progress Data");
     }
+
+    @Override
+    public LevelDTO selectNextLevel() {
+        LevelSelectionObservables levelObs = getObservableOrThrow(LevelSelectionObservables.class);
+        LevelDTO currentLevel = levelObs.getSelectedLevel();
+        if (currentLevel == null) {
+            return getFirstLevel();
+        }
+
+        int nextLevelNumber = currentLevel.getLevelNumber() + 1;
+        if (isLevelUnlocked(nextLevelNumber)) {
+            LevelDTO nextLevel = getLevelProgress(nextLevelNumber);
+            selectLevel(nextLevel);
+            return nextLevel;
+        } else {
+            return currentLevel; 
+        }
+    }
 }

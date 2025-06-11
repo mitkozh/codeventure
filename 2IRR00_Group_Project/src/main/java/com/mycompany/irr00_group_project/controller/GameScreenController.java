@@ -237,7 +237,7 @@ public class GameScreenController {
                 + " Steps: %d, Stars: %d/3",
                 playerSteps, stars));
         userCodeLifecycleService.stopExecution();
-
+        navigatorManager.navigateToWinScreen();
     }
 
     private void handleLoss() {

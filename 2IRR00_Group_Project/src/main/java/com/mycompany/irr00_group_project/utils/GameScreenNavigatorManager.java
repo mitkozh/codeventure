@@ -3,6 +3,7 @@ package com.mycompany.irr00_group_project.utils;
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 import com.mycompany.irr00_group_project.view.screen.LossScreen;
 import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
+import com.mycompany.irr00_group_project.view.screen.WinScreen;
 import javafx.scene.Parent;
 
 import java.io.IOException;
@@ -49,6 +50,15 @@ public class GameScreenNavigatorManager {
         try {
             LossScreen lossScreen = new LossScreen();
             NavigationManager.getInstance().navigateTo(lossScreen.getView());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void navigateToWinScreen() {
+        try {
+            WinScreen winScreen = new WinScreen();
+            NavigationManager.getInstance().navigateTo(winScreen.getView());
         } catch (IOException e) {
             e.printStackTrace();
         }

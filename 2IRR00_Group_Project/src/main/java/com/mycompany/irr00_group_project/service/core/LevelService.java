@@ -28,4 +28,6 @@ public interface LevelService {
     LevelDTO getFirstLevel();
 
     void selectLevel(LevelDTO selectedLevel);
+
+    LevelDTO selectNextLevel();
 }
