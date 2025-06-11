@@ -1,0 +1,36 @@
+# Level 27 -
+SIZE 8 8
+START 0 0 NORTH
+END 7 7
+OBSTACLES
+1 7
+1 6
+1 5
+1 4
+1 3
+1 2
+2 1
+3 1
+4 1
+5 1
+6 1
+3 7
+3 6
+3 5
+3 4
+4 3
+5 3
+6 3
+5 7
+5 6
+6 5
+DOORS
+7 0
+7 3
+7 5
+KEYS
+0 7
+2 7
+4 7
+OPTIMAL_STEPS
+60
