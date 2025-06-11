@@ -14,6 +14,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+/**
+ * This class represents the controller for the Loss Screen of the game.
+ */
 public class LossScreenController {
     @FXML
     private Button restartButton;
@@ -56,4 +59,6 @@ public class LossScreenController {
             e.printStackTrace();
         }
     }
+
+    
 }

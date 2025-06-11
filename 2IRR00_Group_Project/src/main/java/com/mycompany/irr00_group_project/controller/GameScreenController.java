@@ -18,6 +18,7 @@ import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
 import com.mycompany.irr00_group_project.service.observable.GameStateObservables;
 import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
+import com.mycompany.irr00_group_project.utils.CodeEditorCache;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.GameScreenNavigatorManager;
 import com.mycompany.irr00_group_project.utils.StringUtils;
@@ -72,6 +73,11 @@ public class GameScreenController {
         setupObservableBindings();
         stopExecutionButton.setDisable(true);
         getCurrentLevel();
+
+        String cachedCode = CodeEditorCache.getCode();
+        if (cachedCode != null && !cachedCode.isEmpty()) {
+        codeEditorController.setCode(cachedCode);
+        }
     }
 
     private void getCurrentLevel() {
@@ -236,6 +242,8 @@ public class GameScreenController {
 
     private void handleLoss() {
         gameState.setGameResult(GameResult.LOST);
+
+        CodeEditorCache.setCode(codeEditorController.getCode());
         finishExecution("You lost! Try again.");
         userCodeLifecycleService.stopExecution();
         navigatorManager.navigateToLossScreen();
