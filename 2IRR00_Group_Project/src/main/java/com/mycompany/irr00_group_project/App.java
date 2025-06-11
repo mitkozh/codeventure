@@ -14,7 +14,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * The App class is the main entry point of the JavaFX application.
+ * The App class is the actual entry point of the JavaFX application.
  * It initializes the application and displays the main menu screen.
  */
 public class App extends Application {
