@@ -35,7 +35,10 @@ public class WinScreenController {
         starsLabel.setText("★".repeat(stars));
         starsLabel.getStyleClass().add("star-label");
     }
-
+    
+    /**
+     * Handles the action when the "Level Selection" button is clicked.
+     */
     public void handleLevelSelectionButtonAction() {
         LevelSelectionScreen levelSelectionScreen = new LevelSelectionScreen();
         try {
@@ -45,25 +48,29 @@ public class WinScreenController {
         }
     }
 
+    /**
+     * Handles the action when the "Restart" button is clicked.
+     */
     public void handleRestartButtonAction() {
         LevelDTO currentLevel = levelService.getCurrentLevel();
         GameScreen gameScreen = new GameScreen();
         try {
             NavigationManager.getInstance().navigateTo(gameScreen.getView());
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Handles the action when the "Next Level" button is clicked.
+     */
     public void handleNextLevelButtonAction() {
         LevelDTO nextLevel = levelService.selectNextLevel();
         if (nextLevel != null) {
             GameScreen gameScreen = new GameScreen();
             try {
                 NavigationManager.getInstance().navigateTo(gameScreen.getView());
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
@@ -71,10 +78,12 @@ public class WinScreenController {
         }
     }
 
+    /**
+     * Gets the number of stars for the current level.
+     * @return the stars received.
+     */
     public int getStars() {
         LevelDTO currentLevel = levelService.getCurrentLevel();
         return currentLevel.getStars();
     }
-
-    
 }

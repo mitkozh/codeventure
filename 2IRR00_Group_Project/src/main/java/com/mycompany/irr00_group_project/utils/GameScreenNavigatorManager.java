@@ -45,7 +45,10 @@ public class GameScreenNavigatorManager {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Navigates to the level selection screen.
+     */
     public void navigateToLossScreen() {
         try {
             LossScreen lossScreen = new LossScreen();
@@ -55,6 +58,9 @@ public class GameScreenNavigatorManager {
         }
     }
 
+    /**
+     * Navigates to the win screen.
+     */
     public void navigateToWinScreen() {
         try {
             WinScreen winScreen = new WinScreen();

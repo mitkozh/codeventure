@@ -35,15 +35,17 @@ public class LevelServiceImpl implements LevelService, ObservableProvider {
         initializeObservables();
         loadProgress();
     }
-
+    
+    /**
+     * Returns the current level from the LevelSelectionObservables.
+     */
     public LevelDTO getCurrentLevel() {
-       
-            LevelSelectionObservables levelObs = getObservableOrThrow(LevelSelectionObservables.class);
-            LevelDTO currentLevel = levelObs.getSelectedLevel();
-            return currentLevel;
+        LevelSelectionObservables levelObs = 
+            getObservableOrThrow(LevelSelectionObservables.class);
+        LevelDTO currentLevel = levelObs.getSelectedLevel();
+        return currentLevel;
     }
     
-
     /**
      * Singleton to get the instance of LevelServiceImpl.
      */

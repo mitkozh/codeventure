@@ -69,14 +69,15 @@ public class GameScreenController {
         this.gameServiceManager = new GameServiceManager();
         this.navigatorManager = new GameScreenNavigatorManager(rootPane);
         this.commandService = new CommandServiceImpl(gameServiceManager.getMovementService());
-        this.userCodeLifecycleService = new UserCodeLifecycleServiceImpl(gameServiceManager, commandService);
+        this.userCodeLifecycleService = 
+            new UserCodeLifecycleServiceImpl(gameServiceManager, commandService);
         setupObservableBindings();
         stopExecutionButton.setDisable(true);
         getCurrentLevel();
 
         String cachedCode = CodeEditorCache.getCode();
         if (cachedCode != null && !cachedCode.isEmpty()) {
-        codeEditorController.setCode(cachedCode);
+            codeEditorController.setCode(cachedCode);
         }
     }
 

@@ -34,7 +34,10 @@ public class LossScreenController {
     public void setCurrentLevelDTO(LevelDTO levelDTO) {
         this.currentLevelDTO = levelDTO;
     }
-
+    
+    /**
+     * Handles the action when the "Level Selection" button is clicked.
+     */
     @FXML
     public void handleLevelSelectionButton(ActionEvent event) {
 
@@ -47,6 +50,9 @@ public class LossScreenController {
         }
     }
 
+    /**
+     * Handles the action when the "Restart" button is clicked.
+     */
     @FXML
     public void handleRestartButton(ActionEvent event) {
 
@@ -58,7 +64,5 @@ public class LossScreenController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    
+    } 
 }
