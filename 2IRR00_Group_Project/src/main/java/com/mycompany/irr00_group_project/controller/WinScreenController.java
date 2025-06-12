@@ -4,10 +4,11 @@ import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
+import com.mycompany.irr00_group_project.service.navigator.WinScreenNavigatorManager;
 import com.mycompany.irr00_group_project.view.screen.GameScreen;
-import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
 import javafx.fxml.FXML;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import java.io.IOException;
 
@@ -16,10 +17,15 @@ import java.io.IOException;
  */
 public class WinScreenController {
 
+    public Button restartButton;
     @FXML
     private Label starsLabel;
 
     private LevelService levelService;
+
+    private LevelDTO currentLevelDTO;
+
+    private WinScreenNavigatorManager navigatorManager;
 
     /**
      * Initializes the controller.
@@ -34,30 +40,12 @@ public class WinScreenController {
         starsLabel.setText("★".repeat(stars));
         starsLabel.getStyleClass().add("star-label");
     }
-    
+
     /**
      * Handles the action when the "Level Selection" button is clicked.
      */
     public void handleLevelSelectionButtonAction() {
-        LevelSelectionScreen levelSelectionScreen = new LevelSelectionScreen();
-        try {
-            NavigationManager.getInstance().navigateTo(levelSelectionScreen.getView());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Handles the action when the "Restart" button is clicked.
-     */
-    public void handleRestartButtonAction() {
-        LevelDTO currentLevel = levelService.getCurrentLevel();
-        GameScreen gameScreen = new GameScreen();
-        try {
-            NavigationManager.getInstance().navigateTo(gameScreen.getView());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        navigatorManager.navigateToLevelSelection();
     }
 
     /**
@@ -79,10 +67,22 @@ public class WinScreenController {
 
     /**
      * Gets the number of stars for the current level.
+     * 
      * @return the stars received.
      */
     public int getStars() {
         LevelDTO currentLevel = levelService.getCurrentLevel();
         return currentLevel.getStars();
+    }
+
+    /**
+     * Sets the action to be performed when the restart button is clicked.
+     * 
+     * @param onRestart the action to perform on restart.
+     */
+    public void setOnRestart(Runnable onRestart) {
+        restartButton.setOnAction(event -> {
+            onRestart.run();
+        });
     }
 }

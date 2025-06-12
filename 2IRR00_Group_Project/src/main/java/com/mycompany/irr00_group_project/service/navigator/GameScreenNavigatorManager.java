@@ -20,9 +20,7 @@ public class GameScreenNavigatorManager {
     }
 
     private SettingsScreen getSettingsScreen() {
-        Runnable onExit = () -> {
-            NavigationManager.getInstance().navigateTo(rootPane);
-        };
+        Runnable onExit = getOnRestart();
         Runnable onGoBack = () -> {
             LevelSelectionScreen levelSelectionScreen = new LevelSelectionScreen();
             try {
@@ -51,11 +49,16 @@ public class GameScreenNavigatorManager {
      */
     public void navigateToLossScreen() {
         try {
-            LossScreen lossScreen = new LossScreen();
+            LossScreen lossScreen = getLossScreen();
             NavigationManager.getInstance().navigateTo(lossScreen.getView());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private LossScreen getLossScreen() {
+        Runnable onRestart = getOnRestart();
+        return new LossScreen(onRestart);
     }
 
     /**
@@ -63,10 +66,21 @@ public class GameScreenNavigatorManager {
      */
     public void navigateToWinScreen() {
         try {
-            WinScreen winScreen = new WinScreen();
+            WinScreen winScreen = getWinScreen();
             NavigationManager.getInstance().navigateTo(winScreen.getView());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private WinScreen getWinScreen() {
+        Runnable onRestart = getOnRestart();
+        return new WinScreen(onRestart);
+    }
+
+    private Runnable getOnRestart() {
+        return () -> {
+            NavigationManager.getInstance().navigateTo(rootPane);
+        };
     }
 }

@@ -11,9 +11,9 @@ import javafx.scene.Parent;
  * AbstractScreen class.
  */
 public class SettingsScreen extends AbstractScreen {
-    Runnable onExit;
-    Runnable onBack;
-    String backButtonContent = "GO TO MENU";
+    private Runnable onExit;
+    private Runnable onBack;
+    private String backButtonContent = "GO TO MENU";
 
     /**
      * Constructor for the SettingsScreen class.

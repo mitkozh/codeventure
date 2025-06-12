@@ -50,9 +50,9 @@ public class LossScreenController {
     /**
      * Handles the action when the "Restart" button is clicked.
      */
-    @FXML
-    public void handleRestartButton(ActionEvent event) {
-        currentLevelDTO = levelService.getCurrentLevel();
-        navigatorManager.navigateToSameGameScreen(currentLevelDTO);
-    } 
+    public void setOnRestart(Runnable onRestart) {
+        restartButton.setOnAction(event -> {
+            onRestart.run();
+        });
+    }
 }

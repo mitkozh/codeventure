@@ -17,7 +17,6 @@ import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
 import com.mycompany.irr00_group_project.service.observable.GameStateObservables;
 import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
-import com.mycompany.irr00_group_project.utils.CodeEditorCache;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.service.navigator.GameScreenNavigatorManager;
 import com.mycompany.irr00_group_project.utils.StringUtils;
@@ -72,11 +71,6 @@ public class GameScreenController {
         setupObservableBindings();
         stopExecutionButton.setDisable(true);
         getCurrentLevel();
-
-        String cachedCode = CodeEditorCache.getCode();
-        if (cachedCode != null && !cachedCode.isEmpty()) {
-            codeEditorController.setCode(cachedCode);
-        }
     } 
 
     private void getCurrentLevel() {
@@ -128,18 +122,6 @@ public class GameScreenController {
                     }
                 });
             });
-
-            if (gameServiceManager.getLevelService() instanceof LevelServiceImpl serviceImpl) {
-                LevelSelectionObservables levelObs = serviceImpl
-                        .getObservableOrThrow(LevelSelectionObservables.class);
-
-                levelObs.selectedLevelProperty().addListener((observable, oldLevel, newLevel) -> {
-                    if (newLevel != null) {
-                        levelDTO = newLevel;
-                        loadLevel(newLevel);
-                    }
-                });
-            }
         }
     }
 
@@ -224,27 +206,20 @@ public class GameScreenController {
 
     private void handleLevelWon() {
         gameState.setGameResult(GameResult.WON);
+        userCodeLifecycleService.stopExecution();
         int playerSteps = gameState.getPlayerSteps();
-
         levelDTO = gameServiceManager.getGamePlayService()
                 .handleLevelCompletion(this.levelDTO,
                         playerSteps, gameState.getLevelData());
         gameServiceManager.getLevelService().completeLevelAndSave(levelDTO);
-        int stars = gameServiceManager.getGamePlayService().calculateStars(gameState.getLevelData(),
-                playerSteps);
-        finishExecution(String.format("Level completed!"
-                + " Steps: %d, Stars: %d/3",
-                playerSteps, stars));
-        userCodeLifecycleService.stopExecution();
+        loadLevel(levelDTO);
         navigatorManager.navigateToWinScreen();
     }
 
     private void handleLoss() {
         gameState.setGameResult(GameResult.LOST);
-
-        CodeEditorCache.setCode(codeEditorController.getCode());
-        finishExecution("You lost! Try again.");
         userCodeLifecycleService.stopExecution();
+        loadLevel(levelDTO);
         navigatorManager.navigateToLossScreen();
     }
 }
