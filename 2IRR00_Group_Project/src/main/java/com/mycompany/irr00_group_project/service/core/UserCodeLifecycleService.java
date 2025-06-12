@@ -13,14 +13,8 @@ public interface UserCodeLifecycleService {
      * Compiles and executes user code.
      * @param userCode The code to execute
      * @param gameState Current game state
-     * @param onMessage Callback for execution messages
-     * @param onError Callback for execution errors
-     * @param onComplete Callback when execution completes
      */
-    void executeCode(String userCode, GameState gameState,
-                     Consumer<String> onMessage,
-                     Consumer<String> onError,
-                     Runnable onComplete);
+    void executeCode(String userCode, GameState gameState);
 
     /**
      * Stops any currently running execution.

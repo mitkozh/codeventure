@@ -10,17 +10,17 @@ import com.mycompany.irr00_group_project.model.enums.GameResult;
 import com.mycompany.irr00_group_project.service.core.CommandService;
 import com.mycompany.irr00_group_project.service.core.UserCodeLifecycleService;
 import com.mycompany.irr00_group_project.service.core.impl.CommandServiceImpl;
-import com.mycompany.irr00_group_project.utils.GameServiceManager;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.UserCodeLifecycleServiceImpl;
+import com.mycompany.irr00_group_project.service.navigator.GameScreenNavigatorManager;
 import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
-import com.mycompany.irr00_group_project.service.observable.GameStateObservables;
+import com.mycompany.irr00_group_project.service.observable.ExecutionObservables;
 import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
+import com.mycompany.irr00_group_project.service.observable.GameStateObservables;
 import com.mycompany.irr00_group_project.utils.Constants;
-import com.mycompany.irr00_group_project.service.navigator.GameScreenNavigatorManager;
+import com.mycompany.irr00_group_project.utils.GameServiceManager;
 import com.mycompany.irr00_group_project.utils.StringUtils;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,12 +66,15 @@ public class GameScreenController {
         this.gameServiceManager = new GameServiceManager();
         this.navigatorManager = new GameScreenNavigatorManager(rootPane);
         this.commandService = new CommandServiceImpl(gameServiceManager.getMovementService());
-        this.userCodeLifecycleService = 
-            new UserCodeLifecycleServiceImpl(gameServiceManager, commandService);
+        this.userCodeLifecycleService = new UserCodeLifecycleServiceImpl(commandService,
+                gameServiceManager.getSharedJarService(),
+                gameServiceManager.getCompilationService(),
+                gameServiceManager.getExecutionService(),
+                gameServiceManager.getIpcService());
         setupObservableBindings();
         stopExecutionButton.setDisable(true);
         getCurrentLevel();
-    } 
+    }
 
     private void getCurrentLevel() {
         if (gameServiceManager.getLevelService() instanceof LevelServiceImpl serviceImpl) {
@@ -86,6 +89,32 @@ public class GameScreenController {
     }
 
     private void setupObservableBindings() {
+        setupCommandServiceObservables();
+        setupUserCodeLifecycleServiceObservables();
+    }
+
+    private void setupUserCodeLifecycleServiceObservables() {
+        if (userCodeLifecycleService instanceof ObservableProvider provider) {
+            provider.getObservable(ExecutionObservables.class).ifPresent(execution -> {
+                execution.executionStartedProperty().addListener((obs, wasStarted, isStarted) -> {
+                    if (isStarted) {
+                        setExecutionState(true);
+                    }
+                });
+
+                execution.executionCompletedProperty()
+                        .addListener((obs, wasCompleted, isCompleted) -> {
+                            if (isCompleted) {
+                                String message = execution.completionMessageProperty().get();
+                                finishExecution(message);
+                                execution.resetFlags();
+                            }
+                        });
+            });
+        }
+    }
+
+    private void setupCommandServiceObservables() {
         if (commandService instanceof ObservableProvider provider) {
             provider.getObservable(ConsoleObservables.class).ifPresent(console -> {
                 console.lastMessageProperty().addListener((obs, oldMsg, newMsg) -> {
@@ -146,10 +175,7 @@ public class GameScreenController {
         String code = Constants.INITIAL_IMPORTS_CODE + codeEditorController.getCode();
         consoleOutputController.clear();
         setExecutionState(true);
-        userCodeLifecycleService.executeCode(code, gameState,
-                consoleOutputController::appendMessage,
-                consoleOutputController::logError,
-                () -> setExecutionState(false));
+        userCodeLifecycleService.executeCode(code, gameState);
     }
 
     private void setExecutionState(boolean executing) {

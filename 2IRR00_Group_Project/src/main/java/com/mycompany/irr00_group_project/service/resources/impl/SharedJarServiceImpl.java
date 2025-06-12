@@ -1,5 +1,6 @@
 package com.mycompany.irr00_group_project.service.resources.impl;
 
+import com.mycompany.irr00_group_project.service.resources.SharedJarService;
 import com.mycompany.irr00_group_project.utils.Constants;
 
 import java.io.File;
@@ -12,7 +13,7 @@ import java.nio.file.StandardCopyOption;
 /**
  * Class used to find and open shared jar file.
  */
-public class SharedJarServiceImpl {
+public class SharedJarServiceImpl implements SharedJarService {
     private File resolvedSharedJarFile;
 
     public SharedJarServiceImpl() {}
@@ -20,6 +21,7 @@ public class SharedJarServiceImpl {
     /**
      * Method to get the Resolved shared jar file.
      */
+    @Override
     public File getResolvedSharedJarFile() throws IOException {
         if (resolvedSharedJarFile != null && resolvedSharedJarFile.exists()) {
             return resolvedSharedJarFile;
