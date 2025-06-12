@@ -7,12 +7,18 @@ import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
 
 import javafx.fxml.FXML;
 
+/**
+ * Manages navigation for the level selection.
+ */
 public class LevelSelectionScreenNavigatorManager {
 
     public LevelSelectionScreenNavigatorManager() {
         
     }
 
+    /**
+     * This method is called when the user wants to navigate to the main menu.
+     */
     @FXML
     public void navigateToMenu() {
         try {
@@ -22,6 +28,10 @@ public class LevelSelectionScreenNavigatorManager {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This method is called when the user wants to navigate to the level.
+     */
     @FXML
     public void navigateToLevel() {
         GameScreen gameScreen = new GameScreen();

@@ -40,7 +40,6 @@ public class MainMenuController {
         navigatorManager.navigateToLevelSelection();
     }
 
-
     /**
      * This method is called when the settings button is clicked.
      * It loads the settings screen and displays it.

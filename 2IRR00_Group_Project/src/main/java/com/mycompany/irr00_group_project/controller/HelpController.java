@@ -7,8 +7,6 @@ import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-
-
 /**
  * Controller for the help screen.
  * This class handles navigation back to the main menu from the help screen.
@@ -19,8 +17,6 @@ public class HelpController {
 
     private boolean isInitializingView = true;
     
-    
-
     /**
      * Initializes the controller. Can be used to set up
      * any initial data or bindings needed for the help screen.

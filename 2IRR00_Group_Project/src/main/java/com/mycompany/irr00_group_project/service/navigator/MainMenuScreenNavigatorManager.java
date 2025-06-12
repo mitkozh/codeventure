@@ -5,16 +5,18 @@ import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
 
 import javafx.event.ActionEvent;
 
+/**
+ * Manages navigation for the main menu screen.
+ */
 public class MainMenuScreenNavigatorManager {
 
     public MainMenuScreenNavigatorManager() {
 
     }
+
     /**
      * This method is called when the level selection button is clicked.
      * It loads the level selection screen and displays it.
-     *
-     * @param actionEvent The action event triggered by the button click.
      */
     public void navigateToLevelSelection() {
         try {
@@ -25,6 +27,9 @@ public class MainMenuScreenNavigatorManager {
         }
     }
 
+    /**
+     * This method is called when the settings button is clicked.
+     */
     public void navigateToSettings() {
         try {
             SettingsScreen settings = new SettingsScreen();
@@ -34,10 +39,4 @@ public class MainMenuScreenNavigatorManager {
         }
     }
         // This method is currently empty, but can be implemented to navigate to the settings screen
-
-
-    
-
-
-
 }

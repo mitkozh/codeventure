@@ -5,11 +5,16 @@ import java.io.IOException;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.view.screen.GameScreen;
 import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
-
 import javafx.event.ActionEvent;
 
+/**
+ * Manages navigation for the win screen in the game.
+ */
 public class WinScreenNavigatorManager {
 
+    /**
+     * Navigate to the level selection screen.
+     */
     public void navigateToLevelSelection() {
         LevelSelectionScreen levelSelectionScreen = new LevelSelectionScreen();
         try {
@@ -19,7 +24,10 @@ public class WinScreenNavigatorManager {
         }
     }
 
-    public void navigateToSameGameScreen(LevelDTO currentLevelDTO){
+    /**
+     * Navigate to the same game screen with the current level.
+     */
+    public void navigateToSameGameScreen(LevelDTO currentLevelDTO) {
         
         GameScreen gameScreen = new GameScreen();
         try {
@@ -29,6 +37,9 @@ public class WinScreenNavigatorManager {
         }
     }
 
+    /**
+     * Navigate to the next level screen.
+     */
     public void navigateToNextLevel(LevelDTO nextLevel) {
         
         if (nextLevel != null) {

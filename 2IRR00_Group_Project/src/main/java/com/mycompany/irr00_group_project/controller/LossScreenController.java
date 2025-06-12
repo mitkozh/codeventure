@@ -26,6 +26,9 @@ public class LossScreenController {
     private LevelDTO currentLevelDTO;
     private LossScreenNavigatorManager navigatorManager;
 
+    /**
+     * Initialization.
+     */
     @FXML
     public void initialize() {
         levelService = LevelServiceImpl.getInstance();
