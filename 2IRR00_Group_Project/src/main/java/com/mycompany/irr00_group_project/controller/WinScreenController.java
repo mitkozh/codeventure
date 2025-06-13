@@ -28,6 +28,7 @@ public class WinScreenController {
      */
     public void initialize() {
         levelService = LevelServiceImpl.getInstance();
+        navigatorManager = new WinScreenNavigatorManager();
         updateStarsDisplay();
     }
 

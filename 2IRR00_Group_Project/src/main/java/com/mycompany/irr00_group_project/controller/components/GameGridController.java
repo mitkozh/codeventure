@@ -1,5 +1,6 @@
 package com.mycompany.irr00_group_project.controller.components;
 
+import com.mycompany.irr00_group_project.gui.components.GameGridDisplay;
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.SpriteCharacter;
 import com.mycompany.irr00_group_project.model.enums.TileType;
@@ -9,7 +10,6 @@ import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
 import com.mycompany.irr00_group_project.service.observable.SettingsObservables;
 import com.mycompany.irr00_group_project.utils.StringUtils;
 import com.mycompany.irr00_group_project.gui.components.SpriteCharacterView;
-import javafx.fxml.FXML;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.GridPane;
@@ -22,21 +22,22 @@ import javafx.scene.layout.StackPane;
  * character.
  */
 public class GameGridController {
-    @FXML
     private GridPane gameGrid;
-    @FXML
-    private StackPane gameGridContainer;
-
     private GameState gameState;
     private SpriteCharacterView spriteCharacterView;
     private SettingsService settingsService;
+    private GameGridDisplay view;
+
+    public GameGridController(GameGridDisplay view) {
+        this.view = view;
+    }
 
     /**
      * Initializes the game grid controller.
      * Sets up the sprite character view and configures the grid layout.
      */
-    @FXML
     public void initialize() {
+        this.gameGrid = view.getGameGrid();
         spriteCharacterView = new SpriteCharacterView();
         gameGrid.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         gameGrid.setAlignment(javafx.geometry.Pos.CENTER);
@@ -156,10 +157,6 @@ public class GameGridController {
 
         }
 
-    }
-
-    public GameState getGameState() {
-        return gameState;
     }
 
 }

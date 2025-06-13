@@ -3,6 +3,7 @@ package com.mycompany.irr00_group_project.controller;
 import com.mycompany.irr00_group_project.controller.components.CodeEditorAreaController;
 import com.mycompany.irr00_group_project.controller.components.ConsoleOutputController;
 import com.mycompany.irr00_group_project.controller.components.GameGridController;
+import com.mycompany.irr00_group_project.gui.screen.GameScreen;
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
@@ -23,7 +24,6 @@ import com.mycompany.irr00_group_project.utils.GameServiceManager;
 import com.mycompany.irr00_group_project.utils.StringUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,23 +33,16 @@ import javafx.scene.control.Label;
  * logic.
  */
 public class GameScreenController {
-    @FXML
     private Label levelTitle;
-    @FXML
     private Button runCodeButton;
-    @FXML
     private Button stopExecutionButton;
-    @FXML
     private Button resetLevelButton;
 
-    @FXML
     private GameGridController gameGridController;
-    @FXML
     private CodeEditorAreaController codeEditorController;
-    @FXML
     private ConsoleOutputController consoleOutputController;
-    @FXML
     private Parent rootPane;
+    private GameScreen view;
 
     private GameState gameState;
     private GameServiceManager gameServiceManager;
@@ -58,11 +51,15 @@ public class GameScreenController {
     private UserCodeLifecycleService userCodeLifecycleService;
     private LevelDTO levelDTO;
 
+    public GameScreenController(GameScreen view) {
+        this.view = view;
+    }
+
     /**
      * Initialization of game screen.
      */
-    @FXML
     public void initialize() {
+        setUpViewControllerBindings();
         this.gameServiceManager = new GameServiceManager();
         this.navigatorManager = new GameScreenNavigatorManager(rootPane);
         this.commandService = new CommandServiceImpl(gameServiceManager.getMovementService());
@@ -74,6 +71,18 @@ public class GameScreenController {
         setupObservableBindings();
         stopExecutionButton.setDisable(true);
         getCurrentLevel();
+    }
+
+    private void setUpViewControllerBindings() {
+        this.levelTitle = view.getLevelTitle();
+        this.runCodeButton = view.getRunCodeButton();
+        this.stopExecutionButton = view.getStopExecutionButton();
+        this.resetLevelButton = view.getResetLevelButton();
+        this.rootPane = view.getRootPane();
+
+        this.gameGridController = view.getGameGridDisplay().getController();
+        this.codeEditorController = view.getCodeEditorArea().getController();
+        this.consoleOutputController = view.getConsoleOutputArea().getController();
     }
 
     private void getCurrentLevel() {
@@ -95,6 +104,18 @@ public class GameScreenController {
 
     private void setupUserCodeLifecycleServiceObservables() {
         if (userCodeLifecycleService instanceof ObservableProvider provider) {
+            provider.getObservable(ConsoleObservables.class).ifPresent(console -> {
+                console.lastMessageProperty().addListener((obs, oldMsg, newMsg) -> {
+                    if (!StringUtils.isNullOrEmpty(newMsg)) {
+                        consoleOutputController.appendMessage(newMsg);
+                    }
+                });
+                console.lastErrorProperty().addListener((obs, oldErr, newErr) -> {
+                    if (!StringUtils.isNullOrEmpty(newErr)) {
+                        consoleOutputController.logError(newErr);
+                    }
+                });
+            });
             provider.getObservable(ExecutionObservables.class).ifPresent(execution -> {
                 execution.executionStartedProperty().addListener((obs, wasStarted, isStarted) -> {
                     if (isStarted) {
@@ -166,7 +187,6 @@ public class GameScreenController {
     /**
      * fxml method to run the code of the user.
      */
-    @FXML
     public void runCode(ActionEvent event) {
         if (!gameState.isGamePlaying()) {
             return;
@@ -189,7 +209,6 @@ public class GameScreenController {
     /**
      * fxml method to stop executing the code of the user.
      */
-    @FXML
     public void stopExecutionOnClick(ActionEvent event) {
         userCodeLifecycleService.stopExecution();
         setExecutionState(false);
@@ -198,7 +217,6 @@ public class GameScreenController {
     /**
      * fxml method to reset the level.
      */
-    @FXML
     public void resetLevelOnClick(ActionEvent event) {
         resetLevel();
     }

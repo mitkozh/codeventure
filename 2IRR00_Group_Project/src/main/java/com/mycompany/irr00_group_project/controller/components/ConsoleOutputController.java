@@ -1,5 +1,6 @@
 package com.mycompany.irr00_group_project.controller.components;
 
+import com.mycompany.irr00_group_project.gui.components.ConsoleOutputArea;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -10,11 +11,18 @@ import javafx.scene.control.TextArea;
  */
 public class ConsoleOutputController {
 
-    @FXML
+    private ConsoleOutputArea view;
     private TextArea consoleOutput;
 
-    @FXML
+    public ConsoleOutputController(ConsoleOutputArea view) {
+        this.view = view;
+    }
+
+    /**
+     * Initializes the console output area.
+     */
     public void initialize() {
+        this.consoleOutput = view.getConsoleOutput();
         setupConsole();
     }
 

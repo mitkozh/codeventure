@@ -1,5 +1,6 @@
 package com.mycompany.irr00_group_project.controller.components;
 
+import com.mycompany.irr00_group_project.gui.components.CodeEditorArea;
 import com.mycompany.irr00_group_project.utils.Constants;
 import javafx.fxml.FXML;
 
@@ -10,11 +11,19 @@ import javafx.scene.control.TextArea;
  * This class manages the text area where users can write and edit code.
  */
 public class CodeEditorAreaController {
-    @FXML
     private TextArea codeEditor;
+    private CodeEditorArea view;
 
-    @FXML
+
+    public CodeEditorAreaController(CodeEditorArea view) {
+        this.view = view;
+    }
+
+    /**
+     * Initializes the code editor area.
+     */
     public void initialize() {
+        this.codeEditor = view.getCodeEditor();
         setupCodeEditor();
     }
 
