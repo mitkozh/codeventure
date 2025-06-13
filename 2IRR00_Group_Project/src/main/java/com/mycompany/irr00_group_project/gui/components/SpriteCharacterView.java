@@ -3,6 +3,7 @@ package com.mycompany.irr00_group_project.gui.components;
 import java.util.Objects;
 
 import com.mycompany.irr00_group_project.model.enums.Direction;
+import com.mycompany.irr00_group_project.model.enums.SpriteCharacterType;
 import com.mycompany.irr00_group_project.service.core.SettingsService;
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 
@@ -21,7 +22,7 @@ public class SpriteCharacterView {
     private Polygon directionArrow;
     private StackPane stackPane;
     private SettingsService settingsService;
-    
+
     /**
      * Constructs a SpriteCharacterView and initializes the sprite image.
      */
@@ -38,9 +39,9 @@ public class SpriteCharacterView {
         directionArrow = new Polygon();
         // Points for an upward-pointing triangle (relative to center)
         directionArrow.getPoints().addAll(
-            0.0, -20.0,   // Top corner
-            10.0, 0.0,    // Bottom right corner
-            -10.0, 0.0    // Bottom left corner
+                0.0, -20.0, // Top corner
+                10.0, 0.0, // Bottom right corner
+                -10.0, 0.0 // Bottom left corner
         );
         directionArrow.setFill(Color.WHITE);
         directionArrow.setOpacity(0.3);
@@ -59,27 +60,10 @@ public class SpriteCharacterView {
     private void loadSpriteImages() {
         try {
             String avatar = settingsService.getSelectedAvatar();
-            String imagePath;
-            
-            switch (avatar) {
-                case "Robot kid":
-                    imagePath = "images/sprite/character_robot_kid.png";
-                    break;
-                case "Alien":
-                    imagePath = "images/sprite/character_alien.png";
-                    break;
-                case "Cool alien":
-                    imagePath = "images/sprite/character_alien_cool.png";
-                    break;
-                case "Robot":
-                default:
-                    imagePath = "images/sprite/character_robot.png";
-                    break;
-            }
-            
+            SpriteCharacterType characterType = SpriteCharacterType.fromDisplayName(avatar);
             sprite = new Image(Objects.requireNonNull(getClass()
-                    .getResourceAsStream("/com/mycompany/irr00_group_project/assets/" 
-                        + imagePath)));
+                    .getResourceAsStream("/com/mycompany/irr00_group_project/assets/"
+                            + characterType.getImagePath())));
             spriteImageView.setImage(sprite);
         } catch (Exception e) {
             System.err.println("Could not load sprite images: " + e.getMessage());
@@ -87,8 +71,9 @@ public class SpriteCharacterView {
         }
     }
 
-    /** 
+    /**
      * Updates the sprite image and direction based on the given direction.
+     * 
      * @param direction the direction to update the sprite to.
      */
     public void updateDirection(Direction direction) {
@@ -120,6 +105,7 @@ public class SpriteCharacterView {
 
     /**
      * Returns the ImageView of the sprite character.
+     * 
      * @return the ImageView of the sprite character
      */
     public ImageView getImageView() {
