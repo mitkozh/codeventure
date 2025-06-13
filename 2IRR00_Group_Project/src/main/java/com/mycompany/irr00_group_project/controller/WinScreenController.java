@@ -3,14 +3,10 @@ package com.mycompany.irr00_group_project.controller;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
-import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
 import com.mycompany.irr00_group_project.service.navigator.WinScreenNavigatorManager;
-import com.mycompany.irr00_group_project.view.screen.GameScreen;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import java.io.IOException;
 
 /**
  * The WinScreenController class is responsible for handling the logic.
@@ -53,21 +49,12 @@ public class WinScreenController {
      */
     public void handleNextLevelButtonAction() {
         LevelDTO nextLevel = levelService.selectNextLevel();
-        if (nextLevel != null) {
-            GameScreen gameScreen = new GameScreen();
-            try {
-                NavigationManager.getInstance().navigateTo(gameScreen.getView());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("No next level available.");
-        }
+        navigatorManager.navigateToNextLevel(nextLevel);
     }
 
     /**
      * Gets the number of stars for the current level.
-     * 
+     *
      * @return the stars received.
      */
     public int getStars() {
@@ -77,7 +64,7 @@ public class WinScreenController {
 
     /**
      * Sets the action to be performed when the restart button is clicked.
-     * 
+     *
      * @param onRestart the action to perform on restart.
      */
     public void setOnRestart(Runnable onRestart) {

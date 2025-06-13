@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.view.components;
+package com.mycompany.irr00_group_project.gui.components;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

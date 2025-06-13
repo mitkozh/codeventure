@@ -1,8 +1,8 @@
 package com.mycompany.irr00_group_project.service.navigator;
 
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
-import com.mycompany.irr00_group_project.view.screen.GameScreen;
-import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
+import com.mycompany.irr00_group_project.gui.screen.GameScreen;
+import com.mycompany.irr00_group_project.gui.screen.LevelSelectionScreen;
 
 /**
  * Manages navigation for the loss screen in the game.

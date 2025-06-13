@@ -1,25 +1,18 @@
 package com.mycompany.irr00_group_project.controller;
 
-import java.io.IOException;
-import java.util.List;
-
-
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
-import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.service.navigator.LevelSelectionScreenNavigatorManager;
-import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
-import com.mycompany.irr00_group_project.view.components.LevelPreviewButton;
-import com.mycompany.irr00_group_project.view.screen.GameScreen;
-import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
-import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
-
+import com.mycompany.irr00_group_project.utils.Constants;
+import com.mycompany.irr00_group_project.gui.components.LevelPreviewButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.GridPane;
+
+import java.util.List;
 
 /**
  * Controller for the level selection screen.

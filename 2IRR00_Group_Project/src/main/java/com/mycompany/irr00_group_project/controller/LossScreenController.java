@@ -1,12 +1,9 @@
 package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
+import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.navigator.LossScreenNavigatorManager;
-import com.mycompany.irr00_group_project.view.screen.GameScreen;
-import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
-
-
 
 
 import javafx.event.ActionEvent;
@@ -22,7 +19,7 @@ public class LossScreenController {
     @FXML
     private Button levelSelectionButton;
 
-    private LevelServiceImpl levelService;
+    private LevelService levelService;
     private LevelDTO currentLevelDTO;
     private LossScreenNavigatorManager navigatorManager;
 

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.*?>
-
-<HBox fx:id="rootLayout" alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.mycompany.irr00_group_project.controller.MainLayoutController">
-    <AnchorPane fx:id="contentArea" HBox.hgrow="ALWAYS" />
-</HBox>

@@ -2,10 +2,7 @@ package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.service.core.SettingsService;
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
-import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
 import com.mycompany.irr00_group_project.service.navigator.SettingsScreenNavigatorManager;
-import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
-import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

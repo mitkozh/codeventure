@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.view.screen;
+package com.mycompany.irr00_group_project.gui.screen;
 
 /**
  * The LevelSelectionScreen class is responsible for displaying the level
@@ -9,7 +9,7 @@ public class LevelSelectionScreen extends AbstractScreen {
 
     @Override
     protected String getFxmlPath() {
-        return "/com/mycompany/irr00_group_project/view/screen/LevelSelectionScreen.fxml";
+        return "/com/mycompany/irr00_group_project/gui/screen/LevelSelectionScreen.fxml";
     }
 
     @Override

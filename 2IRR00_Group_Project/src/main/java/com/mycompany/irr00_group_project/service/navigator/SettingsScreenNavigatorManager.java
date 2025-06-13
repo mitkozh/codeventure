@@ -1,8 +1,6 @@
 package com.mycompany.irr00_group_project.service.navigator;
 
-import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
-
-import javafx.event.ActionEvent;
+import com.mycompany.irr00_group_project.gui.screen.MainMenuScreen;
 
 /**
  * Manages navigation for the settings screen.

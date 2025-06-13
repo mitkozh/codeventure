@@ -8,7 +8,7 @@ import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
 import com.mycompany.irr00_group_project.service.observable.SettingsObservables;
 import com.mycompany.irr00_group_project.utils.StringUtils;
-import com.mycompany.irr00_group_project.view.components.SpriteCharacterView;
+import com.mycompany.irr00_group_project.gui.components.SpriteCharacterView;
 import javafx.fxml.FXML;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;

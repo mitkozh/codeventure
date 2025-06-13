@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.view.screen;
+package com.mycompany.irr00_group_project.gui.screen;
 
 /**
  * The HelpScreen class is responsible for displaying the help
@@ -10,7 +10,7 @@ public class HelpScreen extends AbstractScreen {
     
     @Override
     protected String getFxmlPath() {
-        return "/com/mycompany/irr00_group_project/view/screen/HelpScreen.fxml";
+        return "/com/mycompany/irr00_group_project/gui/screen/HelpScreen.fxml";
     }
 
     @Override

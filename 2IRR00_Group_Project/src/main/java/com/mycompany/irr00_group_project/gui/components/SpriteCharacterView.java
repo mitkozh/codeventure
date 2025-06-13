@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.view.components;
+package com.mycompany.irr00_group_project.gui.components;
 
 import java.util.Objects;
 

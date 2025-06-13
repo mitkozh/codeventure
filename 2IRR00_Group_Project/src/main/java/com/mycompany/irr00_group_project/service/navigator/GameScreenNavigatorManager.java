@@ -1,9 +1,9 @@
 package com.mycompany.irr00_group_project.service.navigator;
 
-import com.mycompany.irr00_group_project.view.screen.LevelSelectionScreen;
-import com.mycompany.irr00_group_project.view.screen.LossScreen;
-import com.mycompany.irr00_group_project.view.screen.SettingsScreen;
-import com.mycompany.irr00_group_project.view.screen.WinScreen;
+import com.mycompany.irr00_group_project.gui.screen.LevelSelectionScreen;
+import com.mycompany.irr00_group_project.gui.screen.LossScreen;
+import com.mycompany.irr00_group_project.gui.screen.SettingsScreen;
+import com.mycompany.irr00_group_project.gui.screen.WinScreen;
 import javafx.scene.Parent;
 
 import java.io.IOException;

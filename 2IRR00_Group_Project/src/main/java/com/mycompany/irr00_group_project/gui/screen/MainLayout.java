@@ -1,9 +1,12 @@
-package com.mycompany.irr00_group_project.view.screen;
+package com.mycompany.irr00_group_project.gui.screen;
 
-import com.mycompany.irr00_group_project.service.navigator.NavigationManager;
+import com.mycompany.irr00_group_project.service.navigator.MainLayoutNavigatorManager;
 import com.mycompany.irr00_group_project.utils.StringUtils;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.FileNotFoundException;
@@ -20,19 +23,43 @@ public class MainLayout extends AbstractScreen {
 
     private Stage primaryStage;
     private Scene scene;
+    private AnchorPane contentArea;
+    private MainLayoutNavigatorManager navigatorManager;
+
+    @Override
+    protected Parent createContent() {
+        navigatorManager = new MainLayoutNavigatorManager();
+        return createUI();
+    }
+
+    private HBox createUI() {
+        HBox rootLayout = new HBox();
+        rootLayout.setId("rootLayout");
+        rootLayout.setAlignment(Pos.CENTER);
+
+        contentArea = new AnchorPane();
+        contentArea.setId("contentArea");
+        HBox.setHgrow(contentArea, javafx.scene.layout.Priority.ALWAYS);
+
+        rootLayout.getChildren().add(contentArea);
+
+        navigatorManager.setContentArea(contentArea);
+
+        return rootLayout;
+    }
 
     /**
      * This method is called to display the main layout of the application.
      * It initializes the FXML loader, sets up the stage, and applies the global CSS
      * style.
+     * 
      * @param primaryStage The primary stage of the application.
      * @throws IOException An error can occur while loading the FXML file or
      *                     applying CSS.
      */
     public void display(Stage primaryStage) throws IOException {
-        this.fxmlLoader = new FXMLLoader();
         this.primaryStage = primaryStage;
-        loadFxml();
+        Parent rootNode = getView();
         createScene();
         applyCss();
         applyFont();
@@ -126,16 +153,6 @@ public class MainLayout extends AbstractScreen {
     }
 
     private void loadInitialContent() {
-        try {
-            MainMenuScreen mainMenu = new MainMenuScreen();
-            NavigationManager.getInstance().navigateTo(mainMenu.getView());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected String getFxmlPath() {
-        return "/com/mycompany/irr00_group_project/view/screen/MainLayout.fxml";
+        navigatorManager.navigateToMainMenu();
     }
 }

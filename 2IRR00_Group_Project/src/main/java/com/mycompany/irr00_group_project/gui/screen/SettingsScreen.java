@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.view.screen;
+package com.mycompany.irr00_group_project.gui.screen;
 
 import java.io.IOException;
 
@@ -47,7 +47,7 @@ public class SettingsScreen extends AbstractScreen {
 
     @Override
     protected String getFxmlPath() {
-        return "/com/mycompany/irr00_group_project/view/screen/SettingsScreen.fxml";
+        return "/com/mycompany/irr00_group_project/gui/screen/SettingsScreen.fxml";
     }
 
     @Override

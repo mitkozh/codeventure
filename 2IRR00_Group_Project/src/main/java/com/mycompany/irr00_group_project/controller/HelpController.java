@@ -2,8 +2,6 @@ package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.service.navigator.HelpScreenNavigatorManager;
 
-import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -15,8 +13,6 @@ public class HelpController {
 
     private HelpScreenNavigatorManager navigatorManager;
 
-    private boolean isInitializingView = true;
-    
     /**
      * Initializes the controller. Can be used to set up
      * any initial data or bindings needed for the help screen.

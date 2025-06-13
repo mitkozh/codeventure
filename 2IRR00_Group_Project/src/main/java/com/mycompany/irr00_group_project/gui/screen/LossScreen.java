@@ -1,36 +1,38 @@
-package com.mycompany.irr00_group_project.view.screen;
 
-import com.mycompany.irr00_group_project.controller.WinScreenController;
+package com.mycompany.irr00_group_project.gui.screen;
+
+import com.mycompany.irr00_group_project.controller.LossScreenController;
 import javafx.scene.Parent;
 
 import java.io.IOException;
 
 /**
- * This class represents the Win Screen of the game.
+ * 
+ * LossScreen is a class that represents the loss screen in the game.
  */
-public class WinScreen extends AbstractScreen {
+public class LossScreen extends AbstractScreen {
     private Runnable onRestart;
 
     /**
-     * Constructor for WinScreen.
+     * Constructor for LossScreen.
      *
      * @param onRestart Runnable to execute when the restart action is triggered.
      */
-    public WinScreen(Runnable onRestart) {
+    public LossScreen(Runnable onRestart) {
         this.onRestart = onRestart;
     }
 
     @Override
     public Parent getView() throws IOException {
         super.getView();
-        WinScreenController controller = fxmlLoader.getController();
+        LossScreenController controller = fxmlLoader.getController();
         controller.setOnRestart(onRestart);
         return root;
     }
 
     @Override
     protected String getFxmlPath() {
-        return "/com/mycompany/irr00_group_project/view/screen/WinScreen.fxml";
+        return "/com/mycompany/irr00_group_project/gui/screen/LossScreen.fxml";
     }
 
     @Override

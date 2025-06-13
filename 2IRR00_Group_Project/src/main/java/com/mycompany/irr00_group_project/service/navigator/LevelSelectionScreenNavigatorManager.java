@@ -2,8 +2,8 @@ package com.mycompany.irr00_group_project.service.navigator;
 
 import java.io.IOException;
 
-import com.mycompany.irr00_group_project.view.screen.GameScreen;
-import com.mycompany.irr00_group_project.view.screen.MainMenuScreen;
+import com.mycompany.irr00_group_project.gui.screen.GameScreen;
+import com.mycompany.irr00_group_project.gui.screen.MainMenuScreen;
 
 import javafx.fxml.FXML;
 

@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.view.screen;
+package com.mycompany.irr00_group_project.gui.screen;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,19 +16,37 @@ import javafx.scene.Parent;
  */
 public abstract class AbstractScreen {
     protected Parent root;
-    protected FXMLLoader fxmlLoader;
+    protected FXMLLoader fxmlLoader; // for backward compatibility
 
     /**
      * This method is called to get the root view of the screen.
-     * It loads the FXML file and applies the CSS styles.
+     * It initializes the root node by creating content and applying styling.
+     * 
      * @return The root node of the screen.
-     * @throws IOException An error can occur while loading the FXML file or
-     *                     applying CSS.
+     * @throws IOException An error can occur while applying CSS.
      */
     public Parent getView() throws IOException {
-        loadFxml();
+        if (root == null) {
+            this.root = createContent();
+            // will remove in future versions after all screens
+            // are migrated to use createContent()
+            if (root == null) {
+                loadFxml();
+            }
+        }
         applyCssToRoot();
         return root;
+    }
+
+    /**
+     * Creates the content of the screen.
+     * This method can be overridden by subclasses to provide custom content.
+     * 
+     * @return The root node of the screen
+     */
+    protected Parent createContent() {
+        //will be changed to abstract method in future versions
+        return null; 
     }
 
     /**
@@ -47,6 +65,7 @@ public abstract class AbstractScreen {
 
     /**
      * Loads the FXML file and initializes the root node.
+     * 
      * @throws IOException if an I/O error occurs while loading the FXML file
      */
     protected void loadFxml() throws IOException {
@@ -62,7 +81,10 @@ public abstract class AbstractScreen {
         this.root = fxmlLoader.load();
     }
 
-    protected abstract String getFxmlPath();
+    @Deprecated
+    protected String getFxmlPath() {
+        return null; // will be removed in future versions
+    }
 
     protected abstract String getCssPath();
 
