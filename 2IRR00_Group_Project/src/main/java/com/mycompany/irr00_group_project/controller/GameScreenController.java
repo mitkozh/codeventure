@@ -211,7 +211,7 @@ public class GameScreenController {
     private void handleLoss() {
         gameState.setGameResult(GameResult.LOST);
         serviceFacade.stopExecution();
-        loadLevel(levelDTO);
+        resetLevel();
         serviceFacade.navigateToLossScreen();
     }
 }
