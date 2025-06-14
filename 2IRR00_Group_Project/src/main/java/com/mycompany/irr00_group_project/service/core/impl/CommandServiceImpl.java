@@ -16,8 +16,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Implementation of the CommandService interface for handling IPC messages and commands.
- * It uses the observable pattern to notify changes in the game state and console output.
+ * Implementation of the CommandService interface for handling IPC messages and
+ * commands.
+ * It uses the observable pattern to notify changes in the game state and
+ * console output.
  */
 public class CommandServiceImpl implements CommandService, ObservableProvider {
     private final Queue<Runnable> commandQueue = new LinkedList<>();
@@ -28,7 +30,8 @@ public class CommandServiceImpl implements CommandService, ObservableProvider {
     /**
      * Constructor for CommandServiceImpl.
      *
-     * @param movementService The MovementService instance to handle movement commands.
+     * @param movementService The MovementService instance to handle movement
+     *                        commands.
      */
     public CommandServiceImpl(MovementService movementService) {
         this.movementService = movementService;
@@ -125,7 +128,7 @@ public class CommandServiceImpl implements CommandService, ObservableProvider {
             gameState.incrementPlayerSteps();
             gameStateObs.setPlayerSteps(gameState.getPlayerSteps());
             gameStateObs.setGridForUpdate();
-            if (movementResult.isLevelCompleted()) {
+            if (movementResult.isLevelCompleted() && commandQueue.size() == 1) {
                 gameStateObs.setLevelWon(true);
             }
         } else {
@@ -170,5 +173,11 @@ public class CommandServiceImpl implements CommandService, ObservableProvider {
             ConsoleObservables console = getObservableOrThrow(ConsoleObservables.class);
             console.addError("User code: " + arg);
         }
+    }
+
+    @Override
+    public void clearCommandQueue() {
+        commandQueue.clear();
+        isProcessingQueue = false;
     }
 }

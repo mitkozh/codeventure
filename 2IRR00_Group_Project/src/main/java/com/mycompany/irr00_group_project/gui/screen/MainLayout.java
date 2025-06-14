@@ -1,18 +1,22 @@
 package com.mycompany.irr00_group_project.gui.screen;
 
 import com.mycompany.irr00_group_project.service.navigator.MainLayoutNavigatorManager;
+import com.mycompany.irr00_group_project.utils.ConstantsResources;
 import com.mycompany.irr00_group_project.utils.StringUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * The MainLayout class is responsible for setting up the main layout of the
@@ -52,7 +56,7 @@ public class MainLayout extends AbstractScreen {
      * This method is called to display the main layout of the application.
      * It initializes the FXML loader, sets up the stage, and applies the global CSS
      * style.
-     * 
+     *
      * @param primaryStage The primary stage of the application.
      * @throws IOException An error can occur while loading the FXML file or
      *                     applying CSS.
@@ -72,6 +76,8 @@ public class MainLayout extends AbstractScreen {
     }
 
     private void setupStage() {
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(
+                getClass().getResourceAsStream(ConstantsResources.BACKGROUND_IMAGE))));
         primaryStage.setTitle(getTitle());
         primaryStage.setFullScreen(isFullScreen());
         primaryStage.setMinWidth(getMinStageWidth());

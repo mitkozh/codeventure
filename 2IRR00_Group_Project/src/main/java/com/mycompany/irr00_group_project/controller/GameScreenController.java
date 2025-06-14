@@ -137,19 +137,6 @@ public class GameScreenController {
 
     private void setupCommandServiceObservables() {
         if (commandService instanceof ObservableProvider provider) {
-            provider.getObservable(ConsoleObservables.class).ifPresent(console -> {
-                console.lastMessageProperty().addListener((obs, oldMsg, newMsg) -> {
-                    if (!StringUtils.isNullOrEmpty(newMsg)) {
-                        consoleOutputController.appendMessage(newMsg);
-                    }
-                });
-                console.lastErrorProperty().addListener((obs, oldErr, newErr) -> {
-                    if (!StringUtils.isNullOrEmpty(newErr)) {
-                        consoleOutputController.logError(newErr);
-                    }
-                });
-            });
-
             provider.getObservable(GameStateObservables.class).ifPresent(gameState -> {
                 gameState.gridNeedsUpdateProperty().addListener((obs, wasNeeded, isNeeded) -> {
                     if (isNeeded) {
@@ -215,7 +202,7 @@ public class GameScreenController {
     }
 
     /**
-     * fxml method to reset the level.
+     * method to reset the level.
      */
     public void resetLevelOnClick(ActionEvent event) {
         resetLevel();
@@ -226,6 +213,8 @@ public class GameScreenController {
             consoleOutputController.logError("Stop execution first before resetting.");
             return;
         }
+        userCodeLifecycleService.stopExecution();
+        commandService.clearCommandQueue();
         setExecutionState(false);
         loadLevel(levelDTO);
     }
@@ -240,12 +229,21 @@ public class GameScreenController {
     }
 
     /**
-     * fxml method to open the in-game settings.
+     * method to open the in-game settings.
      *
      * @param actionEvent .
      */
     public void onSettingsClick(ActionEvent actionEvent) {
         navigatorManager.navigateToSettings();
+    }
+
+    /**
+     * method to open the help screen.
+     *
+     * @param actionEvent .
+     */
+    public void onHelpClick(ActionEvent actionEvent) {
+        navigatorManager.navigateToHelp();
     }
 
     private void handleLevelWon() {

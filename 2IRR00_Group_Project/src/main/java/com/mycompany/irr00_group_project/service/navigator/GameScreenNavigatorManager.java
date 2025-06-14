@@ -1,9 +1,6 @@
 package com.mycompany.irr00_group_project.service.navigator;
 
-import com.mycompany.irr00_group_project.gui.screen.LevelSelectionScreen;
-import com.mycompany.irr00_group_project.gui.screen.LossScreen;
-import com.mycompany.irr00_group_project.gui.screen.SettingsScreen;
-import com.mycompany.irr00_group_project.gui.screen.WinScreen;
+import com.mycompany.irr00_group_project.gui.screen.*;
 import javafx.scene.Parent;
 
 import java.io.IOException;
@@ -82,5 +79,20 @@ public class GameScreenNavigatorManager {
         return () -> {
             NavigationManager.getInstance().navigateTo(rootPane);
         };
+    }
+
+    public void navigateToHelp() {
+        try {
+            HelpScreen helpScreen = getHelpScreen();
+            NavigationManager.getInstance().navigateTo(helpScreen.getView());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private HelpScreen getHelpScreen() {
+        Runnable onExit = getOnRestart();
+        return new HelpScreen(onExit);
     }
 }

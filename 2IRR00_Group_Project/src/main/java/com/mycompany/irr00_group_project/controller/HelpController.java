@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 public class HelpController {
 
     private HelpScreenNavigatorManager navigatorManager;
+    private Runnable onExit;
 
     /**
      * Initializes the controller. Can be used to set up
@@ -24,11 +25,24 @@ public class HelpController {
 
     /**
      * Handles the back button action to return to the main menu.
+     * 
      * @param actionEvent The action event triggered by the button click
      */
     @FXML
     public void backToMenu(ActionEvent actionEvent) {
-        navigatorManager.navigateToMenu();
+        if (onExit != null) {
+            onExit.run();
+        } else {
+            navigatorManager.navigateToMenu();
+        }
     }
-    
+
+    /**
+     * Sets the action to be performed when the user exits the help screen.
+     * 
+     * @param onExit The runnable to execute on exit
+     */
+    public void setOnExit(Runnable onExit) {
+        this.onExit = onExit;
+    }
 }

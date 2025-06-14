@@ -9,7 +9,7 @@
            fx:controller="com.mycompany.irr00_group_project.controller.LossScreenController"
            styleClass="popup-bg">
     <VBox alignment="CENTER" spacing="30" styleClass="popup-panel">
-        <Label text="You Lost!" styleClass="popup-title loss"/>
+        <Label text="You Lost!" styleClass="popup-title"/>
         <Label text="Better luck next time!" styleClass="popup-subtitle"/>
         <VBox spacing="15" alignment="CENTER">
             <Button text="Restart" fx:id="restartButton" styleClass="popup-button"/>

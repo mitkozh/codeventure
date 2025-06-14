@@ -9,7 +9,7 @@
            fx:controller="com.mycompany.irr00_group_project.controller.WinScreenController"
            styleClass="popup-bg">
     <VBox alignment="CENTER" spacing="30" styleClass="popup-panel">
-        <Label text="You Win!" styleClass="popup-title win"/>
+        <Label text="You Win!" styleClass="popup-title"/>
         <Label fx:id="starsLabel" styleClass="star-label"/>
         <Label fx:id="congratsLabel" text="Well done!" styleClass="popup-subtitle"/>
         <VBox spacing="15" alignment="CENTER">

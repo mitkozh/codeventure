@@ -75,3 +75,11 @@
     -fx-background-color: #e0e0e0;
     -fx-border-color: #888;
 }
+
+.popup-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+    -fx-padding: 0 0 10px 0;
+    -fx-alignment: center;
+}

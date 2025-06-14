@@ -22,4 +22,10 @@ public interface CommandService {
      */
     void handleIPCError(String error, GameState state);
 
+    
+    /**
+     * Clears the command queue.
+     */
+    void clearCommandQueue();
+
 }

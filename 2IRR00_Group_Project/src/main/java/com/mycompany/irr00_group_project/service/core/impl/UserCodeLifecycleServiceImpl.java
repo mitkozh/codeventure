@@ -35,17 +35,22 @@ public class UserCodeLifecycleServiceImpl implements UserCodeLifecycleService, O
     /**
      * Constructor for UserCodeLifecycleServiceImpl.
      *
-     * @param commandService The CommandService instance to handle IPC messages and commands.
-     * @param sharedJarService The SharedJarService instance to manage shared resources.
-     * @param compilationService The UserCodeCompilationService instance to compile user code.
-     * @param executionService The UserCodeExecutionService instance to execute user code.
-     * @param ipcService The IPCService instance to handle inter-process communication.
+     * @param commandService     The CommandService instance to handle IPC messages
+     *                           and commands.
+     * @param sharedJarService   The SharedJarService instance to manage shared
+     *                           resources.
+     * @param compilationService The UserCodeCompilationService instance to compile
+     *                           user code.
+     * @param executionService   The UserCodeExecutionService instance to execute
+     *                           user code.
+     * @param ipcService         The IPCService instance to handle inter-process
+     *                           communication.
      */
     public UserCodeLifecycleServiceImpl(CommandService commandService,
-                                        SharedJarService sharedJarService,
-                                        UserCodeCompilationService compilationService,
-                                        UserCodeExecutionService executionService,
-                                        IPCService ipcService) {
+            SharedJarService sharedJarService,
+            UserCodeCompilationService compilationService,
+            UserCodeExecutionService executionService,
+            IPCService ipcService) {
         this.commandService = commandService;
         this.sharedJarService = sharedJarService;
         this.compilationService = compilationService;
@@ -143,6 +148,7 @@ public class UserCodeLifecycleServiceImpl implements UserCodeLifecycleService, O
                 if (process.exitValue() == 0) {
                     finishExecution("User code execution finished successfully.");
                 } else {
+                    commandService.clearCommandQueue();
                     finishExecution("User code execution finished with errors (Exit code: "
                             + process.exitValue() + ").");
                 }

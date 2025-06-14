@@ -22,6 +22,7 @@ public class GameScreen extends AbstractScreen {
     private BorderPane gamePanel;
     private Label levelTitle;
     private Button gearButton;
+    private Button infoButton;
     private Button runCodeButton;
     private Button stopExecutionButton;
     private Button resetLevelButton;
@@ -59,16 +60,21 @@ public class GameScreen extends AbstractScreen {
     }
 
     private HBox createHeader() {
-        HBox header = new HBox();
+        HBox header = new HBox(10);
         header.getStyleClass().add("gameScreen-header");
         header.setAlignment(Pos.TOP_RIGHT);
+
+        infoButton = new Button("ℹ");
+        infoButton.setId("infoButton");
+        infoButton.getStyleClass().addAll("custom-button");
+        infoButton.setOnAction(controller::onHelpClick);
 
         gearButton = new Button("⚙");
         gearButton.setId("gearButton");
         gearButton.getStyleClass().addAll("custom-button");
         gearButton.setOnAction(controller::onSettingsClick);
 
-        header.getChildren().add(gearButton);
+        header.getChildren().addAll(infoButton, gearButton);
 
         return header;
     }
