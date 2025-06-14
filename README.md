@@ -7,10 +7,10 @@ Group Assignment 2IRR00 2025 <Group 58>
 * [Technologies](#technologies)
 * [Installation](#installation)
 * [Use Case Reference](#use-case-reference)
-* [Design Patterns](design-patterns)
-* [Intermediate Submissions](intermediate-submissions)
-* [License](license)
-* [Project Status](project-status)
+* [Design Patterns](#design-patterns)
+* [Intermediate Submissions](#intermediate-submissions)
+* [License](#license)
+* [Project Status](#project-status)
 
 ## Introduction
 Codventure is a 2D educational game designed to teach programming basics in an interactive way. Players control a character on a grid-based map (minimum size 4×4) by writing simple Java code. The objective is to guide the character from a start point to an endpoint while avoiding obstacles and meeting level-specific challenges. The game features a sandbox environment for executing code, encrypted JSON save files, visual feedback, and documentation to support the player’s learning.
