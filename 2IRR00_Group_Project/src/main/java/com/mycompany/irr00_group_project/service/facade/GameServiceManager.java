@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.utils;
+package com.mycompany.irr00_group_project.service.facade;
 
 import com.mycompany.irr00_group_project.service.core.GamePlayService;
 import com.mycompany.irr00_group_project.service.core.LevelService;
@@ -15,7 +15,7 @@ import com.mycompany.irr00_group_project.service.sandbox.UserCodeExecutionServic
  * Manages the core game services, providing access to various functionalities.
  * This class is a central point for retrieving instances of the core services
  */
-public class GameServiceManager {
+class GameServiceManager {
     private final MovementService movementService;
     private final GamePlayService gamePlayService;
     private final LevelService levelService;

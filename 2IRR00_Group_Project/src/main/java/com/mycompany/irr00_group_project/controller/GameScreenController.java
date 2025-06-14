@@ -8,21 +8,8 @@ import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.model.enums.GameResult;
-import com.mycompany.irr00_group_project.service.core.CommandService;
-import com.mycompany.irr00_group_project.service.core.UserCodeLifecycleService;
-import com.mycompany.irr00_group_project.service.core.impl.CommandServiceImpl;
-import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
-import com.mycompany.irr00_group_project.service.core.impl.UserCodeLifecycleServiceImpl;
-import com.mycompany.irr00_group_project.service.navigator.GameScreenNavigatorManager;
-import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
-import com.mycompany.irr00_group_project.service.observable.NavigationObservables;
-import com.mycompany.irr00_group_project.service.navigator.NavigationService;
-import com.mycompany.irr00_group_project.service.observable.ExecutionObservables;
-import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
-import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
-import com.mycompany.irr00_group_project.service.observable.GameStateObservables;
+import com.mycompany.irr00_group_project.service.facade.GameScreenServiceFacade;
 import com.mycompany.irr00_group_project.utils.Constants;
-import com.mycompany.irr00_group_project.utils.GameServiceManager;
 import com.mycompany.irr00_group_project.utils.StringUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -47,10 +34,7 @@ public class GameScreenController {
     private GameScreen view;
 
     private GameState gameState;
-    private GameServiceManager gameServiceManager;
-    private CommandService commandService;
-    private GameScreenNavigatorManager navigatorManager;
-    private UserCodeLifecycleService userCodeLifecycleService;
+    private GameScreenServiceFacade serviceFacade;
     private LevelDTO levelDTO;
 
     public GameScreenController(GameScreen view) {
@@ -62,14 +46,7 @@ public class GameScreenController {
      */
     public void initialize() {
         setUpViewControllerBindings();
-        this.gameServiceManager = new GameServiceManager();
-        this.navigatorManager = new GameScreenNavigatorManager(rootPane);
-        this.commandService = new CommandServiceImpl(gameServiceManager.getMovementService());
-        this.userCodeLifecycleService = new UserCodeLifecycleServiceImpl(commandService,
-                gameServiceManager.getSharedJarService(),
-                gameServiceManager.getCompilationService(),
-                gameServiceManager.getExecutionService(),
-                gameServiceManager.getIpcService());
+        this.serviceFacade = new GameScreenServiceFacade(rootPane);
         setupObservableBindings();
         stopExecutionButton.setDisable(true);
         getCurrentLevel();
@@ -88,102 +65,59 @@ public class GameScreenController {
     }
 
     private void getCurrentLevel() {
-        if (gameServiceManager.getLevelService() instanceof LevelServiceImpl serviceImpl) {
-            LevelSelectionObservables levelObs = serviceImpl
-                    .getObservableOrThrow(LevelSelectionObservables.class);
-            LevelDTO currentLevel = levelObs.getSelectedLevel();
-            if (currentLevel != null) {
-                levelDTO = currentLevel;
-                loadLevel(currentLevel);
-            }
+        LevelDTO currentLevel = serviceFacade.getCurrentLevel();
+        if (currentLevel != null) {
+            levelDTO = currentLevel;
+            loadLevel(currentLevel);
         }
     }
 
     private void setupObservableBindings() {
-        setupCommandServiceObservables();
-        setupUserCodeLifecycleServiceObservables();
-        setupNavigationObservables();
+        serviceFacade.setupObservableBindings(
+                this::handleGridUpdate,
+                this::handleLevelWon,
+                this::handleLoss,
+                this::handleConsoleMessage,
+                this::handleConsoleError,
+                this::handleExecutionStart,
+                this::handleExecutionComplete,
+                this::handleReturnToGame
+        );
     }
 
-    private void setupNavigationObservables() {
-        NavigationService navService = NavigationService.getInstance();
-        navService.getObservable(NavigationObservables.class).ifPresent(nav -> {
-            nav.returnedToGameProperty().addListener((obs, wasReturned, isReturned) -> {
-                if (isReturned) {
-                    commandService.requestResume();
-                    nav.clearReturnedToGame();
-                }
-            });
-        });
+    private void handleGridUpdate() {
+        gameGridController.renderGridAndSprite();
     }
 
-    private void setupUserCodeLifecycleServiceObservables() {
-        if (userCodeLifecycleService instanceof ObservableProvider provider) {
-            provider.getObservable(ConsoleObservables.class).ifPresent(console -> {
-                console.lastMessageProperty().addListener((obs, oldMsg, newMsg) -> {
-                    if (!StringUtils.isNullOrEmpty(newMsg)) {
-                        consoleOutputController.appendMessage(newMsg);
-                    }
-                });
-                console.lastErrorProperty().addListener((obs, oldErr, newErr) -> {
-                    if (!StringUtils.isNullOrEmpty(newErr)) {
-                        consoleOutputController.logError(newErr);
-                    }
-                });
-            });
-            provider.getObservable(ExecutionObservables.class).ifPresent(execution -> {
-                execution.executionStartedProperty().addListener((obs, wasStarted, isStarted) -> {
-                    if (isStarted) {
-                        setExecutionState(true);
-                    }
-                });
-
-                execution.executionCompletedProperty()
-                        .addListener((obs, wasCompleted, isCompleted) -> {
-                            if (isCompleted) {
-                                String message = execution.completionMessageProperty().get();
-                                finishExecution(message);
-                                execution.resetFlags();
-                            }
-                        });
-            });
+    private void handleConsoleMessage(String message) {
+        if (!StringUtils.isNullOrEmpty(message)) {
+            consoleOutputController.appendMessage(message);
         }
     }
 
-    private void setupCommandServiceObservables() {
-        if (commandService instanceof ObservableProvider provider) {
-            provider.getObservable(GameStateObservables.class).ifPresent(gameState -> {
-                gameState.gridNeedsUpdateProperty().addListener((obs, wasNeeded, isNeeded) -> {
-                    if (isNeeded) {
-                        gameGridController.renderGridAndSprite();
-                        gameState.clearGridUpdateFlag();
-                    }
-                });
-
-                gameState.levelWonProperty().addListener((obs, wasWon, isWon) -> {
-                    if (isWon) {
-                        handleLevelWon();
-                        gameState.resetGameFlags();
-                    }
-                });
-
-                gameState.levelLostProperty().addListener((obs, wasLost, isLost) -> {
-                    if (isLost) {
-                        handleLoss();
-                        gameState.resetGameFlags();
-                    }
-                });
-            });
+    private void handleConsoleError(String error) {
+        if (!StringUtils.isNullOrEmpty(error)) {
+            consoleOutputController.logError(error);
         }
+    }
+
+    private void handleExecutionStart() {
+        setExecutionState(true);
+    }
+
+    private void handleExecutionComplete(String message) {
+        finishExecution(message);
+    }
+
+    private void handleReturnToGame() {
+        serviceFacade.requestResume();
     }
 
     private void loadLevel(LevelDTO level) {
-        LevelData levelDataByLevelDTO = gameServiceManager.getLevelService()
-                .getLevelDataByLevelDTO(level);
-        gameState = new GameState(levelDataByLevelDTO);
+        LevelData levelData = serviceFacade.getLevelData(level);
+        gameState = new GameState(levelData);
         gameGridController.loadLevelFromGameState(gameState);
-        levelTitle.setText("Level: "
-                + levelDTO.getLevelNumber());
+        levelTitle.setText("Level: " + levelDTO.getLevelNumber());
     }
 
     /**
@@ -197,12 +131,12 @@ public class GameScreenController {
         String code = Constants.INITIAL_IMPORTS_CODE + codeEditorController.getCode();
         consoleOutputController.clear();
         setExecutionState(true);
-        userCodeLifecycleService.executeCode(code, gameState);
+        serviceFacade.executeCode(code, gameState);
     }
 
     private void setExecutionState(boolean executing) {
         Platform.runLater(() -> {
-            runCodeButton.setDisable(executing || !userCodeLifecycleService.isReady());
+            runCodeButton.setDisable(executing || !serviceFacade.isReady());
             stopExecutionButton.setDisable(!executing);
             resetLevelButton.setDisable(executing);
         });
@@ -212,7 +146,7 @@ public class GameScreenController {
      * fxml method to stop executing the code of the user.
      */
     public void stopExecutionOnClick(ActionEvent event) {
-        userCodeLifecycleService.stopExecution();
+        serviceFacade.stopExecution();
         setExecutionState(false);
     }
 
@@ -224,12 +158,12 @@ public class GameScreenController {
     }
 
     private void resetLevel() {
-        if (userCodeLifecycleService.isExecuting()) {
+        if (serviceFacade.isExecuting()) {
             consoleOutputController.logError("Stop execution first before resetting.");
             return;
         }
-        userCodeLifecycleService.stopExecution();
-        commandService.clearCommandQueue();
+        serviceFacade.stopExecution();
+        serviceFacade.clearCommandQueue();
         setExecutionState(false);
         loadLevel(levelDTO);
     }
@@ -249,8 +183,8 @@ public class GameScreenController {
      * @param actionEvent .
      */
     public void onSettingsClick(ActionEvent actionEvent) {
-        commandService.requestPause();
-        navigatorManager.navigateToSettings();
+        serviceFacade.requestPause();
+        serviceFacade.navigateToSettings();
     }
 
     /**
@@ -259,26 +193,25 @@ public class GameScreenController {
      * @param actionEvent .
      */
     public void onHelpClick(ActionEvent actionEvent) {
-        commandService.requestPause();
-        navigatorManager.navigateToHelp();
+        serviceFacade.requestPause();
+        serviceFacade.navigateToHelp();
     }
 
     private void handleLevelWon() {
         gameState.setGameResult(GameResult.WON);
-        userCodeLifecycleService.stopExecution();
+        serviceFacade.stopExecution();
         int playerSteps = gameState.getPlayerSteps();
-        levelDTO = gameServiceManager.getGamePlayService()
-                .handleLevelCompletion(this.levelDTO,
-                        playerSteps, gameState.getLevelData());
-        gameServiceManager.getLevelService().completeLevelAndSave(levelDTO);
+        levelDTO = serviceFacade.handleLevelCompletion(this.levelDTO, playerSteps,
+                gameState.getLevelData());
+        serviceFacade.completeLevelAndSave(levelDTO);
         loadLevel(levelDTO);
-        navigatorManager.navigateToWinScreen();
+        serviceFacade.navigateToWinScreen();
     }
 
     private void handleLoss() {
         gameState.setGameResult(GameResult.LOST);
-        userCodeLifecycleService.stopExecution();
+        serviceFacade.stopExecution();
         loadLevel(levelDTO);
-        navigatorManager.navigateToLossScreen();
+        serviceFacade.navigateToLossScreen();
     }
 }
