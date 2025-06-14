@@ -15,6 +15,8 @@ import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.core.impl.UserCodeLifecycleServiceImpl;
 import com.mycompany.irr00_group_project.service.navigator.GameScreenNavigatorManager;
 import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
+import com.mycompany.irr00_group_project.service.observable.NavigationObservables;
+import com.mycompany.irr00_group_project.service.navigator.NavigationService;
 import com.mycompany.irr00_group_project.service.observable.ExecutionObservables;
 import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
@@ -100,6 +102,19 @@ public class GameScreenController {
     private void setupObservableBindings() {
         setupCommandServiceObservables();
         setupUserCodeLifecycleServiceObservables();
+        setupNavigationObservables();
+    }
+
+    private void setupNavigationObservables() {
+        NavigationService navService = NavigationService.getInstance();
+        navService.getObservable(NavigationObservables.class).ifPresent(nav -> {
+            nav.returnedToGameProperty().addListener((obs, wasReturned, isReturned) -> {
+                if (isReturned) {
+                    commandService.requestResume();
+                    nav.clearReturnedToGame();
+                }
+            });
+        });
     }
 
     private void setupUserCodeLifecycleServiceObservables() {
@@ -234,6 +249,7 @@ public class GameScreenController {
      * @param actionEvent .
      */
     public void onSettingsClick(ActionEvent actionEvent) {
+        commandService.requestPause();
         navigatorManager.navigateToSettings();
     }
 
@@ -243,6 +259,7 @@ public class GameScreenController {
      * @param actionEvent .
      */
     public void onHelpClick(ActionEvent actionEvent) {
+        commandService.requestPause();
         navigatorManager.navigateToHelp();
     }
 

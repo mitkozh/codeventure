@@ -2,6 +2,7 @@ package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.service.core.SettingsService;
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
+import com.mycompany.irr00_group_project.service.navigator.NavigationService;
 import com.mycompany.irr00_group_project.service.navigator.SettingsScreenNavigatorManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -172,6 +173,7 @@ public class SettingsController {
     public void handleClose(ActionEvent actionEvent) {
         if (onExit != null) {
             onExit.run();
+            NavigationService.getInstance().notifyReturnedToGame();
         } else {
             goToMenu();
         }

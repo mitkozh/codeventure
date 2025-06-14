@@ -8,6 +8,7 @@ import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
 import com.mycompany.irr00_group_project.service.observable.GameStateObservables;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
 import com.mycompany.irr00_group_project.service.observable.ObservableRegistry;
+import com.mycompany.irr00_group_project.service.observable.CommandExecutionObservables;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.util.Duration;
@@ -26,6 +27,7 @@ public class CommandServiceImpl implements CommandService, ObservableProvider {
     private final MovementService movementService;
     private final ObservableRegistry observableRegistry = new ObservableRegistry();
     private boolean isProcessingQueue = false;
+    private PauseTransition currentPause;
 
     /**
      * Constructor for CommandServiceImpl.
@@ -36,11 +38,80 @@ public class CommandServiceImpl implements CommandService, ObservableProvider {
     public CommandServiceImpl(MovementService movementService) {
         this.movementService = movementService;
         initializeObservables();
+        setupCommandExecutionListeners();
+    }
+
+    private void setupCommandExecutionListeners() {
+        CommandExecutionObservables cmdExecObservables =
+                getObservableOrThrow(CommandExecutionObservables.class);
+
+        cmdExecObservables.pauseRequestedProperty()
+                .addListener((obs, wasPauseRequested, isPauseRequested) -> {
+                    if (isPauseRequested) {
+                        handlePauseRequest();
+                        cmdExecObservables.clearPauseRequest();
+                    }
+                });
+
+        cmdExecObservables.resumeRequestedProperty()
+                .addListener((obs, wasResumeRequested, isResumeRequested) -> {
+                    if (isResumeRequested) {
+                        handleResumeRequest();
+                        cmdExecObservables.clearResumeRequest();
+                    }
+                });
+    }
+
+    private void handlePauseRequest() {
+        CommandExecutionObservables commandExecutionObservables =
+                getObservableOrThrow(CommandExecutionObservables.class);
+        commandExecutionObservables.setExecutionPaused(true);
+
+        if (currentPause != null
+                && currentPause.getStatus() == javafx.animation.Animation.Status.RUNNING) {
+            currentPause.pause();
+        }
+    }
+
+    private void handleResumeRequest() {
+        CommandExecutionObservables commandExecutionObservables =
+                getObservableOrThrow(CommandExecutionObservables.class);
+        commandExecutionObservables.setExecutionPaused(false);
+
+        if (currentPause != null
+                && currentPause.getStatus() == javafx.animation.Animation.Status.PAUSED) {
+            currentPause.play();
+        } else if (!commandQueue.isEmpty() && !isProcessingQueue) {
+            processCommandQueue();
+        }
     }
 
     private void initializeObservables() {
         observableRegistry.register(ConsoleObservables.class, new ConsoleObservables());
         observableRegistry.register(GameStateObservables.class, new GameStateObservables());
+        observableRegistry.register(CommandExecutionObservables.class,
+                new CommandExecutionObservables());
+    }
+
+    @Override
+    public void requestPause() {
+        CommandExecutionObservables commandExecutionObservables =
+                getObservableOrThrow(CommandExecutionObservables.class);
+        commandExecutionObservables.requestPause();
+    }
+
+    @Override
+    public void requestResume() {
+        CommandExecutionObservables commandExecutionObservables =
+                getObservableOrThrow(CommandExecutionObservables.class);
+        commandExecutionObservables.requestResume();
+    }
+
+    @Override
+    public boolean isPaused() {
+        CommandExecutionObservables commandExecutionObservables =
+                getObservableOrThrow(CommandExecutionObservables.class);
+        return commandExecutionObservables.isExecutionPaused();
     }
 
     @Override
@@ -107,14 +178,14 @@ public class CommandServiceImpl implements CommandService, ObservableProvider {
             command.run();
         }
 
-        PauseTransition pause = new PauseTransition(Duration.millis(300));
-        pause.setOnFinished(event -> {
+        currentPause = new PauseTransition(Duration.millis(300));
+        currentPause.setOnFinished(event -> {
             isProcessingQueue = false;
             if (!commandQueue.isEmpty()) {
                 processCommandQueue();
             }
         });
-        pause.play();
+        currentPause.play();
     }
 
     private void handleMoveForward(GameState gameState) {

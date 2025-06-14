@@ -2,6 +2,7 @@ package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.service.navigator.HelpScreenNavigatorManager;
 
+import com.mycompany.irr00_group_project.service.navigator.NavigationService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -32,6 +33,7 @@ public class HelpController {
     public void backToMenu(ActionEvent actionEvent) {
         if (onExit != null) {
             onExit.run();
+            NavigationService.getInstance().notifyReturnedToGame();
         } else {
             navigatorManager.navigateToMenu();
         }

@@ -22,10 +22,23 @@ public interface CommandService {
      */
     void handleIPCError(String error, GameState state);
 
-    
     /**
      * Clears the command queue.
      */
     void clearCommandQueue();
 
+    /**
+     * Requests a pause in command execution.
+     */
+    void requestPause();
+
+    /**
+     * Requests resumption of command execution.
+     */
+    void requestResume();
+
+    /**
+     * Checks if command execution is currently paused.
+     */
+    boolean isPaused();
 }
