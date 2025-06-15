@@ -20,7 +20,7 @@ public class MainMenuScreenNavigatorManager {
     public void navigateToLevelSelection() {
         try {
             LevelSelectionScreen levels = new LevelSelectionScreen();
-            NavigationManager.getInstance().navigateTo(levels.getView());
+            NavigationManager.getInstance().navigateTo(levels);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,7 +32,7 @@ public class MainMenuScreenNavigatorManager {
     public void navigateToSettings() {
         try {
             SettingsScreen settings = new SettingsScreen();
-            NavigationManager.getInstance().navigateTo(settings.getView());
+            NavigationManager.getInstance().navigateTo(settings);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +44,7 @@ public class MainMenuScreenNavigatorManager {
     public void navigateToHelp() {
         try {
             HelpScreen help = new HelpScreen();
-            NavigationManager.getInstance().navigateTo(help.getView());
+            NavigationManager.getInstance().navigateTo(help);
         } catch (Exception e) {
             e.printStackTrace();
         }

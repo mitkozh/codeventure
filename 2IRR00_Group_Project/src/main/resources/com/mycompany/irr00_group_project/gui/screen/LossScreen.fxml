@@ -12,7 +12,7 @@
         <Label text="You Lost!" styleClass="popup-title"/>
         <Label text="Better luck next time!" styleClass="popup-subtitle"/>
         <VBox spacing="15" alignment="CENTER">
-            <Button text="Restart" fx:id="restartButton" styleClass="popup-button"/>
+            <Button text="Restart" fx:id="restartButton" styleClass="popup-button" onAction="#handleGoBack"/>
             <Button text="Level Selection" fx:id="levelSelectButton" styleClass="popup-button" onAction="#handleLevelSelectionButton"/>
         </VBox>
     </VBox>

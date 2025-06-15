@@ -5,7 +5,6 @@ import com.mycompany.irr00_group_project.gui.screen.LevelSelectionScreen;
 import com.mycompany.irr00_group_project.gui.screen.LossScreen;
 import com.mycompany.irr00_group_project.gui.screen.SettingsScreen;
 import com.mycompany.irr00_group_project.gui.screen.WinScreen;
-import javafx.scene.Parent;
 
 import java.io.IOException;
 
@@ -14,52 +13,29 @@ import java.io.IOException;
  * navigation to the settings screen in the game.
  */
 public class GameScreenNavigatorManager {
-    private Parent rootPane;
-
-    public GameScreenNavigatorManager(Parent root) {
-        this.rootPane = root;
-    }
-
-    private SettingsScreen getSettingsScreen() {
-        Runnable onExit = getOnRestart();
-        Runnable onGoBack = () -> {
-            LevelSelectionScreen levelSelectionScreen = new LevelSelectionScreen();
-            try {
-                NavigationManager.getInstance().navigateTo(levelSelectionScreen.getView());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        };
-        return new SettingsScreen(onExit, onGoBack, "SELECT LEVEL");
-    }
 
     /**
      * Navigates to the in-game settings screen.
      */
     public void navigateToSettings() {
-        SettingsScreen settingsScreen = getSettingsScreen();
         try {
-            NavigationManager.getInstance().navigateTo(settingsScreen.getView());
+            SettingsScreen settingsScreen = new SettingsScreen();
+            NavigationManager.getInstance().navigateTo(settingsScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Navigates to the level selection screen.
+     * Navigates to the loss screen.
      */
     public void navigateToLossScreen() {
         try {
-            LossScreen lossScreen = getLossScreen();
-            NavigationManager.getInstance().navigateTo(lossScreen.getView());
+            LossScreen lossScreen = new LossScreen();
+            NavigationManager.getInstance().navigateTo(lossScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private LossScreen getLossScreen() {
-        Runnable onRestart = getOnRestart();
-        return new LossScreen(onRestart);
     }
 
     /**
@@ -67,22 +43,11 @@ public class GameScreenNavigatorManager {
      */
     public void navigateToWinScreen() {
         try {
-            WinScreen winScreen = getWinScreen();
-            NavigationManager.getInstance().navigateTo(winScreen.getView());
+            WinScreen winScreen = new WinScreen();
+            NavigationManager.getInstance().navigateTo(winScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private WinScreen getWinScreen() {
-        Runnable onRestart = getOnRestart();
-        return new WinScreen(onRestart);
-    }
-
-    private Runnable getOnRestart() {
-        return () -> {
-            NavigationManager.getInstance().navigateTo(rootPane);
-        };
     }
 
     /**
@@ -90,15 +55,29 @@ public class GameScreenNavigatorManager {
      */
     public void navigateToHelp() {
         try {
-            HelpScreen helpScreen = getHelpScreen();
-            NavigationManager.getInstance().navigateTo(helpScreen.getView());
+            HelpScreen helpScreen = new HelpScreen();
+            NavigationManager.getInstance().navigateTo(helpScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private HelpScreen getHelpScreen() {
-        Runnable onExit = getOnRestart();
-        return new HelpScreen(onExit);
+    /**
+     * Navigates back to the previous screen.
+     */
+    private void navigateBack() {
+        NavigationManager.getInstance().navigateBack();
+    }
+
+    /**
+     * Navigates to level selection screen.
+     */
+    private void navigateToLevelSelection() {
+        try {
+            LevelSelectionScreen levelSelectionScreen = new LevelSelectionScreen();
+            NavigationManager.getInstance().navigateTo(levelSelectionScreen);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

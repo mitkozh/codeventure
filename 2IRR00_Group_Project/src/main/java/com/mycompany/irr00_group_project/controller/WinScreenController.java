@@ -19,8 +19,6 @@ public class WinScreenController {
 
     private LevelService levelService;
 
-    private LevelDTO currentLevelDTO;
-
     private WinScreenNavigatorManager navigatorManager;
 
     /**
@@ -64,13 +62,10 @@ public class WinScreenController {
     }
 
     /**
-     * Sets the action to be performed when the restart button is clicked.
-     *
-     * @param onRestart the action to perform on restart.
+     * Sets the action to be performed when the user restarts the level.
      */
-    public void setOnRestart(Runnable onRestart) {
-        restartButton.setOnAction(event -> {
-            onRestart.run();
-        });
+    public void handleRestartButtonAction() {
+        navigatorManager.navigateBack();
     }
+
 }

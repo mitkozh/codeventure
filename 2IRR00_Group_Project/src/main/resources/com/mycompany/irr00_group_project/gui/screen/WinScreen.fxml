@@ -14,7 +14,7 @@
         <Label fx:id="congratsLabel" text="Well done!" styleClass="popup-subtitle"/>
         <VBox spacing="15" alignment="CENTER">
             <Button text="Next Level" fx:id="nextLevelButton" styleClass="popup-button" onAction="#handleNextLevelButtonAction"/>
-            <Button text="Restart" fx:id="restartButton" styleClass="popup-button"/>
+            <Button text="Restart" fx:id="restartButton" styleClass="popup-button" onAction="#handleRestartButtonAction"/>
             <Button text="Level Selection" fx:id="levelSelectButton" styleClass="popup-button" onAction="#handleLevelSelectionButtonAction"/>
         </VBox>
     </VBox>

@@ -1,8 +1,5 @@
 package com.mycompany.irr00_group_project.controller;
 
-import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
-import com.mycompany.irr00_group_project.service.core.LevelService;
-import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.navigator.LossScreenNavigatorManager;
 
 
@@ -19,8 +16,6 @@ public class LossScreenController {
     @FXML
     private Button levelSelectionButton;
 
-    private LevelService levelService;
-    private LevelDTO currentLevelDTO;
     private LossScreenNavigatorManager navigatorManager;
 
     /**
@@ -28,14 +23,9 @@ public class LossScreenController {
      */
     @FXML
     public void initialize() {
-        levelService = LevelServiceImpl.getInstance();
         navigatorManager = new LossScreenNavigatorManager();
     }
 
-    public void setCurrentLevelDTO(LevelDTO levelDTO) {
-        this.currentLevelDTO = levelDTO;
-    }
-    
     /**
      * Handles the action when the "Level Selection" button is clicked.
      */
@@ -47,9 +37,7 @@ public class LossScreenController {
     /**
      * Handles the action when the "Restart" button is clicked.
      */
-    public void setOnRestart(Runnable onRestart) {
-        restartButton.setOnAction(event -> {
-            onRestart.run();
-        });
+    public void handleGoBack(ActionEvent event) {
+        navigatorManager.navigateBack();
     }
 }

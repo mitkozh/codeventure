@@ -16,7 +16,6 @@ import com.mycompany.irr00_group_project.service.observable.NavigationObservable
 import com.mycompany.irr00_group_project.service.observable.GameStateObservables;
 import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
-import javafx.scene.Parent;
 
 /**
  * Facade for game screen services.
@@ -29,12 +28,10 @@ public class GameScreenServiceFacade {
 
     /**
      * Constructor for GameScreenServiceFacade.
-     *
-     * @param rootPane The root pane of the game screen, used for navigation.
      */
-    public GameScreenServiceFacade(Parent rootPane) {
+    public GameScreenServiceFacade() {
         this.gameServiceManager = new GameServiceManager();
-        this.navigatorManager = new GameScreenNavigatorManager(rootPane);
+        this.navigatorManager = new GameScreenNavigatorManager();
         this.commandService = new CommandServiceImpl(gameServiceManager.getMovementService());
         this.userCodeLifecycleService = new UserCodeLifecycleServiceImpl(commandService,
                 gameServiceManager.getSharedJarService(),
@@ -45,6 +42,7 @@ public class GameScreenServiceFacade {
 
     /**
      * Gets the current level from the game service manager.
+     * 
      * @return The current LevelDTO if available, otherwise null.
      */
     public LevelDTO getCurrentLevel() {
@@ -107,9 +105,9 @@ public class GameScreenServiceFacade {
     /**
      * Handles the completion of a level.
      *
-     * @param levelDTO      The LevelDTO representing the current level.
-     * @param playerSteps   The number of steps taken by the player.
-     * @param levelData     The LevelData associated with the level.
+     * @param levelDTO    The LevelDTO representing the current level.
+     * @param playerSteps The number of steps taken by the player.
+     * @param levelData   The LevelData associated with the level.
      * @return The updated LevelDTO after handling completion.
      */
     public LevelDTO handleLevelCompletion(LevelDTO levelDTO, int playerSteps, LevelData levelData) {
@@ -124,14 +122,14 @@ public class GameScreenServiceFacade {
     /**
      * Sets up observable bindings for various game events.
      *
-     * @param onGridUpdate          Callback for when the grid needs to be updated.
-     * @param onLevelWon            Callback for when the level is won.
-     * @param onLoss                Callback for when the player loses.
-     * @param onConsoleMessage      Callback for console messages.
-     * @param onConsoleError        Callback for console errors.
-     * @param onExecutionStart      Callback for when execution starts.
-     * @param onExecutionComplete   Callback for when execution completes.
-     * @param onReturnToGame        Callback for when returning to the game.
+     * @param onGridUpdate        Callback for when the grid needs to be updated.
+     * @param onLevelWon          Callback for when the level is won.
+     * @param onLoss              Callback for when the player loses.
+     * @param onConsoleMessage    Callback for console messages.
+     * @param onConsoleError      Callback for console errors.
+     * @param onExecutionStart    Callback for when execution starts.
+     * @param onExecutionComplete Callback for when execution completes.
+     * @param onReturnToGame      Callback for when returning to the game.
      */
     public void setupObservableBindings(
             Runnable onGridUpdate,
@@ -150,7 +148,7 @@ public class GameScreenServiceFacade {
     }
 
     private void setupCommandServiceObservables(Runnable onGridUpdate, Runnable onLevelWon,
-                                                Runnable onLoss) {
+            Runnable onLoss) {
         if (commandService instanceof ObservableProvider provider) {
             provider.getObservable(GameStateObservables.class).ifPresent(gameState -> {
                 gameState.gridNeedsUpdateProperty().addListener((obs, wasNeeded, isNeeded) -> {

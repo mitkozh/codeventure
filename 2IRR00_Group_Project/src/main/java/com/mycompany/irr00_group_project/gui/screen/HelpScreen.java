@@ -13,30 +13,6 @@ import java.io.IOException;
  */
 public class HelpScreen extends AbstractScreen {
 
-    private Runnable onExit;
-
-    /**
-     * Constructor for HelpScreen.
-     * It initializes the screen with an exit action.
-     *
-     * @param onExit Runnable action to be executed when exiting the help screen.
-     */
-    public HelpScreen(Runnable onExit) {
-        this.onExit = onExit;
-    }
-
-    public HelpScreen() {
-
-    }
-
-    @Override
-    public Parent getView() throws IOException {
-        super.getView();
-        HelpController settingsController = fxmlLoader.getController();
-        settingsController.setOnExit(onExit);
-        return root;
-    }
-
     @Override
     protected String getFxmlPath() {
         return "/com/mycompany/irr00_group_project/gui/screen/HelpScreen.fxml";

@@ -16,7 +16,7 @@ public class LossScreenNavigatorManager {
         // Navigate to level selection screen
         try {
             LevelSelectionScreen levels = new LevelSelectionScreen();
-            NavigationManager.getInstance().navigateTo(levels.getView());
+            NavigationManager.getInstance().navigateTo(levels);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,9 +28,13 @@ public class LossScreenNavigatorManager {
     public void navigateToSameGameScreen(LevelDTO currentLevelDTO) {
         try {
             GameScreen game = new GameScreen();
-            NavigationManager.getInstance().navigateTo(game.getView());
+            NavigationManager.getInstance().navigateTo(game);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void navigateBack() {
+        NavigationManager.getInstance().navigateBack();
     }
 }

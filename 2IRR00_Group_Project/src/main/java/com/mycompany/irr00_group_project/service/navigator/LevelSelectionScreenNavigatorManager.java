@@ -23,7 +23,7 @@ public class LevelSelectionScreenNavigatorManager {
     public void navigateToMenu() {
         try {
             MainMenuScreen menuScreen = new MainMenuScreen();
-            NavigationManager.getInstance().navigateTo(menuScreen.getView());
+            NavigationManager.getInstance().navigateTo(menuScreen);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,7 +36,7 @@ public class LevelSelectionScreenNavigatorManager {
     public void navigateToLevel() {
         GameScreen gameScreen = new GameScreen();
         try {
-            NavigationManager.getInstance().navigateTo(gameScreen.getView());
+            NavigationManager.getInstance().navigateTo(gameScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }

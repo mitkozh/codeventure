@@ -11,39 +11,6 @@ import javafx.scene.Parent;
  * AbstractScreen class.
  */
 public class SettingsScreen extends AbstractScreen {
-    private Runnable onExit;
-    private Runnable onBack;
-    private String backButtonContent = "GO TO MENU";
-
-    /**
-     * Constructor for the SettingsScreen class.
-     * It passes an onExit and onBack action.
-     *
-     * @param onExit Runnable action to be executed when exiting the settings screen.
-     * @param onBack Runnable action to be executed when going back from the settings screen.
-     */
-    public SettingsScreen(Runnable onExit, Runnable onBack, String content) {
-        this.onExit = onExit;
-        this.onBack = onBack;
-        this.backButtonContent = content;
-    }
-
-    /**
-     * Default constructor for the SettingsScreen class.
-     * It initializes the screen without any specific actions on exit or back.
-     */
-    public SettingsScreen() {
-    }
-
-    @Override
-    public Parent getView() throws IOException {
-        super.getView();
-        SettingsController settingsController = fxmlLoader.getController();
-        settingsController.setOnExit(onExit);
-        settingsController.setOnGoBack(onBack);
-        settingsController.setBackToMenuButtonContent(backButtonContent);
-        return root;
-    }
 
     @Override
     protected String getFxmlPath() {

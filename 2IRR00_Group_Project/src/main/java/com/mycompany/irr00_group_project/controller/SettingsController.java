@@ -2,7 +2,6 @@ package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.service.core.SettingsService;
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
-import com.mycompany.irr00_group_project.service.navigator.NavigationService;
 import com.mycompany.irr00_group_project.service.navigator.SettingsScreenNavigatorManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,8 +35,6 @@ public class SettingsController {
 
     private SettingsService settingsService;
 
-    private Runnable onExit;
-    private Runnable onGoBack;
 
     private SettingsScreenNavigatorManager navigatorManager;
             
@@ -166,46 +163,20 @@ public class SettingsController {
 
     /**
      * This method is called when the close button is clicked.
-     * It navigates back to the main menu screen.
+     * It navigates back to the previous screen and notifies the navigator manager.
      *
      * @param actionEvent The action event triggered by the button click.
      */
     public void handleClose(ActionEvent actionEvent) {
-        if (onExit != null) {
-            onExit.run();
-            NavigationService.getInstance().notifyReturnedToGame();
-        } else {
-            goToMenu();
-        }
-    }
-
-    public void setOnExit(Runnable onExit) {
-        this.onExit = onExit;
-    }
-
-    public void setOnGoBack(Runnable onGoBack) {
-        this.onGoBack = onGoBack;
+        navigatorManager.navigateBackAndNotify();
     }
 
     /**
-     * This method is called when the main menu button is clicked.
-     * It navigates back to the main menu screen.
+     * This method is called when the back to screen button is clicked.
      *
      * @param actionEvent The action event triggered by the button click.
      */
-    public void backToMenu(ActionEvent actionEvent) {
-        if (onGoBack != null) {
-            onGoBack.run();
-        } else {
-            goToMenu();
-        }
-    }
-
-    public void goToMenu() {
-        navigatorManager.navigateToMenu();
-    }
-
-    public void setBackToMenuButtonContent(String content) {
-        backToMenuButton.setText(content);
+    public void onBackToScreenAction(ActionEvent actionEvent) {
+        navigatorManager.navigateToLevelSelectionOrMainMenu();
     }
 }

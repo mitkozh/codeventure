@@ -23,7 +23,7 @@ public class MainLayoutNavigatorManager {
     public void navigateToMainMenu() {
         try {
             MainMenuScreen mainMenu = new MainMenuScreen();
-            NavigationManager.getInstance().navigateTo(mainMenu.getView());
+            NavigationManager.getInstance().navigateToRoot(mainMenu);
         } catch (Exception e) {
             e.printStackTrace();
         }

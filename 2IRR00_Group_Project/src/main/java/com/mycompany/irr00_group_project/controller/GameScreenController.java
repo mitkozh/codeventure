@@ -46,7 +46,7 @@ public class GameScreenController {
      */
     public void initialize() {
         setUpViewControllerBindings();
-        this.serviceFacade = new GameScreenServiceFacade(rootPane);
+        this.serviceFacade = new GameScreenServiceFacade();
         setupObservableBindings();
         stopExecutionButton.setDisable(true);
         getCurrentLevel();

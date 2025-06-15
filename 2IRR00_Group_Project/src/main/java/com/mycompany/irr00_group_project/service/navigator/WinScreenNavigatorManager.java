@@ -17,7 +17,7 @@ public class WinScreenNavigatorManager {
     public void navigateToLevelSelection() {
         LevelSelectionScreen levelSelectionScreen = new LevelSelectionScreen();
         try {
-            NavigationManager.getInstance().navigateTo(levelSelectionScreen.getView());
+            NavigationManager.getInstance().navigateTo(levelSelectionScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,7 +30,7 @@ public class WinScreenNavigatorManager {
         
         GameScreen gameScreen = new GameScreen();
         try {
-            NavigationManager.getInstance().navigateTo(gameScreen.getView());
+            NavigationManager.getInstance().navigateTo(gameScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,7 +44,7 @@ public class WinScreenNavigatorManager {
         if (nextLevel != null) {
             GameScreen gameScreen = new GameScreen();
             try {
-                NavigationManager.getInstance().navigateTo(gameScreen.getView());
+                NavigationManager.getInstance().navigateTo(gameScreen);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -52,5 +52,8 @@ public class WinScreenNavigatorManager {
             System.out.println("No next level available.");
         }
     }
-    
+
+    public void navigateBack() {
+        NavigationManager.getInstance().navigateBack();
+    }
 }
