@@ -17,19 +17,32 @@ import com.mycompany.irr00_group_project.service.observable.GameStateObservables
 import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
 
+import java.util.function.Consumer;
+
 /**
  * Facade for game screen services.
  */
 public class GameScreenServiceFacade {
+    private static GameScreenServiceFacade instance;
     private final GameServiceManager gameServiceManager;
     private final GameScreenNavigatorManager navigatorManager;
     private final CommandService commandService;
     private final UserCodeLifecycleService userCodeLifecycleService;
+    
+    private Runnable currentOnGridUpdate;
+    private Runnable currentOnLevelWon;
+    private Runnable currentOnLoss;
+    private Consumer<String> currentOnConsoleMessage;
+    private Consumer<String> currentOnConsoleError;
+    private Runnable currentOnExecutionStart;
+    private Consumer<String> currentOnExecutionComplete;
+    private Runnable currentOnReturnToGame;
+    private boolean listenersInitialized;
 
     /**
      * Constructor for GameScreenServiceFacade.
      */
-    public GameScreenServiceFacade() {
+    private GameScreenServiceFacade() {
         this.gameServiceManager = new GameServiceManager();
         this.navigatorManager = new GameScreenNavigatorManager();
         this.commandService = new CommandServiceImpl(gameServiceManager.getMovementService());
@@ -38,6 +51,18 @@ public class GameScreenServiceFacade {
                 gameServiceManager.getCompilationService(),
                 gameServiceManager.getExecutionService(),
                 gameServiceManager.getIpcService());
+    }
+
+    /**
+     * Gets the singleton instance of GameScreenServiceFacade.
+     * 
+     * @return The singleton instance of GameScreenServiceFacade.
+     */
+    public static synchronized GameScreenServiceFacade getInstance() {
+        if (instance == null) {
+            instance = new GameScreenServiceFacade();
+        }
+        return instance;
     }
 
     /**
@@ -135,39 +160,49 @@ public class GameScreenServiceFacade {
             Runnable onGridUpdate,
             Runnable onLevelWon,
             Runnable onLoss,
-            java.util.function.Consumer<String> onConsoleMessage,
-            java.util.function.Consumer<String> onConsoleError,
+            Consumer<String> onConsoleMessage,
+            Consumer<String> onConsoleError,
             Runnable onExecutionStart,
-            java.util.function.Consumer<String> onExecutionComplete,
+            Consumer<String> onExecutionComplete,
             Runnable onReturnToGame) {
 
-        setupCommandServiceObservables(onGridUpdate, onLevelWon, onLoss);
-        setupUserCodeLifecycleServiceObservables(onConsoleMessage, onConsoleError,
-                onExecutionStart, onExecutionComplete);
-        setupNavigationObservables(onReturnToGame);
+        this.currentOnGridUpdate = onGridUpdate;
+        this.currentOnLevelWon = onLevelWon;
+        this.currentOnLoss = onLoss;
+        this.currentOnConsoleMessage = onConsoleMessage;
+        this.currentOnConsoleError = onConsoleError;
+        this.currentOnExecutionStart = onExecutionStart;
+        this.currentOnExecutionComplete = onExecutionComplete;
+        this.currentOnReturnToGame = onReturnToGame;
+
+        if (!listenersInitialized) {
+            setupCommandServiceObservables();
+            setupUserCodeLifecycleServiceObservables();
+            setupNavigationObservables();
+            listenersInitialized = true;
+        }
     }
 
-    private void setupCommandServiceObservables(Runnable onGridUpdate, Runnable onLevelWon,
-            Runnable onLoss) {
+    private void setupCommandServiceObservables() {
         if (commandService instanceof ObservableProvider provider) {
             provider.getObservable(GameStateObservables.class).ifPresent(gameState -> {
                 gameState.gridNeedsUpdateProperty().addListener((obs, wasNeeded, isNeeded) -> {
                     if (isNeeded) {
-                        onGridUpdate.run();
+                        currentOnGridUpdate.run();
                         gameState.clearGridUpdateFlag();
                     }
                 });
 
                 gameState.levelWonProperty().addListener((obs, wasWon, isWon) -> {
                     if (isWon) {
-                        onLevelWon.run();
+                        currentOnLevelWon.run();
                         gameState.resetGameFlags();
                     }
                 });
 
                 gameState.levelLostProperty().addListener((obs, wasLost, isLost) -> {
                     if (isLost) {
-                        onLoss.run();
+                        currentOnLoss.run();
                         gameState.resetGameFlags();
                     }
                 });
@@ -175,26 +210,22 @@ public class GameScreenServiceFacade {
         }
     }
 
-    private void setupUserCodeLifecycleServiceObservables(
-            java.util.function.Consumer<String> onConsoleMessage,
-            java.util.function.Consumer<String> onConsoleError,
-            Runnable onExecutionStart,
-            java.util.function.Consumer<String> onExecutionComplete) {
+    private void setupUserCodeLifecycleServiceObservables() {
 
         if (userCodeLifecycleService instanceof ObservableProvider provider) {
             provider.getObservable(ConsoleObservables.class).ifPresent(console -> {
                 console.lastMessageProperty().addListener((obs, oldMsg, newMsg) -> {
-                    onConsoleMessage.accept(newMsg);
+                    currentOnConsoleMessage.accept(newMsg);
                 });
                 console.lastErrorProperty().addListener((obs, oldErr, newErr) -> {
-                    onConsoleError.accept(newErr);
+                    currentOnConsoleError.accept(newErr);
                 });
             });
 
             provider.getObservable(ExecutionObservables.class).ifPresent(execution -> {
                 execution.executionStartedProperty().addListener((obs, wasStarted, isStarted) -> {
                     if (isStarted) {
-                        onExecutionStart.run();
+                        currentOnExecutionStart.run();
                     }
                 });
 
@@ -202,7 +233,7 @@ public class GameScreenServiceFacade {
                         .addListener((obs, wasCompleted, isCompleted) -> {
                             if (isCompleted) {
                                 String message = execution.completionMessageProperty().get();
-                                onExecutionComplete.accept(message);
+                                currentOnExecutionComplete.accept(message);
                                 execution.resetFlags();
                             }
                         });
@@ -210,12 +241,12 @@ public class GameScreenServiceFacade {
         }
     }
 
-    private void setupNavigationObservables(Runnable onReturnToGame) {
+    private void setupNavigationObservables() {
         NavigationService navService = NavigationService.getInstance();
         navService.getObservable(NavigationObservables.class).ifPresent(nav -> {
             nav.returnedToGameProperty().addListener((obs, wasReturned, isReturned) -> {
                 if (isReturned) {
-                    onReturnToGame.run();
+                    currentOnReturnToGame.run();
                     nav.clearReturnedToGame();
                 }
             });
