@@ -4,24 +4,16 @@ import com.mycompany.irr00_group_project.service.navigator.LossScreenNavigatorMa
 
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
 /**
  * This class represents the controller for the Loss Screen of the game.
  */
 public class LossScreenController {
-    @FXML
-    private Button restartButton;
-    @FXML
-    private Button levelSelectionButton;
-
     private LossScreenNavigatorManager navigatorManager;
 
     /**
-     * Initialization.
+     * Initialization method for the Loss Screen Controller.
      */
-    @FXML
     public void initialize() {
         navigatorManager = new LossScreenNavigatorManager();
     }
@@ -29,7 +21,6 @@ public class LossScreenController {
     /**
      * Handles the action when the "Level Selection" button is clicked.
      */
-    @FXML
     public void handleLevelSelectionButton(ActionEvent event) {
         navigatorManager.navigateToLevelSelection();
     }
