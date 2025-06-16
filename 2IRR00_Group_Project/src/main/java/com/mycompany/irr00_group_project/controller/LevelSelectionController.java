@@ -7,7 +7,6 @@ import com.mycompany.irr00_group_project.service.navigator.LevelSelectionScreenN
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.gui.components.LevelPreviewButton;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.GridPane;
@@ -21,7 +20,6 @@ import java.util.List;
  */
 public class LevelSelectionController {
 
-    @FXML
     private Pagination pagination;
 
     private final LevelService levelService = LevelServiceImpl.getInstance();
@@ -33,7 +31,6 @@ public class LevelSelectionController {
      * This method is called when the controller is initialized.
      * It retrieves all levels and sets up the pagination.
      */
-    @FXML
     public void initialize() {
         navigatorManager = new LevelSelectionScreenNavigatorManager();
         allLevelsDTO = levelService.getAllLevelsDTO();
@@ -83,12 +80,15 @@ public class LevelSelectionController {
      *
      * @param actionEvent The action event triggered by the button click.
      */
-    @FXML
     public void backToMenu(ActionEvent actionEvent) {
         goToMenu();
     }
 
     public void goToMenu() {
         navigatorManager.navigateToMenu();
+    }
+
+    public void setPagination(Pagination pagination) {
+        this.pagination = pagination;
     }
 }

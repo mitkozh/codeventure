@@ -2,7 +2,6 @@ package com.mycompany.irr00_group_project.controller.components;
 
 import com.mycompany.irr00_group_project.gui.components.CodeEditorArea;
 import com.mycompany.irr00_group_project.utils.Constants;
-import javafx.fxml.FXML;
 
 import javafx.scene.control.TextArea;
 

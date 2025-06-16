@@ -1,13 +1,10 @@
 package com.mycompany.irr00_group_project.gui.screen;
 
-import java.io.FileNotFoundException;
+import com.mycompany.irr00_group_project.utils.StringUtils;
+import javafx.scene.Parent;
+
 import java.io.IOException;
 import java.net.URL;
-
-import com.mycompany.irr00_group_project.utils.StringUtils;
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 
 /**
  * AbstractScreen is an abstract class that provides a template for creating
@@ -16,23 +13,17 @@ import javafx.scene.Parent;
  */
 public abstract class AbstractScreen {
     protected Parent root;
-    protected FXMLLoader fxmlLoader; // for backward compatibility
 
     /**
      * This method is called to get the root view of the screen.
      * It initializes the root node by creating content and applying styling.
-     * 
+     *
      * @return The root node of the screen.
      * @throws IOException An error can occur while applying CSS.
      */
     public Parent getView() throws IOException {
         if (root == null) {
             this.root = createContent();
-            // will remove in future versions after all screens
-            // are migrated to use createContent()
-            if (root == null) {
-                loadFxml();
-            }
         }
         applyCssToRoot();
         return root;
@@ -41,13 +32,10 @@ public abstract class AbstractScreen {
     /**
      * Creates the content of the screen.
      * This method can be overridden by subclasses to provide custom content.
-     * 
+     *
      * @return The root node of the screen
      */
-    protected Parent createContent() {
-        //will be changed to abstract method in future versions
-        return null; 
-    }
+    protected abstract Parent createContent();
 
     /**
      * Applies CSS styles to the root node of the screen.
@@ -61,29 +49,6 @@ public abstract class AbstractScreen {
                 root.getStylesheets().add(cssUrl.toExternalForm());
             }
         }
-    }
-
-    /**
-     * Loads the FXML file and initializes the root node.
-     * 
-     * @throws IOException if an I/O error occurs while loading the FXML file
-     */
-    protected void loadFxml() throws IOException {
-        String path = getFxmlPath();
-        if (StringUtils.isNullOrWhiteSpace(path)) {
-            throw new IllegalArgumentException("FXML path is null or empty");
-        }
-        URL fxmlUrl = getClass().getResource(path);
-        if (fxmlUrl == null) {
-            throw new FileNotFoundException("FXML file not found: " + path);
-        }
-        fxmlLoader = new FXMLLoader(fxmlUrl);
-        this.root = fxmlLoader.load();
-    }
-
-    @Deprecated
-    protected String getFxmlPath() {
-        return null; // will be removed in future versions
     }
 
     protected abstract String getCssPath();

@@ -2,7 +2,6 @@ package com.mycompany.irr00_group_project.controller.components;
 
 import com.mycompany.irr00_group_project.gui.components.ConsoleOutputArea;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
 /**

@@ -4,7 +4,6 @@ import com.mycompany.irr00_group_project.service.core.SettingsService;
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 import com.mycompany.irr00_group_project.service.navigator.SettingsScreenNavigatorManager;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
@@ -14,41 +13,30 @@ import java.util.List;
 
 /**
  * Controller for Game Settings Screen.
- * It manages the changes occurring in the sound lavels and character of the player.
+ * It manages the changes occurring in the sound lavels and character of the
+ * player.
  */
 public class SettingsController {
 
-    @FXML
     private Button backToMenuButton;
-
-    @FXML
     private ComboBox<String> characterComboBox;
-
-    @FXML
     private Slider masterVolumeSlider;
-
-    @FXML
     private Slider musicSlider;
-
-    @FXML
     private Slider sfxSlider;
 
     private SettingsService settingsService;
 
-
     private SettingsScreenNavigatorManager navigatorManager;
-            
 
-    private final List<String> avatarOptions =
-            Arrays.asList("Robot", "Robot kid", "Alien", "Cool alien");
+    private final List<String> avatarOptions = Arrays.asList("Robot", "Robot kid",
+            "Alien", "Cool alien");
 
     private boolean isInitializingView = true;
 
     /**
      * Initializes the settings screen.
      */
-    @FXML
-    private void initialize() {
+    public void initialize() {
         navigatorManager = new SettingsScreenNavigatorManager();
         isInitializingView = true;
         initializeServices();
@@ -178,5 +166,25 @@ public class SettingsController {
      */
     public void onBackToScreenAction(ActionEvent actionEvent) {
         navigatorManager.navigateToLevelSelectionOrMainMenu();
+    }
+
+    public void setBackToMenuButton(Button backToMenuButton) {
+        this.backToMenuButton = backToMenuButton;
+    }
+
+    public void setMasterVolumeSlider(Slider masterVolumeSlider) {
+        this.masterVolumeSlider = masterVolumeSlider;
+    }
+
+    public void setMusicSlider(Slider musicSlider) {
+        this.musicSlider = musicSlider;
+    }
+
+    public void setSfxSlider(Slider sfxSlider) {
+        this.sfxSlider = sfxSlider;
+    }
+
+    public void setCharacterComboBox(ComboBox<String> characterComboBox) {
+        this.characterComboBox = characterComboBox;
     }
 }
