@@ -4,7 +4,7 @@ import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.navigator.WinScreenNavigatorManager;
-import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -13,8 +13,7 @@ import javafx.scene.control.Label;
  */
 public class WinScreenController {
 
-    public Button restartButton;
-    @FXML
+    private Button restartButton;
     private Label starsLabel;
 
     private LevelService levelService;
@@ -38,15 +37,17 @@ public class WinScreenController {
 
     /**
      * Handles the action when the "Level Selection" button is clicked.
+     * @param event the action event triggered by the button click.
      */
-    public void handleLevelSelectionButtonAction() {
+    public void handleLevelSelectionButtonAction(ActionEvent event) {
         navigatorManager.navigateToLevelSelection();
     }
 
     /**
      * Handles the action when the "Next Level" button is clicked.
+     * @param event the action event triggered by the button click.
      */
-    public void handleNextLevelButtonAction() {
+    public void handleNextLevelButtonAction(ActionEvent event) {
         LevelDTO nextLevel = levelService.selectNextLevel();
         navigatorManager.navigateToNextLevel(nextLevel);
     }
@@ -63,9 +64,17 @@ public class WinScreenController {
 
     /**
      * Sets the action to be performed when the user restarts the level.
+     * @param event the action event triggered by the button click.
      */
-    public void handleRestartButtonAction() {
+    public void handleRestartButtonAction(ActionEvent event) {
         navigatorManager.navigateBack();
     }
 
+    public void setStarsLabel(Label starsLabel) {
+        this.starsLabel = starsLabel;
+    }
+
+    public void setRestartButton(Button restartButton) {
+        this.restartButton = restartButton;
+    }
 }
