@@ -6,6 +6,7 @@ import java.util.Map;
 import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.GamePlayService;
+import com.mycompany.irr00_group_project.utils.Constants;
 
 /**
  * Implementation of the GamePlayService interface.
@@ -65,7 +66,7 @@ public class GamePlayServiceImpl implements GamePlayService {
 
     private static void checkValidLevel(LevelDTO levelDTO) {
         if (levelDTO == null || levelDTO.getLevelNumber() <= 0
-                || levelDTO.getLevelNumber() > 50) {
+                || levelDTO.getLevelNumber() > Constants.MAX_LEVEL) {
             throw new IllegalArgumentException("Invalid LevelDTO provided: " + levelDTO);
         }
     }

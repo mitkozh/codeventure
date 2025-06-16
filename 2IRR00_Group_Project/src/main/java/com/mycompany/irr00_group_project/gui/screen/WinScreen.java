@@ -1,6 +1,8 @@
 package com.mycompany.irr00_group_project.gui.screen;
 
 import com.mycompany.irr00_group_project.controller.WinScreenController;
+import com.mycompany.irr00_group_project.utils.Constants;
+
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -18,8 +20,8 @@ public class WinScreen extends AbstractScreen {
     @Override
     protected Parent createContent() {
         controller = new WinScreenController();
+        controller.initialize(); 
         Parent ui = createUI();
-        controller.initialize();
         return ui;
     }
 
@@ -38,6 +40,7 @@ public class WinScreen extends AbstractScreen {
         Label starsLabel = new Label();
         starsLabel.getStyleClass().add("star-label");
         controller.setStarsLabel(starsLabel);
+        controller.updateStarsDisplay();
 
         Label congratsLabel = new Label("Well done!");
         congratsLabel.getStyleClass().add("popup-subtitle");
@@ -46,9 +49,12 @@ public class WinScreen extends AbstractScreen {
         buttonContainer.setSpacing(15);
         buttonContainer.setAlignment(Pos.CENTER);
 
-        Button nextLevelButton = new Button("Next Level");
-        nextLevelButton.getStyleClass().add("popup-button");
-        nextLevelButton.setOnAction(controller::handleNextLevelButtonAction);
+        if (controller.hasNextLevel(Constants.MAX_LEVEL)) {
+            Button nextLevelButton = new Button("Next Level");
+            nextLevelButton.getStyleClass().add("popup-button");
+            nextLevelButton.setOnAction(controller::handleNextLevelButtonAction);
+            buttonContainer.getChildren().add(nextLevelButton);
+        }
 
         Button restartButton = new Button("Restart");
         restartButton.getStyleClass().add("popup-button");
@@ -58,7 +64,7 @@ public class WinScreen extends AbstractScreen {
         Button levelSelectButton = new Button("Level Selection");
         levelSelectButton.getStyleClass().add("popup-button");
         levelSelectButton.setOnAction(controller::handleLevelSelectionButtonAction);
-        buttonContainer.getChildren().addAll(nextLevelButton, restartButton, levelSelectButton);
+        buttonContainer.getChildren().addAll(restartButton, levelSelectButton);
         mainPanel.getChildren().addAll(titleLabel, starsLabel, congratsLabel, buttonContainer);
         rootPane.getChildren().add(mainPanel);
 

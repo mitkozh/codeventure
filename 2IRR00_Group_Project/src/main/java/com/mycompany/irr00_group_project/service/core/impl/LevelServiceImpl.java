@@ -78,7 +78,7 @@ public class LevelServiceImpl implements LevelService, ObservableProvider {
     @Override
     public List<LevelDTO> getAllLevelsDTO() {
         List<LevelDTO> levels = new ArrayList<>();
-        for (int i = 1; i <= 50; i++) {
+        for (int i = 1; i <= Constants.MAX_LEVEL; i++) {
             LevelDTO levelProgress = getLevelProgress(i);
             levels.add(levelProgress);
         }

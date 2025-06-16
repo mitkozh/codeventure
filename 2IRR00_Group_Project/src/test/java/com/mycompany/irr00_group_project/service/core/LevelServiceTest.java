@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
+import com.mycompany.irr00_group_project.utils.Constants;
 
 /**
  * JUnit test class for LevelService.
@@ -29,7 +30,7 @@ public class LevelServiceTest {
     @Test
     void testGetAllLevelsDTO() {
         List<LevelDTO> levels = levelService.getAllLevelsDTO();
-        assertEquals(50, levels.size());
+        assertEquals(Constants.MAX_LEVEL, levels.size());
         for (int i = 0; i < levels.size(); i++) {
             LevelDTO level = levels.get(i);
             assertEquals(i + 1, level.getLevelNumber());
@@ -71,6 +72,6 @@ public class LevelServiceTest {
     @Test
     void testIsLevelUnlocked() {
         assertTrue(levelService.isLevelUnlocked(1));
-        assertFalse(levelService.isLevelUnlocked(50));
+        assertFalse(levelService.isLevelUnlocked(Constants.MAX_LEVEL));
     }
 }
