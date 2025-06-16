@@ -1,0 +1,35 @@
+# Level 35 -
+SIZE 9 9
+START 0 0 NORTH
+END 6 3
+OBSTACLES
+1 0
+1 1
+1 2
+1 3
+1 4
+2 4
+3 4
+4 4
+5 4
+6 4
+7 4
+7 3
+7 2
+7 1
+3 6
+3 7
+4 7
+5 7
+6 7
+DOORS
+8 0
+8 2
+8 4
+KEYS
+0 8
+2 8
+4 8
+OPTIMAL_STEPS
+29
+

@@ -1,0 +1,34 @@
+# Level 36 -
+SIZE 10 10
+START 0 0 NORTH
+END 2 3
+OBSTACLES
+1 0
+1 1
+1 2
+1 3
+1 4
+2 4
+3 4
+4 4
+5 4
+5 3
+5 2
+5 1
+6 6
+7 6
+8 6
+9 6
+9 5
+9 4
+8 2
+7 2
+6 2
+DOORS
+9 2
+5 0
+KEYS
+4 9
+9 7
+OPTIMAL_STEPS
+45
