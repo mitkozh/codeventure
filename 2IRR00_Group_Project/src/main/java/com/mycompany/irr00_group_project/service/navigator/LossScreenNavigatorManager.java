@@ -13,7 +13,6 @@ public class LossScreenNavigatorManager {
      * This method is called when the user wants to navigate to the level selection screen.
      */
     public void navigateToLevelSelection() {
-        // Navigate to level selection screen
         try {
             LevelSelectionScreen levels = new LevelSelectionScreen();
             NavigationManager.getInstance().navigateTo(levels);

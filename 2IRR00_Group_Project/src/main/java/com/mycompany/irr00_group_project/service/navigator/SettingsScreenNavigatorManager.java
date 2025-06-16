@@ -26,15 +26,8 @@ public class SettingsScreenNavigatorManager {
      */
     public void navigateBackAndNotify() {
         NavigationManager navigationManager = NavigationManager.getInstance();
-        if (inGame(navigationManager)) {
-            NavigationService.getInstance().notifyReturnedToGame();
-        }
+        NavigationService.getInstance().notifyReturnedToGame();
         navigationManager.navigateBack();
-    }
-
-    private boolean inGame(NavigationManager navigationManager) {
-        return getScreenType(GameScreen.class)
-                .equals(navigationManager.getPreviousScreenType());
     }
 
     /**

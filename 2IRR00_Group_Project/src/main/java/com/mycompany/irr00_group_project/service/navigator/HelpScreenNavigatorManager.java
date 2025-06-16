@@ -13,18 +13,8 @@ public class HelpScreenNavigatorManager {
      */
     public void navigateBackAndNotify() {
         NavigationManager navigationManager = NavigationManager.getInstance();
-        if (inGame(navigationManager)) {
-            NavigationService.getInstance().notifyReturnedToGame();
-        }
+        NavigationService.getInstance().notifyReturnedToGame();
         navigationManager.navigateBack();
     }
 
-    private boolean inGame(NavigationManager navigationManager) {
-        return getScreenType(GameScreen.class)
-                .equals(navigationManager.getPreviousScreenType());
-    }
-
-    private String getScreenType(Class<?> screenClass) {
-        return screenClass.getSimpleName();
-    }
 }
