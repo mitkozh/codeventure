@@ -26,10 +26,10 @@ public class WinScreenController {
     public void initialize() {
         levelService = LevelServiceImpl.getInstance();
         navigatorManager = new WinScreenNavigatorManager();
-        updateStarsDisplay();
+        
     }
 
-    private void updateStarsDisplay() {
+    public void updateStarsDisplay() {
         int stars = getStars();
         starsLabel.setText("★".repeat(stars));
         starsLabel.getStyleClass().add("star-label");
@@ -77,4 +77,22 @@ public class WinScreenController {
     public void setRestartButton(Button restartButton) {
         this.restartButton = restartButton;
     }
+
+    /**
+     * Returns the current level number.
+     */
+    public int getCurrentLevelNumber() {
+        return levelService.getCurrentLevel().getLevelNumber();
+    }
+
+    /**
+     * Returns true if there is a next level (unlocked and within max).
+     */
+    public boolean hasNextLevel(int maxLevel) {
+        int currentLevel = getCurrentLevelNumber();
+        
+        // Only allow next level if within bounds and unlocked
+        return currentLevel < maxLevel;
+    }
+
 }

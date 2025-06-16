@@ -32,5 +32,6 @@ public class Constants {
     public static final String GAME_PROGRESS_FILE = "game_progress.properties";
     public static final String BACKGROUND_MUSIC_LOCATION = "/com/mycompany/irr00_group_project"
             + "/assets/sounds/MainMenuMusic.wav";
+    public static final int MAX_LEVEL = 50; 
 
 }
