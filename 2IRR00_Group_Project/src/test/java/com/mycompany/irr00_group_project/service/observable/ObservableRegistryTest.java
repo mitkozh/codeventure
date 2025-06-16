@@ -23,7 +23,8 @@ class ObservableRegistryTest {
 
         Optional<ConsoleObservables> result = observableRegistry.get(ConsoleObservables.class);
         assertTrue(result.isPresent(), "Observable should be present");
-        assertEquals(consoleObservables, result.get(), "Retrieved observable should match registered instance");
+        assertEquals(consoleObservables, result.get(),
+            "Retrieved observable should match registered instance");
     }
 
     @Test
@@ -38,22 +39,27 @@ class ObservableRegistryTest {
         observableRegistry.register(ConsoleObservables.class, consoleObservables);
 
         ConsoleObservables result = observableRegistry.getOrThrow(ConsoleObservables.class);
-        assertEquals(consoleObservables, result, "getOrThrow should return registered instance");
+        assertEquals(consoleObservables, result,
+            "getOrThrow should return registered instance");
     }
 
     @Test
     void testGetOrThrowThrowsExceptionForNonExistent() {
-        assertThrows(IllegalStateException.class, () -> observableRegistry.getOrThrow(ConsoleObservables.class),
-                "getOrThrow should throw IllegalStateException for non-registered observable");
+        assertThrows(IllegalStateException.class,
+            () -> observableRegistry.getOrThrow(ConsoleObservables.class),
+            "getOrThrow should throw IllegalStateException"
+            + " for non-registered observable");
     }
 
     @Test
     void testHasObservableReturnsCorrectStatus() {
-        assertFalse(observableRegistry.has(ConsoleObservables.class), "has should return false for non-registered observable");
+        assertFalse(observableRegistry.has(ConsoleObservables.class),
+            "has should return false for non-registered observable");
 
         ConsoleObservables consoleObservables = new ConsoleObservables();
         observableRegistry.register(ConsoleObservables.class, consoleObservables);
-        assertTrue(observableRegistry.has(ConsoleObservables.class), "has should return true for registered observable");
+        assertTrue(observableRegistry.has(ConsoleObservables.class),
+            "has should return true for registered observable");
     }
 
     @Test
@@ -65,7 +71,9 @@ class ObservableRegistryTest {
 
         observableRegistry.clear();
 
-        assertFalse(observableRegistry.has(ConsoleObservables.class), "Registry should not contain ConsoleObservables after clear");
-        assertFalse(observableRegistry.has(NavigationObservables.class), "Registry should not contain NavigationObservables after clear");
+        assertFalse(observableRegistry.has(ConsoleObservables.class),
+            "Registry should not contain ConsoleObservables after clear");
+        assertFalse(observableRegistry.has(NavigationObservables.class),
+            "Registry should not contain NavigationObservables after clear");
     }
 }

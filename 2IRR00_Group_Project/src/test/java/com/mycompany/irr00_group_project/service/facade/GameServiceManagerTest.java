@@ -26,13 +26,20 @@ class GameServiceManagerTest {
 
     @Test
     void testConstructorInitializesServices() {
-        assertNotNull(gameServiceManager.getMovementService(), "MovementService should be initialized");
-        assertNotNull(gameServiceManager.getGamePlayService(), "GamePlayService should be initialized");
-        assertNotNull(gameServiceManager.getLevelService(), "LevelService should be initialized");
-        assertNotNull(gameServiceManager.getSharedJarService(), "SharedJarService should be initialized");
-        assertNotNull(gameServiceManager.getCompilationService(), "CompilationService should be initialized");
-        assertNotNull(gameServiceManager.getExecutionService(), "ExecutionService should be initialized");
-        assertNotNull(gameServiceManager.getIpcService(), "IPCService should be initialized");
+        assertNotNull(gameServiceManager.getMovementService(),
+            "MovementService should be initialized");
+        assertNotNull(gameServiceManager.getGamePlayService(),
+            "GamePlayService should be initialized");
+        assertNotNull(gameServiceManager.getLevelService(),
+            "LevelService should be initialized");
+        assertNotNull(gameServiceManager.getSharedJarService(),
+            "SharedJarService should be initialized");
+        assertNotNull(gameServiceManager.getCompilationService(),
+            "CompilationService should be initialized");
+        assertNotNull(gameServiceManager.getExecutionService(),
+            "ExecutionService should be initialized");
+        assertNotNull(gameServiceManager.getIpcService(), 
+            "IPCService should be initialized");
     }
 
     @Test

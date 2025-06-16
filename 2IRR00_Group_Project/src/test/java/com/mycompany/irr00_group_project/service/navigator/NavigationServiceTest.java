@@ -11,7 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class NavigationServiceTest {
 
     private NavigationService navigationService;
-
+    
+    /**
+     *  Sets up the NavigationService instance before each test.
+     */
     @BeforeEach
     void setUp() throws Exception {
         Field instanceField = NavigationService.class.getDeclaredField("instance");
@@ -29,14 +32,15 @@ class NavigationServiceTest {
 
     @Test
     void testGetObservableRegistryReturnsSameInstance() {
-        assertSame(navigationService.getObservableRegistry(), navigationService.getObservableRegistry(),
-                "getObservableRegistry should always return the same instance");
+        assertSame(navigationService.getObservableRegistry(), 
+            navigationService.getObservableRegistry(),
+            "getObservableRegistry should always return the same instance");
     }
 
     @Test
     void testNotifyReturnedToGameDoesNotThrowWhenObservablePresent() {
         assertDoesNotThrow(() -> navigationService.notifyReturnedToGame(),
-                "notifyReturnedToGame should not throw when NavigationObservables is registered");
+            "notifyReturnedToGame should not throw when NavigationObservables is registered");
     }
 
     @Test
@@ -48,6 +52,7 @@ class NavigationServiceTest {
         t2.start();
         t1.join();
         t2.join();
-        assertSame(instances[0], instances[1], "Both threads should get the same singleton instance");
+        assertSame(instances[0], instances[1],
+            "Both threads should get the same singleton instance");
     }
 }

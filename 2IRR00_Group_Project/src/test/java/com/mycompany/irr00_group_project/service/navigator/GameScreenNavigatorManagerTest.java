@@ -8,19 +8,29 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class GameScreenNavigatorManagerTest {
 
     private GameScreenNavigatorManager navigatorManager;
     private NavigationManager navigationManager;
 
+    /**
+     *  Initializes the JavaFX runtime before any tests are run.
+     */
     @BeforeAll
     static void initJfxRuntime() throws Exception {
         try {
             javafx.application.Platform.startup(() -> {});
         } catch (Exception e) {
+            if (!e.getMessage().contains("Toolkit not initialized")) {
+                throw e;
+            }
         }
     }
 
+    /**
+     *  Sets up the GameScreenNavigatorManager instance before each test.
+     */
     @BeforeEach
     void setUp() throws Exception {
         Field instanceField = NavigationManager.class.getDeclaredField("instance");
@@ -49,7 +59,8 @@ class GameScreenNavigatorManagerTest {
 
     @Test
     void testNavigateBackNavigatesToPreviousScreen() throws Exception {
-        java.lang.reflect.Method navigateBackMethod = GameScreenNavigatorManager.class.getDeclaredMethod("navigateBack");
+        java.lang.reflect.Method navigateBackMethod = 
+            GameScreenNavigatorManager.class.getDeclaredMethod("navigateBack");
         navigateBackMethod.setAccessible(true);
 
         navigatorManager.navigateToSettings();
@@ -72,7 +83,8 @@ class GameScreenNavigatorManagerTest {
 
     @Test
     void testNavigateBackOnInitialScreenDoesNotThrow() throws Exception {
-        java.lang.reflect.Method navigateBackMethod = GameScreenNavigatorManager.class.getDeclaredMethod("navigateBack");
+        java.lang.reflect.Method navigateBackMethod = 
+            GameScreenNavigatorManager.class.getDeclaredMethod("navigateBack");
         navigateBackMethod.setAccessible(true);
         assertDoesNotThrow(() -> navigateBackMethod.invoke(navigatorManager));
     }

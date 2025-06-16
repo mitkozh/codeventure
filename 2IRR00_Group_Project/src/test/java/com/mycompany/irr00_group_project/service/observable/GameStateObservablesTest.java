@@ -55,7 +55,8 @@ class GameStateObservablesTest {
         gameStateObservables.setPlayerSteps(steps);
 
         IntegerProperty playerSteps = gameStateObservables.playerStepsProperty();
-        assertEquals(steps, playerSteps.get(), "PlayerSteps property should match set value");
+        assertEquals(steps, playerSteps.get(),
+            "PlayerSteps property should match set value");
     }
 
     @Test
@@ -66,17 +67,25 @@ class GameStateObservablesTest {
         gameStateObservables.setPlayerSteps(42);
         gameStateObservables.resetGameFlags();
 
-        assertFalse(gameStateObservables.gridNeedsUpdateProperty().get(), "GridNeedsUpdate should be false after reset");
-        assertFalse(gameStateObservables.levelWonProperty().get(), "LevelWon should be false after reset");
-        assertFalse(gameStateObservables.levelLostProperty().get(), "LevelLost should be false after reset");
-        assertEquals(42, gameStateObservables.playerStepsProperty().get(), "PlayerSteps should not be reset");
+        assertFalse(gameStateObservables.gridNeedsUpdateProperty().get(),
+            "GridNeedsUpdate should be false after reset");
+        assertFalse(gameStateObservables.levelWonProperty().get(),
+            "LevelWon should be false after reset");
+        assertFalse(gameStateObservables.levelLostProperty().get(),
+            "LevelLost should be false after reset");
+        assertEquals(42, gameStateObservables.playerStepsProperty().get(),
+            "PlayerSteps should not be reset");
     }
 
     @Test
     void testInitialState() {
-        assertFalse(gameStateObservables.gridNeedsUpdateProperty().get(), "Initial GridNeedsUpdate should be false");
-        assertFalse(gameStateObservables.levelWonProperty().get(), "Initial LevelWon should be false");
-        assertFalse(gameStateObservables.levelLostProperty().get(), "Initial LevelLost should be false");
-        assertEquals(0, gameStateObservables.playerStepsProperty().get(), "Initial PlayerSteps should be 0");
+        assertFalse(gameStateObservables.gridNeedsUpdateProperty().get(),
+            "Initial GridNeedsUpdate should be false");
+        assertFalse(gameStateObservables.levelWonProperty().get(),
+            "Initial LevelWon should be false");
+        assertFalse(gameStateObservables.levelLostProperty().get(),
+            "Initial LevelLost should be false");
+        assertEquals(0, gameStateObservables.playerStepsProperty().get(),
+            "Initial PlayerSteps should be 0");
     }
 }

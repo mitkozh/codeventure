@@ -14,7 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class GameScreenServiceFacadeTest {
 
     private GameScreenServiceFacade facade;
-
+    
+    /**
+     *  Sets up the GameScreenServiceFacade instance before each test.
+     */
     @BeforeEach
     void setUp() {
         resetSingleton();
@@ -63,7 +66,8 @@ class GameScreenServiceFacadeTest {
         );
 
         try {
-            Field listenersInitializedField = GameScreenServiceFacade.class.getDeclaredField("listenersInitialized");
+            Field listenersInitializedField = 
+                GameScreenServiceFacade.class.getDeclaredField("listenersInitialized");
             listenersInitializedField.setAccessible(true);
             boolean listenersInitialized = (boolean) listenersInitializedField.get(facade);
             assertTrue(listenersInitialized, "Listeners should be initialized after setup");
@@ -80,8 +84,8 @@ class GameScreenServiceFacadeTest {
 
     @Test
     void testIsExecutingReturnsBoolean() {
-        boolean result = facade.isExecuting();
-        assertTrue(result == true || result == false, "isExecuting should return a boolean value");
+        Boolean result = facade.isExecuting();
+        assertNotNull(result, "isExecuting should return a boolean value");
     }
 
     @Test
@@ -104,7 +108,7 @@ class GameScreenServiceFacadeTest {
 
     @Test
     void testIsReadyReturnsBoolean() {
-        boolean result = facade.isReady();
-        assertTrue(result == true || result == false, "isReady should return a boolean value");
+        Boolean result = facade.isReady();
+        assertNotNull(result, "isReady should return a boolean value");
     }
 }

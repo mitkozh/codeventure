@@ -43,7 +43,10 @@ class NavigationManagerTest {
             throw new UnsupportedOperationException("Unimplemented method 'getCssPath'");
         }
     }
-
+    
+    /**
+     *  Sets up the NavigationManager instance before each test.
+     */
     @BeforeEach
     void setUp() throws Exception {
         Field instanceField = NavigationManager.class.getDeclaredField("instance");
@@ -66,8 +69,10 @@ class NavigationManagerTest {
 
         navigationManager.navigateTo(screen);
 
-        assertEquals("TestScreen", navigationManager.getCurrentScreenType(), "Current screen type should match");
-        assertEquals(0, navigationManager.getNavigationStackSize(), "Stack should be empty after first navigation");
+        assertEquals("TestScreen", navigationManager.getCurrentScreenType(),
+            "Current screen type should match");
+        assertEquals(0, navigationManager.getNavigationStackSize(),
+            "Stack should be empty after first navigation");
     }
 
     @Test
@@ -78,8 +83,10 @@ class NavigationManagerTest {
         navigationManager.navigateTo(screen1);
         navigationManager.navigateTo(screen2);
 
-        assertEquals(1, navigationManager.getNavigationStackSize(), "Stack should contain one entry");
-        assertEquals("TestScreen", navigationManager.getCurrentScreenType(), "Current screen type should match screen2");
+        assertEquals(1, navigationManager.getNavigationStackSize(),
+            "Stack should contain one entry");
+        assertEquals("TestScreen", navigationManager.getCurrentScreenType(),
+            "Current screen type should match screen2");
     }
 
     @Test
@@ -91,8 +98,10 @@ class NavigationManagerTest {
         navigationManager.navigateTo(screen2);
         navigationManager.navigateBack();
 
-        assertEquals(0, navigationManager.getNavigationStackSize(), "Stack should be empty after navigating back");
-        assertEquals("TestScreen", navigationManager.getCurrentScreenType(), "Current screen should be screen1");
+        assertEquals(0, navigationManager.getNavigationStackSize(),
+            "Stack should be empty after navigating back");
+        assertEquals("TestScreen",
+            navigationManager.getCurrentScreenType(), "Current screen should be screen1");
     }
 
     @Test
@@ -112,7 +121,8 @@ class NavigationManagerTest {
         navigationManager.navigateToRoot(screen2);
 
         assertEquals(0, navigationManager.getNavigationStackSize(), "Stack should be cleared");
-        assertEquals("TestScreen", navigationManager.getCurrentScreenType(), "Current screen should be screen2");
+        assertEquals("TestScreen",
+            navigationManager.getCurrentScreenType(), "Current screen should be screen2");
     }
 
     @Test
@@ -128,7 +138,8 @@ class NavigationManagerTest {
         assertFalse(navigationManager.canNavigateBack(), "Should return false when stack is empty");
         navigationManager.navigateTo(screen);
         navigationManager.navigateTo(new TestScreen("TestScreen2"));
-        assertTrue(navigationManager.canNavigateBack(), "Should return true when stack has entries");
+        assertTrue(navigationManager.canNavigateBack(),
+            "Should return true when stack has entries");
     }
 
     @Test

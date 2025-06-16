@@ -24,9 +24,12 @@ class ConsoleObservablesTest {
         ObservableList<String> messages = consoleObservables.getMessages();
         StringProperty lastMessage = consoleObservables.lastMessageProperty();
 
-        assertEquals(1, messages.size(), "Messages list should contain one message");
-        assertEquals(message, messages.get(0), "Messages list should contain the added message");
-        assertEquals(message, lastMessage.get(), "Last message property should match the added message");
+        assertEquals(1, messages.size(),
+            "Messages list should contain one message");
+        assertEquals(message, messages.get(0),
+            "Messages list should contain the added message");
+        assertEquals(message, lastMessage.get(),
+            "Last message property should match the added message");
     }
 
     @Test
@@ -50,17 +53,24 @@ class ConsoleObservablesTest {
         consoleObservables.addMessage(message2);
 
         ObservableList<String> messages = consoleObservables.getMessages();
-        assertEquals(2, messages.size(), "Messages list should contain two messages");
-        assertEquals(message1, messages.get(0), "First message should be first in list");
-        assertEquals(message2, messages.get(1), "Second message should be second in list");
-        assertEquals(message2, consoleObservables.lastMessageProperty().get(), "Last message should be the most recent");
+        assertEquals(2, messages.size(),
+            "Messages list should contain two messages");
+        assertEquals(message1, messages.get(0),
+            "First message should be first in list");
+        assertEquals(message2, messages.get(1),
+            "Second message should be second in list");
+        assertEquals(message2, consoleObservables.lastMessageProperty().get(),
+            "Last message should be the most recent");
     }
 
     @Test
     void testInitialState() {
-        assertEquals("", consoleObservables.lastMessageProperty().get(), "Initial last message should be empty");
-        assertEquals("", consoleObservables.lastErrorProperty().get(), "Initial last error should be empty");
-        assertTrue(consoleObservables.getMessages().isEmpty(), "Initial messages list should be empty");
+        assertEquals("", consoleObservables.lastMessageProperty().get(),
+            "Initial last message should be empty");
+        assertEquals("", consoleObservables.lastErrorProperty().get(),
+            "Initial last error should be empty");
+        assertTrue(consoleObservables.getMessages().isEmpty(),
+            "Initial messages list should be empty");
         assertTrue(consoleObservables.getErrors().isEmpty(), "Initial errors list should be empty");
     }
 }

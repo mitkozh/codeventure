@@ -30,7 +30,8 @@ class NavigationObservablesTest {
         navigationObservables.clearReturnedToGame();
 
         BooleanProperty returnedToGame = navigationObservables.returnedToGameProperty();
-        assertFalse(returnedToGame.get(), "ReturnedToGame property should be false after clear");
+        assertFalse(returnedToGame.get(),
+            "ReturnedToGame property should be false after clear");
     }
 
     @Test
@@ -39,12 +40,16 @@ class NavigationObservablesTest {
         navigationObservables.setLastNavigatedTo(destination);
 
         StringProperty lastNavigatedTo = navigationObservables.lastNavigatedToProperty();
-        assertEquals(destination, lastNavigatedTo.get(), "LastNavigatedTo property should match the set destination");
+        assertEquals(destination, lastNavigatedTo.get(),
+            "LastNavigatedTo property should match the set destination");
     }
 
     @Test
     void testInitialState() {
-        assertFalse(navigationObservables.returnedToGameProperty().get(), "Initial ReturnedToGame should be false");
-        assertEquals("", navigationObservables.lastNavigatedToProperty().get(), "Initial LastNavigatedTo should be empty");
+        assertFalse(navigationObservables.returnedToGameProperty().get(),
+            "Initial ReturnedToGame should be false");
+        assertEquals("",
+            navigationObservables.lastNavigatedToProperty().get(),
+            "Initial LastNavigatedTo should be empty");
     }
 }
