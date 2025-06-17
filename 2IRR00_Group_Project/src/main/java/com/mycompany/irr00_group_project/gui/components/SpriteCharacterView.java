@@ -53,8 +53,8 @@ public class SpriteCharacterView {
 
     private void initializeSprite() {
         spriteImageView = new ImageView();
-        spriteImageView.setFitWidth(40);
-        spriteImageView.setFitHeight(40);
+        spriteImageView.setFitWidth(minTileSize);
+        spriteImageView.setFitHeight(minTileSize);
         spriteImageView.getStyleClass().add("sprite-character");
     }
 
