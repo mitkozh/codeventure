@@ -18,7 +18,6 @@ import javafx.scene.layout.HBox;
 public class WinScreenController {
 
     private Button restartButton;
-    //private Label starsLabel;
     private HBox starsContainer;
 
     private LevelService levelService;
@@ -35,7 +34,8 @@ public class WinScreenController {
     }
     
     /**
-     *  Updates the stars display based on the current level's stars.
+     *  Updates the stars display using images of stars
+     *  based on the number of stars the player achieved in the current level.
      */
     public void updateStarsDisplay() {
         starsContainer.getChildren().clear();
@@ -88,10 +88,23 @@ public class WinScreenController {
         navigatorManager.navigateBack();
     }
 
+    /**
+    * Sets the HBox container that will hold the star rating display.
+    * This container holds the star images for the win screen
+    * to visually represent the player's performance or score.
+    * @param starsContainer the HBox to be used for displaying stars
+     */
     public void setStarsContainer(HBox starsContainer) {
         this.starsContainer = starsContainer;
     }
 
+    /**
+    * Sets the restart button for the win screen. 
+    * The button is used to reset the current level 
+    * to defaults when clicked by the player.
+    * 
+    * @param restartButton the Button to be used for restart functionality
+    */
     public void setRestartButton(Button restartButton) {
         this.restartButton = restartButton;
     }

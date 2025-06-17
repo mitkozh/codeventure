@@ -10,13 +10,26 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
+ * LossScreen is a class that represents the game over screen displayed 
+ * when a player fails to complete a level.
+ * This screen includes messages about the loss 
+ * and navigation options to retry the level or return to the level selection menu.
  * 
- * LossScreen is a class that represents the loss screen in the game.
+ * @see AbstractScreen
+ * @see LossScreenController
+ * @see WinScreen for the corresponding victory screen
  */
 public class LossScreen extends AbstractScreen {
 
     private LossScreenController controller;
 
+    /**
+     * Creates and initializes the screen content by setting up the controller
+     * and constructing the UI components.
+     * 
+     * @return the root Parent node containing all screen elements
+     * @see #createUI() for the actual UI construction
+     */
     @Override
     protected Parent createContent() {
         controller = new LossScreenController();
@@ -24,6 +37,15 @@ public class LossScreen extends AbstractScreen {
         return createUI();
     }
 
+    /**
+     * Constructs the complete user interface for the loss screen 
+     * displayed when a player loses a level.
+     * Includes a title and subtitle
+     * and action buttons to navigate to other pages
+     * such as a restart and a level selection button.
+     * 
+     * @return the root StackPane containing all UI elements
+     */
     private Parent createUI() {
         StackPane rootPane = new StackPane();
         rootPane.getStyleClass().add("popup-bg");
@@ -57,6 +79,10 @@ public class LossScreen extends AbstractScreen {
         return rootPane;
     }
 
+    /**
+     * Gets the path to the CSS stylesheet for the loss screen.
+     * @return the absolute path to the CSS file for this screen's style.
+     */
     @Override
     protected String getCssPath() {
         return "/com/mycompany/irr00_group_project/assets/css/lossScreenStyle.css";

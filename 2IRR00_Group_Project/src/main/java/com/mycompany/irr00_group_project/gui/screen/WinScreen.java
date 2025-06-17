@@ -12,12 +12,21 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * This class represents the Win Screen of the game.
+ * This class represents the Win Screen of the game shown when a player successfully completes a level.
+ * This screen includes a congrats message, star ratings based on performance,
+ * and provides navigation options to restart the level, go to the next level, or return to menus.
+ * @see AbstractScreen
+ * @see WinScreenController
  */
 public class WinScreen extends AbstractScreen {
 
     private WinScreenController controller;
 
+    /**
+     * Creates and initializes the screen content.
+     * @return the root Parent node containing all screen elements
+     * @see #createUI() for the actual UI construction
+     */
     @Override
     protected Parent createContent() {
         controller = new WinScreenController();
@@ -26,6 +35,11 @@ public class WinScreen extends AbstractScreen {
         return ui;
     }
 
+    /**
+     * Constructs the complete user interface for the win screen.
+     * 
+     * @return the root node of the constructed UI
+     */
     private Parent createUI() {
         StackPane rootPane = new StackPane();
         rootPane.getStyleClass().add("popup-bg");
@@ -73,6 +87,10 @@ public class WinScreen extends AbstractScreen {
         return rootPane;
     }
 
+    /**
+     * Gets the path to the CSS stylesheet for this screen.
+     * @return the absolute path to the CSS resource file
+     */
     @Override
     protected String getCssPath() {
         return "/com/mycompany/irr00_group_project/assets/css/winScreenStyle.css";
