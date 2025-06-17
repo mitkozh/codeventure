@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.controller;
 
 import com.mycompany.irr00_group_project.service.navigator.MainMenuScreenNavigatorManager;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 
@@ -51,6 +52,12 @@ public class MainMenuController {
         navigatorManager.navigateToHelp();
     }
 
+    /**
+     * This method is called when the exit button is clicked.
+     * It exits the application.
+     *
+     * @param actionEvent The action event triggered by the button click.
+     */
     public void onExitGameClick(ActionEvent actionEvent) {
         Platform.exit();
     }
