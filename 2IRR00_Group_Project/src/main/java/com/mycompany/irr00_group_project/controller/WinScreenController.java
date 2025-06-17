@@ -28,7 +28,10 @@ public class WinScreenController {
         navigatorManager = new WinScreenNavigatorManager();
         
     }
-
+    
+    /**
+     *  Updates the stars display based on the current level's stars.
+     */
     public void updateStarsDisplay() {
         int stars = getStars();
         starsLabel.setText("★".repeat(stars));
