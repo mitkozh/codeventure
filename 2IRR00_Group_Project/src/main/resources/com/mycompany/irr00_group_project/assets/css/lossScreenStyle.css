@@ -1,0 +1,75 @@
+/* Background image for the whole screen */
+.popup-bg {
+    -fx-background-image: url("../images/geometric_bckg_sprites_angry.png");
+    -fx-background-size: 100%;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-position: center;
+    -fx-padding: 20px;
+}
+
+
+.popup-panel {
+    -fx-background-image: url("../images/pixel_card.png");
+    -fx-background-size: 100% 100%;
+    -fx-padding: 30px 20px 30px 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 3, 0.9, 1, 1);
+    -fx-background-radius: 18px;
+    -fx-alignment: center;
+    -fx-max-width: 400px;
+    -fx-max-height: 320px;
+    -fx-spacing: 20px;
+}
+
+
+.popup-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+    -fx-padding: 0 0 10px 0;
+    -fx-alignment: center;
+}
+
+
+.popup-title.loss {
+    -fx-text-fill: #ff1744;
+}
+
+
+.star-label {
+    -fx-font-size: 36px;
+    -fx-text-fill: #FFD700;  
+    -fx-padding: 10px 0;
+    -fx-alignment: center;
+}
+
+
+.popup-subtitle {
+    -fx-font-size: 18px;
+    -fx-text-fill: #fff;
+    -fx-padding: 0 0 20px 0;
+    -fx-alignment: center;
+}
+
+
+.popup-button {
+    -fx-min-width: 180px;
+    -fx-max-width: 200px;
+    -fx-min-height: 40px;
+    -fx-font-size: 18px;
+    -fx-background-radius: 10px;
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #bdbdbd;
+    -fx-border-width: 1px;
+    -fx-text-fill: #2B3E50;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 2, 0.2, 0, 1);
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+
+.popup-button:hover {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #888;
+}
