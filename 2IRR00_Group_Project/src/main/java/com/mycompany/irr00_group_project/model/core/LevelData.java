@@ -13,10 +13,6 @@ import com.mycompany.irr00_group_project.model.enums.TileType;
  */
 public class LevelData {
 
-
-
-
-
     private int width;
     private int height;
     private TileType[][] grid;
