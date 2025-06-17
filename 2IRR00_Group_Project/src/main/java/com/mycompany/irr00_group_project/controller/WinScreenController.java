@@ -4,10 +4,13 @@ import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.navigator.WinScreenNavigatorManager;
+
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 /**
  * The WinScreenController class is responsible for handling the logic.
  */
@@ -15,6 +18,7 @@ public class WinScreenController {
 
     private Button restartButton;
     private Label starsLabel;
+    private HBox starsContainer;
 
     private LevelService levelService;
 
@@ -33,9 +37,19 @@ public class WinScreenController {
      *  Updates the stars display based on the current level's stars.
      */
     public void updateStarsDisplay() {
+        starsContainer.getChildren().clear();
         int stars = getStars();
-        starsLabel.setText("★".repeat(stars));
-        starsLabel.getStyleClass().add("star-label");
+
+        Image starImage = new Image(
+            getClass().getResourceAsStream(
+                "/com/mycompany/irr00_group_project/assets/images/star_image.png"
+            ),
+            60, 60, true, true
+        );
+
+        for (int i = 0; i < stars; i++) {
+            starsContainer.getChildren().add(new ImageView(starImage));
+        }      
     }
 
     /**
@@ -73,8 +87,8 @@ public class WinScreenController {
         navigatorManager.navigateBack();
     }
 
-    public void setStarsLabel(Label starsLabel) {
-        this.starsLabel = starsLabel;
+    public void setStarsContainer(HBox starsContainer) {
+        this.starsContainer = starsContainer;
     }
 
     public void setRestartButton(Button restartButton) {
