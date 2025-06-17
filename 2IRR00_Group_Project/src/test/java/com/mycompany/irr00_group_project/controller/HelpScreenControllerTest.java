@@ -54,7 +54,8 @@ public class HelpScreenControllerTest {
             // Verify that the navigatorManager is not null
             Field field = HelpScreenController.class.getDeclaredField("navigatorManager");
             field.setAccessible(true);
-            HelpScreenNavigatorManager navigatorManager = (HelpScreenNavigatorManager) field.get(controller);
+            HelpScreenNavigatorManager navigatorManager = 
+                (HelpScreenNavigatorManager) field.get(controller);
             assertTrue(navigatorManager != null, "Expected navigatorManager to be initialized");
         } catch (NoSuchFieldException | IllegalAccessException e) {
             fail("Initialization failed: " + e.getMessage());
