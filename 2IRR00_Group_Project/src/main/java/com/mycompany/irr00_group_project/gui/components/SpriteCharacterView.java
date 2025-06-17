@@ -22,6 +22,7 @@ public class SpriteCharacterView {
     private Polygon directionArrow;
     private StackPane stackPane;
     private SettingsService settingsService;
+    private int minTileSize = 40;
 
     /**
      * Constructs a SpriteCharacterView and initializes the sprite image.
@@ -52,9 +53,30 @@ public class SpriteCharacterView {
 
     private void initializeSprite() {
         spriteImageView = new ImageView();
-        spriteImageView.setFitWidth(50);
-        spriteImageView.setFitHeight(50);
+        spriteImageView.setFitWidth(40);
+        spriteImageView.setFitHeight(40);
         spriteImageView.getStyleClass().add("sprite-character");
+    }
+
+    public void updateSpriteSize(int gridSize) {
+        double curSize = Math.max(minTileSize, minTileSize * (8.0 / gridSize));
+        spriteImageView.setFitWidth(curSize);
+        spriteImageView.setFitHeight(curSize);
+        updateArrowSize(curSize);
+    }
+
+    private void updateArrowSize(double curSpriteSize) {
+        double arrowScale = curSpriteSize / minTileSize;
+        double arrowHeight = 20.0 * arrowScale;
+        double arrowWidth = 10.0 * arrowScale;
+
+        directionArrow.getPoints().clear();
+        directionArrow.getPoints().addAll(
+                0.0, -arrowHeight,
+                arrowWidth, 0.0,
+                -arrowWidth, 0.0);
+        directionArrow.setStrokeWidth(2 * arrowScale);
+        directionArrow.setTranslateY(10 * arrowScale);
     }
 
     private void loadSpriteImages() {

@@ -148,6 +148,7 @@ public class GameGridController {
     private void updateSpritePosition() {
         SpriteCharacter sprite = gameState.getSprite();
         if (sprite != null) {
+            spriteCharacterView.updateSpriteSize(gameState.getSize());
             spriteCharacterView.updateDirection(sprite.getCurrentDirection());
             gameGrid.getChildren().removeIf(node -> node == spriteCharacterView.getNode());
             gameGrid.add(spriteCharacterView.getNode(),
