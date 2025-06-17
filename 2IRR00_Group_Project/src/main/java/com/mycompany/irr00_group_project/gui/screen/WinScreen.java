@@ -70,7 +70,7 @@ public class WinScreen extends AbstractScreen {
         levelSelectButton.getStyleClass().add("popup-button");
         levelSelectButton.setOnAction(controller::handleLevelSelectionButtonAction);
         buttonContainer.getChildren().addAll(restartButton, levelSelectButton);
-        mainPanel.getChildren().addAll(titleLabel, starsLabel, congratsLabel, buttonContainer);
+        mainPanel.getChildren().addAll(congratsLabel,  youWinLabel, starsContainer, buttonContainer);
         rootPane.getChildren().add(mainPanel);
 
         return rootPane;

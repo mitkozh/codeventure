@@ -7,17 +7,18 @@ import com.mycompany.irr00_group_project.service.navigator.WinScreenNavigatorMan
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+
 /**
  * The WinScreenController class is responsible for handling the logic.
  */
+
 public class WinScreenController {
 
     private Button restartButton;
-    private Label starsLabel;
+    //private Label starsLabel;
     private HBox starsContainer;
 
     private LevelService levelService;
