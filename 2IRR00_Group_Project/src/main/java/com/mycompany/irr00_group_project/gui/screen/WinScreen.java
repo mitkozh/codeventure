@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -34,16 +35,20 @@ public class WinScreen extends AbstractScreen {
         mainPanel.setSpacing(30);
         mainPanel.getStyleClass().add("popup-panel");
 
-        Label titleLabel = new Label("You Win!");
-        titleLabel.getStyleClass().add("popup-title");
+        Label congratsLabel = new Label("CONGRATS!");
+        congratsLabel.getStyleClass().add("popup-title-win");
 
-        Label starsLabel = new Label();
+        Label youWinLabel = new Label("You Win!");
+        youWinLabel.getStyleClass().add("popup-title");
+
+        HBox starsContainer = new HBox();
+        starsContainer.setSpacing(10);
+        starsContainer.setAlignment(Pos.CENTER);
+
+        /*Label starsLabel = new Label();
         starsLabel.getStyleClass().add("star-label");
         controller.setStarsLabel(starsLabel);
-        controller.updateStarsDisplay();
-
-        Label congratsLabel = new Label("Well done!");
-        congratsLabel.getStyleClass().add("popup-subtitle");
+        controller.updateStarsDisplay();*/
 
         VBox buttonContainer = new VBox();
         buttonContainer.setSpacing(15);
@@ -73,6 +78,6 @@ public class WinScreen extends AbstractScreen {
 
     @Override
     protected String getCssPath() {
-        return "/com/mycompany/irr00_group_project/assets/css/popupScreenStyle.css";
+        return "/com/mycompany/irr00_group_project/assets/css/winScreenStyle.css";
     }
 }

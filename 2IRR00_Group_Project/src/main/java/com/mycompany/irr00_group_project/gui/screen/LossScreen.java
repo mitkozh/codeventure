@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.gui.screen;
 
 import com.mycompany.irr00_group_project.controller.LossScreenController;
+
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -58,6 +59,6 @@ public class LossScreen extends AbstractScreen {
 
     @Override
     protected String getCssPath() {
-        return "/com/mycompany/irr00_group_project/assets/css/popupScreenStyle.css";
+        return "/com/mycompany/irr00_group_project/assets/css/lossScreenStyle.css";
     }
 }
