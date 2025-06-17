@@ -44,11 +44,8 @@ public class WinScreen extends AbstractScreen {
         HBox starsContainer = new HBox();
         starsContainer.setSpacing(10);
         starsContainer.setAlignment(Pos.CENTER);
-
-        /*Label starsLabel = new Label();
-        starsLabel.getStyleClass().add("star-label");
-        controller.setStarsLabel(starsLabel);
-        controller.updateStarsDisplay();*/
+        controller.setStarsContainer(starsContainer);
+        controller.updateStarsDisplay();
 
         VBox buttonContainer = new VBox();
         buttonContainer.setSpacing(15);
@@ -70,7 +67,7 @@ public class WinScreen extends AbstractScreen {
         levelSelectButton.getStyleClass().add("popup-button");
         levelSelectButton.setOnAction(controller::handleLevelSelectionButtonAction);
         buttonContainer.getChildren().addAll(restartButton, levelSelectButton);
-        mainPanel.getChildren().addAll(congratsLabel,  youWinLabel, starsContainer, buttonContainer);
+        mainPanel.getChildren().addAll(congratsLabel, youWinLabel, starsContainer, buttonContainer);
         rootPane.getChildren().add(mainPanel);
 
         return rootPane;
