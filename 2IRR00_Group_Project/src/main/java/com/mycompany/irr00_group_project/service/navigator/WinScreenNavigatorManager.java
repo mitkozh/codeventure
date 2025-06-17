@@ -2,9 +2,9 @@ package com.mycompany.irr00_group_project.service.navigator;
 
 import java.io.IOException;
 
-import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.gui.screen.GameScreen;
 import com.mycompany.irr00_group_project.gui.screen.LevelSelectionScreen;
+import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 
 /**
  * Manages navigation for the win screen in the game.
