@@ -13,6 +13,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import com.mycompany.irr00_group_project.service.core.AudioManagerService;
 import com.mycompany.irr00_group_project.service.observable.SettingsObservables;
 import com.mycompany.irr00_group_project.utils.Constants;
+import com.mycompany.irr00_group_project.utils.StringUtils;
 
 /**
  * Class which implements the respective interface and manages the sound levels of the game.
@@ -100,6 +101,9 @@ public class AudioManagerServiceImpl implements AudioManagerService {
     @Override
     public void playSfx(String soundPath) {
         try {
+            if (StringUtils.isNullOrEmpty(soundPath)) {
+                throw new IllegalArgumentException("Sound path cannot be null or empty");
+            }
             URL soundURL = getClass().getResource(soundPath);
             if (soundURL != null) {
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundURL);
@@ -123,8 +127,12 @@ public class AudioManagerServiceImpl implements AudioManagerService {
 
                 clip.start();
             }
-        } catch (Exception e) {
-            System.err.println("Failed to play SFX: " + e.getMessage());
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException("Unsupported audio file format: " + soundPath, e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error reading audio file: " + soundPath, e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException("Audio line  for sound: " + soundPath, e);
         }
     }
 }

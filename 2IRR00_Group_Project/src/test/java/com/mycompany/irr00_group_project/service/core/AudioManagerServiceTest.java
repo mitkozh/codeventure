@@ -49,6 +49,9 @@ public class AudioManagerServiceTest {
     void testPlaySfxWithNullPath() {
         try {
             audioManagerService.playSfx(null);
+            fail("Expected an exception when playing with null path");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Sound path cannot be null or empty", e.getMessage());
         } catch (Exception e) {
             fail("Unexpected exception when playing with null path: " + e.getMessage());
         }
@@ -58,6 +61,9 @@ public class AudioManagerServiceTest {
     void testPlaySfxWithEmptyPath() {
         try {
             audioManagerService.playSfx("");
+            fail("Expected an exception when playing with empty path");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Sound path cannot be null or empty", e.getMessage());
         } catch (Exception e) {
             fail("Unexpected exception when playing with empty path: " + e.getMessage());
         }
