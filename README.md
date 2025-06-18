@@ -90,9 +90,9 @@ Separates application logic, UI, and user interaction handling in their respecti
 
 ## Intermediate Submissions
 You can find our intermediate submissions here:
-* [Submission 1](2IRR00_Group_Project/submissions/Intermediate_Submission_1_Group_58.pdf)
-* [Submission 2](2IRR00_Group_Project/submissions/Intermediate_Submission_2_Group_58.pdf) 
-* [Submission 3](2IRR00_Group_Project/submissions/Intermediate_Submission_3_Group_58.pdf)
+* [Submission 1](submissions/Intermediate_Submission_1_Group_58.pdf)
+* [Submission 2](submissions/Intermediate_Submission_2_Group_58.pdf) 
+* [Submission 3](submissions/Intermediate_Submission_3_Group_58.pdf)
 
 ## Contributions
 * Dimitar Zhekov — Project leader, tech lead, GUI and backend.
