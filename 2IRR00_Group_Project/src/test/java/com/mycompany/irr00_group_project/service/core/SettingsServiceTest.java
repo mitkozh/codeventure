@@ -22,8 +22,8 @@ import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 public class SettingsServiceTest {
 
     private SettingsService settingsService;
-    private static final java.nio.file.Path PROPERTIES_PATH = Paths.get("settings.properties");
-    private static final java.nio.file.Path BACKUP_PATH = Paths.get("settings.properties.bak");
+    private static final java.nio.file.Path PROPERTIES_PATH = Paths.get("game_settings.properties");
+    private static final java.nio.file.Path BACKUP_PATH = Paths.get("game_settings.properties.bak");
 
     /**
      * Sets up the SettingsService instance before each test.
