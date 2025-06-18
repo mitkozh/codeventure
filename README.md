@@ -76,7 +76,7 @@ Follow these steps to set up and run the game:
 ## Design Patterns  
 We applied the following design patterns in our project:
 * **Observer Pattern**  
-Used to decouple parts of the UI or logic when game state changes (e.g., level won/lost, grid updates), notably in `CommandExecutionVariable`.
+Used to decouple parts of the UI or logic when game state changes (e.g., level won/lost, grid updates).
 * **Singleton Pattern**  
 So only one instance of core services (like `AudioManagerServiceImpl`, `NavigationManager`, `LevelServiceImpl`) exists and provides a global access point.
 * **DTO (Data Transfer Object) Pattern**  
