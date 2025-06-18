@@ -1,6 +1,9 @@
 package com.mycompany.irr00_group_project.gui.screen;
 
+import java.util.Objects;
+
 import com.mycompany.irr00_group_project.controller.HelpScreenController;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -12,11 +15,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import java.util.Objects;
 
 /**
- * The HelpScreen class is responsible for displaying the help
- * screen of the application which assists users by providing game instructions.
+ * Implements the application's help screen which provides
+ * detailed game instructions, code examples, and visual references.
+ * 
+ * The screen is organized into two main columns:
+ *   Left column: Game mechanics and tile type explanations</li>
+ *   Right column: Code examples and feedback system information</li>
  */
 public class HelpScreen extends AbstractScreen {
 
@@ -29,6 +35,13 @@ public class HelpScreen extends AbstractScreen {
         return createUI();
     }
 
+    /**
+     * Constructs and configures the complete help screen UI.
+     * Creates the main layout structure including:
+     * - Header with title and close button
+     * - Scrollable content area with two columns
+     * - Back to menu button
+     */
     private Parent createUI() {
         StackPane rootPane = new StackPane();
         rootPane.getStyleClass().add("helpScreen-bg");

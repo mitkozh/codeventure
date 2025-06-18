@@ -129,9 +129,6 @@ public class SettingsController {
         return characterComboBox != null && avatarOptions.contains(savedAvatar);
     }
 
-    /**
-     * Sets up observable bindings for UI controls.
-     */
     private void setupObservableBindings() {
         if (settingsService == null) {
             return;
@@ -144,9 +141,6 @@ public class SettingsController {
         bindSlider(sfxSlider, (volume) -> settingsService.setSfxVolume(volume));
     }
 
-    /**
-     * Handles avatar selection changes.
-     */
     private void handleAvatarChange() {
         if (isInitializingView) {
             return;
@@ -185,61 +179,30 @@ public class SettingsController {
         });
     }
 
-    /**
-     * This method is called when the close button is clicked.
-     * It navigates back to the previous screen and notifies the navigator manager.
-     *
-     * @param actionEvent The action event triggered by the button click.
-     */
     public void handleClose(ActionEvent actionEvent) {
         navigatorManager.navigateBackAndNotify();
     }
 
-    /**
-     * This method is called when the back to screen button is clicked.
-     *
-     * @param actionEvent The action event triggered by the button click.
-     */
     public void onBackToScreenAction(ActionEvent actionEvent) {
         navigatorManager.navigateToLevelSelectionOrMainMenu();
     }
-    /**
-     * Sets the back to menu button.
-     * @param backToMenuButton The button to set
-     */
 
     public void setBackToMenuButton(Button backToMenuButton) {
         this.backToMenuButton = backToMenuButton;
     }
 
-    /**
-     * Sets the master volume slider.
-     * @param masterVolumeSlider The slider to set
-     */
     public void setMasterVolumeSlider(Slider masterVolumeSlider) {
         this.masterVolumeSlider = masterVolumeSlider;
     }
 
-    /**
-     * Sets the music volume slider.
-     * @param musicSlider The slider to set
-     */
     public void setMusicSlider(Slider musicSlider) {
         this.musicSlider = musicSlider;
     }
 
-    /**
-     * Sets the SFX volume slider.
-     * @param sfxSlider The slider to set
-     */
     public void setSfxSlider(Slider sfxSlider) {
         this.sfxSlider = sfxSlider;
     }
 
-    /**
-     * Sets the character selection combo box.
-     * @param characterComboBox The combo box to set
-     */
     public void setCharacterComboBox(ComboBox<String> characterComboBox) {
         this.characterComboBox = characterComboBox;
     }

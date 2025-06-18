@@ -10,7 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * LossScreen is a class that represents the game over screen displayed 
+ * LossScreen is a class that represents the game-over screen displayed 
  * when a player fails to complete a level.
  * This screen includes messages about the loss 
  * and navigation options to retry the level or return to the level selection menu.

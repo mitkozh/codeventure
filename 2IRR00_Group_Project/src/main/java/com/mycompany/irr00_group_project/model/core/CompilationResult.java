@@ -1,15 +1,16 @@
 package com.mycompany.irr00_group_project.model.core;
 
 
-import com.mycompany.irr00_group_project.service.sandbox.JavaClassAsBytes;
-
 import java.util.List;
 import java.util.Map;
-import javax.tools.JavaFileObject;
+
 import javax.tools.Diagnostic;
+import javax.tools.JavaFileObject;
+
+import com.mycompany.irr00_group_project.service.sandbox.JavaClassAsBytes;
 
 /**
- * Class used to check if the compilation of the class submitted by the user is successful or no.
+ * Class used to check if the compilation of the class submitted by the user is successful or not.
  */ 
 public class CompilationResult {
     private final boolean success;

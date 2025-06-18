@@ -14,7 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 /**
- * SpriteCharacterView is responsible for displaying the sprite character.
+ * SpriteCharacterView is responsible for displaying and managing the visual 
+ * representation of a sprite character, including its image and direction indicator.
+ * Handles sprite loading, sizing, and directional display updates.
  */
 public class SpriteCharacterView {
     private ImageView spriteImageView;
@@ -25,7 +27,9 @@ public class SpriteCharacterView {
     private int minTileSize = 40;
 
     /**
-     * Constructs a SpriteCharacterView and initializes the sprite image.
+     * Constructs a SpriteCharacterView and initializes all visual components.
+     * Creates the sprite image view, loads the initial sprite image,
+     * and sets up the direction indicator arrow.
      */
     public SpriteCharacterView() {
         settingsService = SettingsServiceImpl.getInstance();
@@ -58,6 +62,12 @@ public class SpriteCharacterView {
         spriteImageView.getStyleClass().add("sprite-character");
     }
 
+    /**
+     * Updates the sprite size based on the current grid size.
+     * Ensures the sprite maintains proper proportions relative to the game grid.
+     * 
+     * @param gridSize The current size of the game grid
+     */
     public void updateSpriteSize(int gridSize) {
         double curSize = Math.max(minTileSize, minTileSize * (8.0 / gridSize));
         spriteImageView.setFitWidth(curSize);
@@ -65,6 +75,11 @@ public class SpriteCharacterView {
         updateArrowSize(curSize);
     }
 
+    /**
+     * Adjusts the direction arrow size proportionally to the sprite size.
+     * 
+     * @param curSpriteSize The current size of the sprite
+     */
     private void updateArrowSize(double curSpriteSize) {
         double arrowScale = curSpriteSize / minTileSize;
         double arrowHeight = 20.0 * arrowScale;
@@ -79,6 +94,10 @@ public class SpriteCharacterView {
         directionArrow.setTranslateY(10 * arrowScale);
     }
 
+    /**
+     * Loads the sprite image based on the currently selected avatar from settings.
+     * Handles image loading errors gracefully by printing stack traces.
+     */
     private void loadSpriteImages() {
         try {
             String avatar = settingsService.getSelectedAvatar();

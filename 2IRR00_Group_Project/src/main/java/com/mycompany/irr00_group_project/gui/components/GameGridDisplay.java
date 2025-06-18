@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.gui.components;
 
 import com.mycompany.irr00_group_project.controller.components.GameGridController;
+
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
@@ -8,8 +9,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * Component for displaying the game grid.
- */
+* Constructs a new GameGridDisplay and initializes its UI components
+* and controller.
+*/
 public class GameGridDisplay {
 
     private GameGridController controller;
@@ -23,6 +25,10 @@ public class GameGridDisplay {
         createUI();
     }
 
+    /**
+     * Creates and configures the UI components for the game grid display.
+     * Sets up the layout hierarchy and styling for the grid containers.
+     */
     private void createUI() {
         rootContainer = new VBox();
         rootContainer.getStyleClass().add("grid-panel");

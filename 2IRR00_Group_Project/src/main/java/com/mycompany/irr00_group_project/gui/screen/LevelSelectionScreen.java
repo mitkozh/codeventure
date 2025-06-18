@@ -13,7 +13,9 @@ import javafx.scene.layout.VBox;
 
 /**
  * The LevelSelectionScreen class is responsible for displaying the level
- * selection screen of the application.
+ * selection screen of the application. It provides a paginated interface
+ * for users to browse and select different game levels, along with navigation
+ * options to return to the main menu.
  */
 public class LevelSelectionScreen extends AbstractScreen {
 

@@ -1,13 +1,15 @@
 package com.mycompany.irr00_group_project.gui.components;
 
 import com.mycompany.irr00_group_project.controller.components.ConsoleOutputController;
+
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
 /**
- * Component for the console output area.
+ * A graphical component that displays console output in a scrollable, read-only text area.
+ * Handles the visual presentation of program output, errors, and other messages.
  */
 public class ConsoleOutputArea {
 

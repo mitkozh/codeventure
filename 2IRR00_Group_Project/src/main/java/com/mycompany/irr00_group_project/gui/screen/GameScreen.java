@@ -4,15 +4,25 @@ import com.mycompany.irr00_group_project.controller.GameScreenController;
 import com.mycompany.irr00_group_project.gui.components.CodeEditorArea;
 import com.mycompany.irr00_group_project.gui.components.ConsoleOutputArea;
 import com.mycompany.irr00_group_project.gui.components.GameGridDisplay;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 /**
- * Class for implementing game screen.
+ * The main game screen implementation that combines all gameplay components.
+ * Manages the layout and interaction between:
+ * - Game grid display
+ * - Code editor
+ * - Console output
+ * - Control buttons
  */
 public class GameScreen extends AbstractScreen {
 
@@ -36,6 +46,15 @@ public class GameScreen extends AbstractScreen {
         return createUI();
     }
 
+    /**
+     * Constructs and configures the complete game screen UI.
+     * Creates the main layout structure including:
+     * - Header with control buttons
+     * - Center content with game grid and code editor
+     * - Button controls area
+     * 
+     * @return The fully constructed UI root node
+     */
     private Parent createUI() {
         rootPane = new StackPane();
         rootPane.getStyleClass().add("game-bg");
@@ -59,6 +78,13 @@ public class GameScreen extends AbstractScreen {
         return rootPane;
     }
 
+    /**
+     * Creates and configures the header section containing:
+     * - Info button (for help & instructions)
+     * - Settings button
+     * 
+     * @return Configured HBox containing header controls
+     */
     private HBox createHeader() {
         HBox header = new HBox(10);
         header.getStyleClass().add("gameScreen-header");
@@ -79,6 +105,13 @@ public class GameScreen extends AbstractScreen {
         return header;
     }
 
+    /**
+     * Creates the main content area containing:
+     * - Left side: Game grid display
+     * - Right side: Code editor, console output, and control buttons
+     * 
+     * @return Configured HBox containing the main game content
+     */
     private HBox createCenterContent() {
         HBox centerContent = new HBox(20);
         VBox.setVgrow(centerContent, Priority.ALWAYS);
@@ -118,6 +151,14 @@ public class GameScreen extends AbstractScreen {
         return centerContent;
     }
 
+    /**
+     * Creates and configures the button control area containing:
+     * - Run Code button
+     * - Stop Execution button
+     * - Reset Level button
+     * 
+     * @return Configured VBox containing the control buttons
+     */
     private VBox createButtonsArea() {
         VBox buttonsArea = new VBox(10);
         buttonsArea.getStyleClass().add("right-panel-buttons-area");

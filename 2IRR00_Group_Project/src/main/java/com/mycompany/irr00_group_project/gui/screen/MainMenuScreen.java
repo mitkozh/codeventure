@@ -1,7 +1,10 @@
 package com.mycompany.irr00_group_project.gui.screen;
 
+import java.util.Objects;
+
 import com.mycompany.irr00_group_project.controller.MainMenuController;
 import com.mycompany.irr00_group_project.utils.ConstantsResources;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -12,12 +15,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-import java.util.Objects;
-
 /**
- * The MainMenuScreen class is responsible for displaying the main menu screen
- * of the application. Loading of the FXML and CSS files is handled by the
- * AbstractScreen class.
+ * Represents the main menu screen of the application.
+ * It initializes and lays out the UI elements such as the title, background images,
+ * and navigation buttons (Play, Settings, Help, Exit).
+ * Styles and fonts are applied via the specified CSS file.
+ * The UI layout is created manually in code.
  */
 public class MainMenuScreen extends AbstractScreen {
     private MainMenuController controller;

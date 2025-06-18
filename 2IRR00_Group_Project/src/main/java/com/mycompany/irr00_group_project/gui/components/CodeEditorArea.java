@@ -2,6 +2,7 @@ package com.mycompany.irr00_group_project.gui.components;
 
 import com.mycompany.irr00_group_project.controller.components.CodeEditorAreaController;
 import com.mycompany.irr00_group_project.utils.Constants;
+
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
@@ -9,6 +10,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * Component for the code editor area.
+ * Provides a text area for code input with default styling and behavior.
  */
 public class CodeEditorArea {
 

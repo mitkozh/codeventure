@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.gui.screen;
 
 import com.mycompany.irr00_group_project.controller.SettingsController;
+
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -16,8 +17,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * The SettingsScreen class is responsible for displaying the settings screen of
- * the application.
+ * The SettingsScreen class constructs and displays the settings menu
+ * of the application, allowing the user to adjust audio levels and choose a character.
  */
 public class SettingsScreen extends AbstractScreen {
 

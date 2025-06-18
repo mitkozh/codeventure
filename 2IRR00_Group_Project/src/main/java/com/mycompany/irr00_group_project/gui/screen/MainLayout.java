@@ -1,8 +1,15 @@
 package com.mycompany.irr00_group_project.gui.screen;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Objects;
+
 import com.mycompany.irr00_group_project.service.navigator.MainLayoutNavigatorManager;
 import com.mycompany.irr00_group_project.utils.ConstantsResources;
 import com.mycompany.irr00_group_project.utils.StringUtils;
+
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,16 +19,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Objects;
-
 /**
- * The MainLayout class is responsible for setting up the main layout of the
- * application.
- * All other screens will be displayed within this layout.
+ * The MainLayout class is responsible for creating and managing the main GUI layout
+ * of the application. It loads the global styles, applies the default font, 
+ * and initializes the main navigation manager.
+ * All other screens are displayed within this layout's content area.
  */
 public class MainLayout extends AbstractScreen {
 
@@ -36,6 +38,10 @@ public class MainLayout extends AbstractScreen {
         return createUI();
     }
 
+    /**
+     * Builds the primary UI layout consisting of a horizontally aligned container
+     * and a content area. The navigation manager is linked to this content area.
+     */
     private HBox createUI() {
         HBox rootLayout = new HBox();
         rootLayout.setId("rootLayout");
