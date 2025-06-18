@@ -13,9 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 
-
-// import javafx.scene.shape.Path; // Removed incorrect import
-
 /**
  * Junit test class for SettingsService.
  * This class tests the functionality of the SettingsService,
@@ -41,6 +38,9 @@ public class SettingsServiceTest {
         settingsService.saveCurrentSettings();
     }
 
+    /**
+     * Backs up the properties file before all tests.
+     */
     @BeforeAll
     static void backupPropertiesFile() throws Exception {
         // Create the properties file with default content if it does not exist
@@ -50,6 +50,9 @@ public class SettingsServiceTest {
         Files.copy(PROPERTIES_PATH, BACKUP_PATH, StandardCopyOption.REPLACE_EXISTING);
     }
 
+    /**
+     * Restores the original properties file after all tests.
+     */
     @AfterAll
     static void restorePropertiesFile() throws Exception {
         Files.copy(BACKUP_PATH, PROPERTIES_PATH, StandardCopyOption.REPLACE_EXISTING);
