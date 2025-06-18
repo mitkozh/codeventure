@@ -1,16 +1,24 @@
 package com.mycompany.irr00_group_project.service.core;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.utils.Constants;
+
 
 /**
  * JUnit test class for LevelService.
@@ -21,10 +29,27 @@ import com.mycompany.irr00_group_project.utils.Constants;
 public class LevelServiceTest {
 
     private LevelService levelService;
+    private static final Path PROPERTIES_PATH = Paths.get("level.properties");
+    private static final Path BACKUP_PATH = Paths.get("level.properties.bak");
 
     @BeforeEach
     void setUp() {
         levelService = LevelServiceImpl.getInstance();
+    }
+
+    @BeforeAll
+    static void backupPropertiesFile() throws Exception {
+        // Create the properties file with default content if it does not exist
+        if (!Files.exists(PROPERTIES_PATH)) {
+            Files.write(PROPERTIES_PATH, "".getBytes());
+        }
+        Files.copy(PROPERTIES_PATH, BACKUP_PATH, StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    @AfterAll
+    static void restorePropertiesFile() throws Exception {
+        Files.copy(BACKUP_PATH, PROPERTIES_PATH, StandardCopyOption.REPLACE_EXISTING);
+        Files.deleteIfExists(BACKUP_PATH);
     }
 
     @Test
