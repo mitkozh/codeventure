@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.model;
+package com.mycompany.irr00_group_project.model.core.dto;
 
 import java.util.Map;
 import java.util.Set;
@@ -11,9 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.mycompany.irr00_group_project.model.core.dto.GameProgressDTO;
-import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 
 /**
  * JUnit test class for GameProgressDTO.

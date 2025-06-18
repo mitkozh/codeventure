@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.model;
+package com.mycompany.irr00_group_project.model.core;
 
 import java.util.Map;
 
@@ -11,16 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.mycompany.irr00_group_project.model.core.GameState;
-import com.mycompany.irr00_group_project.model.core.LevelData;
-import com.mycompany.irr00_group_project.model.core.Point;
-import com.mycompany.irr00_group_project.model.core.SpriteCharacter;
 import com.mycompany.irr00_group_project.model.enums.Direction;
 import com.mycompany.irr00_group_project.model.enums.GameResult;
 import com.mycompany.irr00_group_project.model.enums.TileType;
 
 /**
- * JUnit test class for GameState.
+ * JUnit test class for the GameState Class.
  * This class tests the functionality of the GameState,
  * including grid management, position validation, and game progress tracking.
  */

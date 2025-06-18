@@ -1,11 +1,9 @@
-package com.mycompany.irr00_group_project.model;
+package com.mycompany.irr00_group_project.model.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-
-import com.mycompany.irr00_group_project.model.core.Point;
 
 /**
  * Tests for the Point Class.

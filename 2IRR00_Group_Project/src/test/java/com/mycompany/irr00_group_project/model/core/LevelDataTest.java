@@ -1,4 +1,4 @@
-package com.mycompany.irr00_group_project.model;
+package com.mycompany.irr00_group_project.model.core;
 
 import java.util.List;
 import java.util.Map;
@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.mycompany.irr00_group_project.model.core.LevelData;
-import com.mycompany.irr00_group_project.model.core.Point;
 import com.mycompany.irr00_group_project.model.enums.Direction;
 import com.mycompany.irr00_group_project.model.enums.TileType;
 

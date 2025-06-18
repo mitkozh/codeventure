@@ -1,9 +1,8 @@
-package com.mycompany.irr00_group_project.model;
+package com.mycompany.irr00_group_project.model.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import com.mycompany.irr00_group_project.model.core.SpriteCharacter;
 import com.mycompany.irr00_group_project.model.enums.Direction;
 
 /**
