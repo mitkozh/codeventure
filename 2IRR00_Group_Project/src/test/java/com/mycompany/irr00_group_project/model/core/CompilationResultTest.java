@@ -71,6 +71,60 @@ class CompilationResultTest {
     }
 
     /**
+     * Tests that getCompiledClasses returns the exact same map instance passed to the constructor.
+     */
+    @Test
+    void testGetCompiledClassesReturnsSameInstance() {
+        Map<String, JavaClassAsBytes> testClasses = Collections.singletonMap(
+            "Sample", new JavaClassAsBytes("Sample", Kind.CLASS));
+        CompilationResult result = new CompilationResult(
+            true, testClasses, Collections.emptyList(), "OK");
+        assertEquals(testClasses, result.getCompiledClasses(),
+            "getCompiledClasses should return the same map instance as provided");
+    }
+
+    /**
+     * Tests that getDiagnosticsList returns the exact same list instance passed to the constructor.
+     */
+    @Test
+    void testGetDiagnosticsListReturnsSameInstance() {
+        List<Diagnostic<? extends JavaFileObject>> diagnostics = Collections.emptyList();
+        CompilationResult result = new CompilationResult(
+            true, Collections.emptyMap(), diagnostics, "OK");
+        assertEquals(diagnostics, result.getDiagnosticsList(),
+            "getDiagnosticsList should return the same list instance as provided");
+    }
+
+    /**
+     * Tests that getFormattedDiagnostics returns the exact string passed to the constructor.
+     */
+    @Test
+    void testGetFormattedDiagnosticsReturnsSameString() {
+        String formatted = "Some diagnostics";
+        CompilationResult result = new CompilationResult(
+            true, Collections.emptyMap(), Collections.emptyList(), formatted);
+        assertEquals(formatted, result.getFormattedDiagnostics(),
+            "getFormattedDiagnostics should return the same string as provided");
+    }
+
+    /**
+     * Tests that CompilationResult works with multiple compiled classes.
+     */
+    @Test
+    void testMultipleCompiledClasses() {
+        Map<String, JavaClassAsBytes> classes = Map.of(
+            "A", new JavaClassAsBytes("A", Kind.CLASS),
+            "B", new JavaClassAsBytes("B", Kind.CLASS)
+        );
+        CompilationResult result = new CompilationResult(
+            true, classes, Collections.emptyList(), "All good");
+        assertEquals(2, result.getCompiledClasses().size(),
+            "Should contain two compiled classes");
+        assertTrue(result.getCompiledClasses().containsKey("A"));
+        assertTrue(result.getCompiledClasses().containsKey("B"));
+    }
+
+    /**
      * Tests behavior with null diagnostics list (should be allowed).
      */
     @Test
