@@ -1,8 +1,9 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/xYOl6zeZ)
 
 # Codeventure - coding game
-Group Assignment 2IRR00 2025 <Group 58>
+Group Assignment 2IRR00 2025 Group 58
 ## Table of contents
+* [Screenshots](#screenshots)
 * [Introduction](#introduction)
 * [Technologies](#technologies)
 * [Installation](#installation)
@@ -10,15 +11,53 @@ Group Assignment 2IRR00 2025 <Group 58>
 * [Design Patterns](#design-patterns)
 * [Intermediate Submissions](#intermediate-submissions)
 * [License](#license)
+* [Contributions](#contributions)
 * [Project Status](#project-status)
 
+## Screenshots
+
+<table>
+  <tr>
+    <td valign="top">
+      <img src="screenshots/main_menu.png" alt="Main Menu" width="300"/>
+      <p style="text-align:center;">Main Menu</p>
+    </td>
+    <td valign="top">
+      <img src="screenshots/settings.png" alt="Settings" width="300"/>
+      <p style="text-align:center;">Settings</p>
+    </td>
+    <td valign="top">
+      <img src="screenshots/help_screen.png" alt="Help Screen" width="300"/>
+      <p style="text-align:center;">Help Screen</p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <img src="screenshots/level_8.jpg" alt="Level 8 Gameplay" width="300"/>
+      <p style="text-align:center;">Level 8</p>
+    </td>
+    <td valign="top">
+      <img src="screenshots/level_20.jpg" alt="Level 20 Gameplay" width="300"/>
+      <p style="text-align:center;">Level 20</p>
+    </td>
+    <td valign="top">
+      <img src="screenshots/level_completed.png" alt="Victory / Level Completed" width="300"/>
+      <p style="text-align:center;">Victory / Level Completed</p>
+    </td>
+  </tr>
+</table>
+
+<p style="text-align:center;">
+  <img src="screenshots/level_20_gameplay_demo.gif" alt="Gameplay Demo" style="width:100%; max-width:800px;"/>
+</p>
+
 ## Introduction
-Codventure is a 2D educational game designed to teach programming basics in an interactive way. Players control a character on a grid-based map (minimum size 4×4) by writing simple Java code. The objective is to guide the character from a start point to an endpoint while avoiding obstacles and meeting level-specific challenges. The game features a sandbox environment for executing code, encrypted JSON save files, visual feedback, and documentation to support the player’s learning.
+Codventure is a 2D educational game designed to teach programming basics in an interactive way. Players control a character on a grid-based map by writing simple Java code. The objective is to guide the character from a start point to an endpoint while avoiding obstacles and meeting level-specific challenges. The game features visual feedback, tutorials, and an enganging way for players to practice coding through play.
 
 ## Technologies
 this project is created using:
 * Java (JDK 21)
-* JavaFX
+* JavaFX (17)
 
 ## Installation
 Follow these steps to set up and run the game:
@@ -27,7 +66,9 @@ Follow these steps to set up and run the game:
     git clone https://github.com/TUe-MCS-2IRR00/2irr00-2025-group-assignment-graded-assignment-2irr00-2025-58.git
 2. **Open the project in your preferred Java IDE** (e.g., Intellij IDEA, Eclipse).
 3. **Set the project SDK to Java 21.**
-4. **Run the main class** (i.e., `App.java`)
+4. **Run the game**
+   * **If using IntelliJ IDEA or Eclipse:** run the `App.java` main class.
+   * **If using NetBeans:** build the Maven project and run the `Launcher.java` class (Maven sets up the entry point automatically).
 
 ## Authors and acknowledgment
 * **Dimitar Zhekov** — _Student ID: 2132966_ — `mitkozh` — d.z.zhekov@student.tue.nl
@@ -58,14 +99,22 @@ Separates application logic (`Model`), UI (`View`), and user interaction handlin
 
 ## Intermediate Submissions
 You can find our intermediate submissions here:
-* [Placeholder submission 1]
-* [Placeholder submission 2]
-* [Placeholder submission 3]
+* [Submission 1](2IRR00_Group_Project/submissions/Intermediate_Submission_1_Group_58.pdf)
+* [Submission 2](2IRR00_Group_Project/submissions/Intermediate_Submission_2_Group_58.pdf) 
+* [Submission 3](2IRR00_Group_Project/submissions/Intermediate_Submission_3_Group_58.pdf)
 
+## Contributions
+* Dimitar Zhekov — Project leader, tech lead, GUI and backend.
+* Stefanos Kritikos — GUI and backend.
+* Sofia Constantinou — Tests, GUI, some controllers.
+* Alex Christou — Tests and assignments.
+* Efe Koç — Tests, asset collections, some services.
+* Nicole Almeida — Styling and tests.
+  
 ## License
 This project was developed as a part of a group assignment for the 2IRR00 course at TU/e.  
 It is intended for academic use only and is not licensed for commercial distribution.
 
 ## Project Status
 This project has been completed and submitted as part of the 2IRR00 course at TU/e.  
-No further updates are planned.
+We would love to continue working on this project in the future and develop it into a real application. :)
