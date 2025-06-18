@@ -1,9 +1,11 @@
-package com.mycompany.irr00_group_project.service.core.impl;
+package com.mycompany.irr00_group_project.service.core;
 
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.MovementResult;
-import com.mycompany.irr00_group_project.service.core.MovementService;
-import com.mycompany.irr00_group_project.service.observable.*;
+import com.mycompany.irr00_group_project.service.core.impl.CommandServiceImpl;
+import com.mycompany.irr00_group_project.service.observable.CommandExecutionObservables;
+import com.mycompany.irr00_group_project.service.observable.ConsoleObservables;
+import com.mycompany.irr00_group_project.service.observable.ObservableRegistry;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
@@ -21,16 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CommandServiceTest {
-
+    /**
+     * Initializes the JavaFX toolkit to ensure that Platform.runLater does not throw an exception.
+     */
     @BeforeAll
     static void initToolkit() throws Exception {
-        // Mock JavaFX Platform.runLater to avoid Toolkit not initialized error
         try {
             Class<?> platformClass = Class.forName("javafx.application.Platform");
             Field field = platformClass.getDeclaredField("impl_instance");
             field.setAccessible(true);
             if (field.get(null) == null) {
-                // Create a mock Platform instance if needed
                 java.lang.reflect.Proxy.newProxyInstance(
                     platformClass.getClassLoader(),
                     new Class<?>[]{platformClass},
@@ -38,24 +40,28 @@ class CommandServiceTest {
                 );
             }
         } catch (Throwable t) {
-            // If Platform is not available, ignore
+            // If JavaFX is not available, we can still run tests without it
+            // This is a no-op to ensure Platform.runLater does not throw
         }
 
-        // Alternatively, set Platform.runLater to a no-op using reflection
         try {
             Class<?> platformClass = Class.forName("javafx.application.Platform");
-            java.lang.reflect.Method m = platformClass.getDeclaredMethod("runLater", Runnable.class);
-            java.lang.reflect.Field modifiersField = java.lang.reflect.Field.class.getDeclaredField("modifiers");
+            java.lang.reflect.Method m = 
+                platformClass.getDeclaredMethod("runLater", Runnable.class);
+            java.lang.reflect.Field modifiersField = 
+                java.lang.reflect.Field.class.getDeclaredField("modifiers");
             modifiersField.setAccessible(true);
             m.setAccessible(true);
-            // Not possible to override static methods directly, so use a library like PowerMock in real scenarios
         } catch (Throwable t) {
-            // Ignore if not possible
+            // If JavaFX is not available, we can still run tests without it
+            // This is a no-op to ensure Platform.runLater does not throw
         }
     }
 
-// Minimal MovementService stub
-private static class TestMovementService implements MovementService {
+/**
+ * Test class for CommandServiceImpl, which tests the command handling .
+ */
+    private static class TestMovementService implements MovementService {
         @Override
         public MovementResult tryMoveForward(GameState gameState) {
             return new MovementResult(true, null, null, false);
@@ -93,7 +99,6 @@ private static class TestMovementService implements MovementService {
         }
     }
 
-    // Minimal ConsoleObservables stub
     private static class TestConsoleObservables extends ConsoleObservables {
         private final List<String> messages = new ArrayList<>();
         private final List<String> errors = new ArrayList<>();
@@ -117,7 +122,6 @@ private static class TestMovementService implements MovementService {
         }
     }
 
-    // Minimal CommandExecutionObservables stub
     private static class TestCommandExecutionObservables extends CommandExecutionObservables {
         private final BooleanProperty pauseRequested = new SimpleBooleanProperty(false);
         private final BooleanProperty resumeRequested = new SimpleBooleanProperty(false);
@@ -164,7 +168,6 @@ private static class TestMovementService implements MovementService {
         }
     }
 
-    // Minimal ObservableRegistry stub
     private static class TestObservableRegistry extends ObservableRegistry {
         private final ConsoleObservables console = new TestConsoleObservables();
         private final CommandExecutionObservables cmdExec = new TestCommandExecutionObservables();
@@ -172,7 +175,6 @@ private static class TestMovementService implements MovementService {
         @Override
         public <T> void register(Class<T> observableType, T observable) {}
 
-        @SuppressWarnings("unchecked")
         public <T> T getObservable(Class<T> observableType) {
             if (observableType == ConsoleObservables.class) {
                 return (T) console;
@@ -187,6 +189,9 @@ private static class TestMovementService implements MovementService {
     private TestMovementService movementService;
     private TestObservableRegistry testObservableRegistry;
 
+    /**
+     * Initializes the CommandServiceTest class, setting up the necessary services and observables.
+     */
     @BeforeEach
     void setUp() {
         movementService = new TestMovementService();
@@ -218,23 +223,17 @@ private static class TestMovementService implements MovementService {
 
     @Test
     void testRequestPauseAndResume() {
-        // Initially not paused
         assertFalse(commandService.isPaused());
 
-        // Request pause
         commandService.requestPause();
-        // Depending on implementation, isPaused may or may not reflect immediately
-        // Here we just check that calling doesn't throw
         assertDoesNotThrow(() -> commandService.requestPause());
 
-        // Request resume
         commandService.requestResume();
         assertDoesNotThrow(() -> commandService.requestResume());
     }
 
     @Test
     void testMultiplePauseResumeCalls() {
-        // Multiple pause/resume calls should not throw
         assertDoesNotThrow(() -> {
             commandService.requestPause();
             commandService.requestPause();
