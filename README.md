@@ -7,7 +7,6 @@ Group Assignment 2IRR00 2025 Group 58
 * [Introduction](#introduction)
 * [Technologies](#technologies)
 * [Installation](#installation)
-* [Use Case Reference](#use-case-reference)
 * [Design Patterns](#design-patterns)
 * [Intermediate Submissions](#intermediate-submissions)
 * [License](#license)
@@ -66,9 +65,7 @@ Follow these steps to set up and run the game:
     git clone https://github.com/TUe-MCS-2IRR00/2irr00-2025-group-assignment-graded-assignment-2irr00-2025-58.git
 2. **Open the project in your preferred Java IDE** (e.g., Intellij IDEA, Eclipse).
 3. **Set the project SDK to Java 21.**
-4. **Run the game**
-   * **If using IntelliJ IDEA or Eclipse:** run the `App.java` main class.
-   * **If using NetBeans:** build the Maven project and run the `Launcher.java` class (Maven sets up the entry point automatically).
+4. **Run the game** (i.e. build the Maven project and run the `Launcher.java` class).
 
 ## Authors and acknowledgment
 * **Dimitar Zhekov** — _Student ID: 2132966_ — `mitkozh` — d.z.zhekov@student.tue.nl
@@ -77,10 +74,6 @@ Follow these steps to set up and run the game:
 * **Alex Christou** — _Student ID: 2075407_ — `alexchristou06` — a.christou@student.tue.nl
 * **Efe Koç** — _Student ID: 2098156_ — `techinesis` — e.koc@student.tue.nl
 * **Nicole Almeida** —  _Student ID: 2087480_ — `nicolealm1405` —  n.e.almeida@student.tue.nl
-
-## Use Case Reference
-The updated use case can be found in `placehodler`.  
-It describes the step-by-step execution flow, including two alternative/exception scenarios.
 
 ## Design Patterns  
 We applied the following design patterns in our project:
