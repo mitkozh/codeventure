@@ -94,6 +94,10 @@ You can find our intermediate submissions here:
 * [Submission 2](submissions/Intermediate_Submission_2_Group_58.pdf) 
 * [Submission 3](submissions/Intermediate_Submission_3_Group_58.pdf)
 
+## Reflections
+You can find our reflections here:
+* [Reflections](https://drive.google.com/drive/folders/1GEiDpqTCp3__CT5tuy0Lk11pN78lZ43Q?usp=sharing)
+
 ## Contributions
 * Dimitar Zhekov — Project leader, tech lead, GUI and backend.
 * Stefanos Kritikos — GUI and backend.
