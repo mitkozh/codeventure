@@ -28,8 +28,8 @@ import com.mycompany.irr00_group_project.utils.Constants;
 public class LevelServiceTest {
 
     private LevelService levelService;
-    private static final Path PROPERTIES_PATH = Paths.get("level.properties");
-    private static final Path BACKUP_PATH = Paths.get("level.properties.bak");
+    private static final Path PROPERTIES_PATH = Paths.get("game_progress.properties");
+    private static final Path BACKUP_PATH = Paths.get("game_progress.properties.bak");
 
     @BeforeEach
     void setUp() {
