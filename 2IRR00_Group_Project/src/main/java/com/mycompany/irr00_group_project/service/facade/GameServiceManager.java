@@ -38,30 +38,66 @@ class GameServiceManager {
         this.ipcService = new IPCService();
     }
 
+    /**
+     * Provides access to the movement service.
+     *
+     * @return an instance of MovementService
+     */
     public MovementService getMovementService() {
         return movementService;
     }
+    
+    /**
+     * Provides access to the game play service.
+     *
+     * @return an instance of GamePlayService
+     */
 
     public GamePlayService getGamePlayService() {
         return gamePlayService;
     }
 
+    /**
+     * Provides access to the level service.
+     *
+     * @return an instance of LevelService
+     */
     public LevelService getLevelService() {
         return levelService;
     }
 
+    /**
+     * Provides access to the shared jar service.
+     *
+     * @return an instance of SharedJarServiceImpl
+     */
     public SharedJarServiceImpl getSharedJarService() {
         return sharedJarService;
     }
 
+    /**
+     * Provides access to the user code compilation service.
+     *
+     * @return an instance of UserCodeCompilationService
+     */
     public UserCodeCompilationService getCompilationService() {
         return compilationService;
     }
 
+    /**
+     * Provides access to the user code execution service.
+     *
+     * @return an instance of UserCodeExecutionService
+     */
     public UserCodeExecutionService getExecutionService() {
         return executionService;
     }
 
+    /**
+     * Provides access to the IPC service.
+     *
+     * @return an instance of IPCService
+     */
     public IPCService getIpcService() {
         return ipcService;
     }

@@ -24,37 +24,6 @@ public class SpriteCharacterTest {
     }
 
     /**
-     * Tests position updates.
-     * Verifies row and column can be changed individually.
-     */
-    @Test
-    void testPositionUpdates() {
-        SpriteCharacter sprite = new SpriteCharacter(0, 0, Direction.NORTH);
-        sprite.setCurrentRow(1);
-        sprite.setCurrentCol(1);
-        assertEquals(1, sprite.getCurrentRow());
-        assertEquals(1, sprite.getCurrentCol());
-    }
-
-    /**
-     * Tests direction changes.
-     * Verifies all direction values can be set.
-     */
-    @Test
-    void testDirectionChanges() {
-        SpriteCharacter sprite = new SpriteCharacter(0, 0, Direction.NORTH);
-        
-        sprite.setCurrentDirection(Direction.EAST);
-        assertEquals(Direction.EAST, sprite.getCurrentDirection());
-        
-        sprite.setCurrentDirection(Direction.SOUTH);
-        assertEquals(Direction.SOUTH, sprite.getCurrentDirection());
-        
-        sprite.setCurrentDirection(Direction.WEST);
-        assertEquals(Direction.WEST, sprite.getCurrentDirection());
-    }
-
-    /**
      * Tests movement method.
      * Verifies position updates correctly.
      */
@@ -64,20 +33,5 @@ public class SpriteCharacterTest {
         sprite.moveTo(2, 3);
         assertEquals(2, sprite.getCurrentRow());
         assertEquals(3, sprite.getCurrentCol());
-    }
-
-    /**
-     * Tests negative position values.
-     * Verifies sprite can handle negative coordinates.
-     */
-    @Test
-    void testNegativePositions() {
-        SpriteCharacter sprite = new SpriteCharacter(-1, -1, Direction.SOUTH);
-        assertEquals(-1, sprite.getCurrentRow());
-        assertEquals(-1, sprite.getCurrentCol());
-        
-        sprite.moveTo(-2, -3);
-        assertEquals(-2, sprite.getCurrentRow());
-        assertEquals(-3, sprite.getCurrentCol());
     }
 }

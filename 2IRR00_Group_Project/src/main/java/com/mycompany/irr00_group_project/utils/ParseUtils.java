@@ -65,6 +65,12 @@ public class ParseUtils {
         return levelData;
     }
 
+    /**
+     * Handles individual parts of the level file based on the current section.
+     * @param parts the parts of the line split by spaces
+     * @param levelData the LevelData object to populate
+     * @param currentSection the current section being processed
+     */
     private static void handleIndividualPart(String[] parts,
             LevelData levelData, String currentSection) {
         switch (parts[0]) {
@@ -99,6 +105,12 @@ public class ParseUtils {
         }
     }
 
+    /**
+     * Handles different tile types based on the current section.
+     * @param parts the parts of the line split by spaces
+     * @param levelData the LevelData object to populate
+     * @param currentSection the current section being processed
+     */
     private static void handleDifferentTileTypes(String[] parts,
             LevelData levelData, String currentSection) {
         if (parts.length >= 2 && !currentSection.isEmpty()) {

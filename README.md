@@ -1,5 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/xYOl6zeZ)
-
 # Codeventure - coding game
 Group Assignment 2IRR00 2025 Group 58
 ## Table of contents
@@ -78,13 +76,13 @@ Follow these steps to set up and run the game:
 ## Design Patterns  
 We applied the following design patterns in our project:
 * **Observer Pattern**  
-Used to notify parts of the UI or logic when game state changes (e.g., level won/lost, grid updates).
+Used to decouple parts of the UI or logic when game state changes (e.g., level won/lost, grid updates).
 * **Singleton Pattern**  
 So only one instance of core services (like `AudioManagerServiceImpl`, `NavigationManager`, `LevelServiceImpl`) exists and provides a global access point.
 * **DTO (Data Transfer Object) Pattern**  
 `LevelDTO` and similar classes are used to transfer structured data between layers (e.g., from service to controller) without exposing internal details.
 * **MVC (Model-View-Controller) Pattern**  
-Separates application logic (`Model`), UI (`View`), and user interaction handling (`Controller`) for better organization and maintainability.
+Separates application logic, UI, and user interaction handling in their respective packages (`model`,`GUI`, `controller`), for better organization and maintainability.
 * **Facade Pattern**  
 `GameScreenServiceFacade` provides a simplified interface to complex subsystems, making it easier for controllers to interact with multiple services.
 * **Service Locator Pattern**  

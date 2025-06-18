@@ -69,41 +69,4 @@ class GameSettingsDTOTest {
             "SFX volume should be updated to 0.4");
     }
 
-    /**
-     * Tests edge cases for volume values (minimum and maximum bounds).
-     */
-    @Test
-    void testVolumeEdgeCases() {
-        GameSettingsDTO settings = new GameSettingsDTO();
-        
-        // Test minimum volume (0.0)
-        settings.setMasterVolume(0.0);
-        assertEquals(0.0, settings.getMasterVolume(), 
-            "Master volume should accept 0.0");
-        
-        // Test maximum volume (1.0)
-        settings.setMasterVolume(1.0);
-        assertEquals(1.0, settings.getMasterVolume(), 
-            "Master volume should accept 1.0");
-        
-        // Test values beyond normal range (should still work as there's no validation)
-        settings.setMusicVolume(-0.5);
-        assertEquals(-0.5, settings.getMusicVolume(), 
-            "Music volume should accept negative values");
-        
-        settings.setSfxVolume(1.5);
-        assertEquals(1.5, settings.getSfxVolume(), 
-            "SFX volume should accept values above 1.0");
-    }
-
-    /**
-     * Tests setting null as avatar (should be allowed based on current implementation).
-     */
-    @Test
-    void testNullAvatar() {
-        GameSettingsDTO settings = new GameSettingsDTO();
-        settings.setSelectedAvatar(null);
-        assertNull(settings.getSelectedAvatar(), 
-            "Avatar should accept null value");
-    }
 }

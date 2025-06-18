@@ -84,4 +84,85 @@ public class PointTest {
         assertEquals(Integer.MAX_VALUE, point.row);
         assertEquals(Integer.MIN_VALUE, point.col);
     }
+
+    /**
+     * Tests reflexivity of equals.
+     * A point should be equal to itself.
+     */
+    @Test
+    void testEqualsReflexive() {
+        Point point = new Point(4, 7);
+        assertEquals(point, point);
+    }
+
+    /**
+     * Tests symmetry of equals.
+     * If p1.equals(p2) then p2.equals(p1).
+     */
+    @Test
+    void testEqualsSymmetric() {
+        Point p1 = new Point(5, 6);
+        Point p2 = new Point(5, 6);
+        assertEquals(p1, p2);
+        assertEquals(p2, p1);
+    }
+
+    /**
+     * Tests transitivity of equals.
+     * If p1.equals(p2) and p2.equals(p3), then p1.equals(p3).
+     */
+    @Test
+    void testEqualsTransitive() {
+        Point p1 = new Point(8, 9);
+        Point p2 = new Point(8, 9);
+        Point p3 = new Point(8, 9);
+        assertEquals(p1, p2);
+        assertEquals(p2, p3);
+        assertEquals(p1, p3);
+    }
+
+    /**
+     * Tests consistency of equals.
+     * Multiple invocations should return the same result.
+     */
+    @Test
+    void testEqualsConsistent() {
+        Point p1 = new Point(1, 1);
+        Point p2 = new Point(1, 1);
+        for (int i = 0; i < 10; i++) {
+            assertEquals(p1, p2);
+        }
+    }
+
+    /**
+     * Tests hashCode consistency.
+     * Multiple invocations should return the same result.
+     */
+    @Test
+    void testHashCodeConsistent() {
+        Point point = new Point(10, 20);
+        int hash1 = point.hashCode();
+        int hash2 = point.hashCode();
+        assertEquals(hash1, hash2);
+    }
+
+    /**
+     * Tests that different points have different hash codes (not guaranteed, but likely).
+     */
+    @Test
+    void testDifferentPointsDifferentHashCodes() {
+        Point p1 = new Point(1, 2);
+        Point p2 = new Point(2, 1);
+        assertNotEquals(p1.hashCode(), p2.hashCode());
+    }
+
+    /**
+     * Tests toString format.
+     * Verifies the output matches the expected format.
+     */
+    @Test
+    void testToStringFormat() {
+        Point point = new Point(7, 8);
+        assertEquals("Point{row=7, col=8}", point.toString());
+    }
 }

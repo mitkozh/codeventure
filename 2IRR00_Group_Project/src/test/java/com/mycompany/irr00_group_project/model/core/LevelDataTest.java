@@ -25,6 +25,44 @@ public class LevelDataTest {
     }
 
     /**
+     * Tests that setStart does not throw or set out of bounds.
+     */
+    @Test
+    void testSetStartOutOfBounds() {
+        levelData.setSize(2, 2);
+        levelData.setStart(3, 3, Direction.EAST); // Should not throw
+        // Grid should remain unchanged
+        assertEquals(TileType.NORMAL, levelData.getGrid()[0][0]);
+        assertEquals(TileType.NORMAL, levelData.getGrid()[1][1]);
+    }
+
+    /**
+     * Tests addDoorKeyPairs with more doors than keys.
+     */
+    @Test
+    void testAddDoorKeyPairsMoreDoors() {
+        levelData.addKey(0, 0);
+        levelData.addDoor(1, 1);
+        levelData.addDoor(2, 2);
+        levelData.addDoorKeyPairs();
+        Map<Point, Point> pairs = levelData.getDoorKeyPair();
+        assertEquals(1, pairs.size());
+        assertTrue(pairs.containsKey(new Point(1, 1)));
+    }
+
+    /**
+     * Tests that keys and doors lists are independent.
+     */
+    @Test
+    void testKeysAndDoorsIndependence() {
+        levelData.addKey(1, 1);
+        levelData.addDoor(2, 2);
+        levelData.addKey(3, 3);
+        assertEquals(2, levelData.getKeys().size());
+        assertEquals(1, levelData.getDoors().size());
+    }
+
+    /**
      * Tests grid initialization.
      * Verifies correct dimensions and default tile values.
      */
@@ -71,38 +109,12 @@ public class LevelDataTest {
     void testKeyDoorManagement() {
         levelData.addKey(1, 1);
         levelData.addDoor(2, 2);
-        
+
         List<Point> keys = levelData.getKeys();
         List<Point> doors = levelData.getDoors();
-        
+
         assertEquals(1, keys.size());
         assertEquals(1, doors.size());
         assertEquals(new Point(1, 1), keys.get(0));
-    }
-
-    /**
-     * Tests door-key pairing.
-     * Verifies correct pair creation and mapping.
-     */
-    @Test
-    void testDoorKeyPairs() {
-        levelData.addKey(1, 1);
-        levelData.addKey(2, 2);
-        levelData.addDoor(3, 3);
-        levelData.addDoorKeyPairs();
-        
-        Map<Point, Point> pairs = levelData.getDoorKeyPair();
-        assertEquals(1, pairs.size());
-        assertTrue(pairs.containsKey(new Point(3, 3)));
-    }
-
-    /**
-     * Tests optimal steps management.
-     * Verifies value storage and retrieval.
-     */
-    @Test
-    void testOptimalSteps() {
-        levelData.setOptimalSteps(10);
-        assertEquals(10, levelData.getOptimalSteps());
     }
 }

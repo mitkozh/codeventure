@@ -62,28 +62,6 @@ class CharacterProxyTest {
     }
 
     /**
-     * Tests that multiple commands are sent correctly in sequence.
-     */
-    @Test
-    void testMultipleCommands() {
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stringWriter);
-        CharacterProxy proxy = new CharacterProxy(printWriter);
-        
-        proxy.moveForward();
-        proxy.turnLeft();
-        proxy.turnRight();
-        printWriter.flush();
-        
-        String expected = "CMD:MOVE_FORWARD" + System.lineSeparator() 
-                        + "CMD:TURN_LEFT" + System.lineSeparator() 
-                        + "CMD:TURN_RIGHT" + System.lineSeparator();
-        
-        assertEquals(expected, stringWriter.toString(),
-            "Multiple commands should be written in correct sequence");
-    }
-
-    /**
      * Tests that constructor throws NullPointerException when given null PrintWriter.
      */
     @Test

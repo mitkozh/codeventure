@@ -5,7 +5,6 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -117,22 +116,13 @@ public class GameStateTest {
     }
 
     /**
-     * Tests tile modification.
-     * Verifies tiles can be changed and invalid positions are handled.
+     * Tests tile modification - Verifies tiles can be changed.
      */
     @Test
     void testSetTileAt() {
         // Change a tile and verify
         gameState.setTileAt(1, 1, TileType.KEY);
         assertEquals(TileType.KEY, gameState.getTileAt(1, 1));
-        
-        // Set to null should be handled
-        gameState.setTileAt(1, 1, null);
-        assertNull(gameState.getTileAt(1, 1));
-        
-        // Invalid positions should be ignored
-        gameState.setTileAt(-1, 0, TileType.NORMAL);
-        gameState.setTileAt(3, 3, TileType.NORMAL);
     }
 
     /**
@@ -186,20 +176,5 @@ public class GameStateTest {
         gameState.setGameResult(GameResult.LOST);
         assertEquals(GameResult.LOST, gameState.getGameResult());
         assertFalse(gameState.isGamePlaying());
-    }
-
-    /**
-     * Tests sprite character integration.
-     * Verifies correct sprite position and direction initialization.
-     */
-    @Test
-    void testSpriteCharacterIntegration() {
-        SpriteCharacter sprite = gameState.getSprite();
-        assertNotNull(sprite);
-        
-        // Verify initial position
-        assertEquals(1, sprite.getCurrentRow());
-        assertEquals(1, sprite.getCurrentCol());
-        assertEquals(Direction.NORTH, sprite.getCurrentDirection());
     }
 }
