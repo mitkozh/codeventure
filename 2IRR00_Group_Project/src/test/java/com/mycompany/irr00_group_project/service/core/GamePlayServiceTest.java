@@ -20,14 +20,14 @@ public class GamePlayServiceTest {
     private GamePlayService gamePlayService;
     private LevelData levelData;
 
-   /**
-    * Sets up the GamePlayService instance and LevelData before each test.
-    * This method initializes the service and mocks the LevelData with an optimal step count.
-    */
+    /**
+     * Sets up the GamePlayService instance and LevelData before each test.
+     * This method initializes the service and mocks the LevelData with an optimal step count.
+     */
     @BeforeEach
     void setUp() {
         gamePlayService = new GamePlayServiceImpl();
-       // Mock LevelData with optimal steps = 10
+        // Mock LevelData with optimal steps = 10
         levelData = new LevelData();
         levelData.setOptimalSteps(10);
     }
@@ -95,11 +95,11 @@ public class GamePlayServiceTest {
         gamePlayService.recordLevelResult(levelDTO, 15, levelData);
         assertEquals(15, gamePlayService.getBestStepsForLevel(levelDTO));
 
-       // Record better result
+        // Record better result
         gamePlayService.recordLevelResult(levelDTO, 12, levelData);
         assertEquals(12, gamePlayService.getBestStepsForLevel(levelDTO));
 
-       // Record worse result, should not update
+        // Record worse result, should not update
         gamePlayService.recordLevelResult(levelDTO, 20, levelData);
         assertEquals(12, gamePlayService.getBestStepsForLevel(levelDTO));
     }
