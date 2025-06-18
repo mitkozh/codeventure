@@ -30,7 +30,6 @@ public class ObservableRegistry {
      * @return an {@link Optional} containing the observable instance if registered,
      * or an empty {@link Optional} otherwise.
      */
-    @SuppressWarnings("unchecked")
     public <T> Optional<T> get(Class<T> type) {
         return Optional.ofNullable((T) observables.get(type));
     }
