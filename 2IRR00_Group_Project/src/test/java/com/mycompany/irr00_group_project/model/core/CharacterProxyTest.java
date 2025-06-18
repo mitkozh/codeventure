@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for the CharacterProxy Class.
+ * Test class for the CharacterProxy Class .
  * Verifies that character commands are properly forwarded to the output stream.
  */
 class CharacterProxyTest {
