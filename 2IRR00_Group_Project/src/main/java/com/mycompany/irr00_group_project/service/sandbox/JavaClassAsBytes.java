@@ -12,6 +12,7 @@ import java.net.URI;
  */
 public class JavaClassAsBytes extends SimpleJavaFileObject {
 
+   
     protected ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
     /**
@@ -24,10 +25,20 @@ public class JavaClassAsBytes extends SimpleJavaFileObject {
                 + kind.extension), kind);
     }
 
+    /**
+     * Returns the byte array containing the compiled class bytes.
+     *
+     * @return a byte array of the compiled class
+     */
     public byte[] getBytes() {
         return bos.toByteArray();
     }
 
+    /**
+     * Opens an output stream to write the compiled class bytes.
+     *
+     * @return an OutputStream to write the class bytes
+     */
     @Override
     public OutputStream openOutputStream() {
         return bos;

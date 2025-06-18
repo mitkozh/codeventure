@@ -16,6 +16,9 @@ import java.nio.file.StandardCopyOption;
 public class SharedJarServiceImpl implements SharedJarService {
     private File resolvedSharedJarFile;
 
+    /*
+     * Default constructor to initiallize the SharedJarServiceImpl without parameters
+     */
     public SharedJarServiceImpl() {}
     
     /**
