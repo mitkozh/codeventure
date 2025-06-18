@@ -3,8 +3,6 @@ package com.mycompany.irr00_group_project.service.core;
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.MovementResult;
 import com.mycompany.irr00_group_project.model.core.Point;
-import com.mycompany.irr00_group_project.model.core.SpriteCharacter;
-
 import java.util.List;
 
 /**

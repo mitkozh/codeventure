@@ -1,7 +1,6 @@
 package com.mycompany.irr00_group_project.service.navigator;
 
 import com.mycompany.irr00_group_project.gui.screen.AbstractScreen;
-import com.mycompany.irr00_group_project.utils.NavigationEntry;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import org.junit.jupiter.api.BeforeEach;

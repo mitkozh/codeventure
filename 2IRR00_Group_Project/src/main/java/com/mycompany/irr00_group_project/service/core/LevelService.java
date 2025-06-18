@@ -2,9 +2,6 @@ package com.mycompany.irr00_group_project.service.core;
 
 import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
-import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
-import com.mycompany.irr00_group_project.service.observable.LevelSelectionObservables;
-
 import java.util.List;
 
 /**

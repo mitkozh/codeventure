@@ -49,6 +49,7 @@
                 <executions>
                     <!-- bind `checkstyle:check` to `validate` such that style is checked before compilation -->
                     <execution>
+                        <?m2e execute onConfiguration?>
                         <id>validate</id>
                         <phase>validate</phase>
                         <goals>

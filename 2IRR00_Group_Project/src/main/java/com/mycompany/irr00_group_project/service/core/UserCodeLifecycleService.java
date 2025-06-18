@@ -2,8 +2,6 @@ package com.mycompany.irr00_group_project.service.core;
 
 import com.mycompany.irr00_group_project.model.core.GameState;
 
-import java.util.function.Consumer;
-
 /**
  * Service for managing the lifecycle of user code execution.
  * This includes compiling, executing, stopping, and checking the status of user code.

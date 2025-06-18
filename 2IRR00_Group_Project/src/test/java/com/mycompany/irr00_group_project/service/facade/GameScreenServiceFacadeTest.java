@@ -1,7 +1,5 @@
 package com.mycompany.irr00_group_project.service.facade;
 
-import com.mycompany.irr00_group_project.model.core.GameState;
-import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

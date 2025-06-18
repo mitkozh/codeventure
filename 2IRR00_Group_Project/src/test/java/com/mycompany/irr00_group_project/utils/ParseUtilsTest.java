@@ -2,7 +2,6 @@ package com.mycompany.irr00_group_project.utils;
 
 import com.mycompany.irr00_group_project.model.core.LevelData;
 import com.mycompany.irr00_group_project.model.enums.Direction;
-import com.mycompany.irr00_group_project.model.enums.TileType;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;

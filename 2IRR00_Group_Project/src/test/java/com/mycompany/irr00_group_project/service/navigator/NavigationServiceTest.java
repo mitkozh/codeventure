@@ -1,6 +1,5 @@
 package com.mycompany.irr00_group_project.service.navigator;
 
-import com.mycompany.irr00_group_project.service.observable.NavigationObservables;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

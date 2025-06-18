@@ -1,8 +1,5 @@
 package com.mycompany.irr00_group_project.service.navigator;
 
-
-import com.mycompany.irr00_group_project.gui.screen.GameScreen;
-
 /**
  * Manages navigation for the help screen.
  */

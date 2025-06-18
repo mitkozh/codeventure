@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.model.enums.GameResult;
 import com.mycompany.irr00_group_project.model.enums.TileType;
-import com.mycompany.irr00_group_project.service.core.LevelService;
-import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 
 /**
  * The GameState class is responsible for managing the current state of the
@@ -37,7 +34,6 @@ public class GameState {
      * Constructor that initializes the game state with a grid and a sprite.
      */
     public GameState(TileType[][] grid2, SpriteCharacter sprite2) {
-        //TODO Auto-generated constructor stub
     }
 
     /**
