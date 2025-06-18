@@ -11,6 +11,7 @@ import com.mycompany.irr00_group_project.model.enums.GameResult;
 import com.mycompany.irr00_group_project.service.facade.GameScreenServiceFacade;
 import com.mycompany.irr00_group_project.utils.Constants;
 import com.mycompany.irr00_group_project.utils.StringUtils;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
@@ -37,6 +38,10 @@ public class GameScreenController {
     private GameScreenServiceFacade serviceFacade;
     private LevelDTO levelDTO;
 
+    /**
+     * Constructs a controller for the game screen.
+     * @param view The GameScreen view component
+     */
     public GameScreenController(GameScreen view) {
         this.view = view;
     }
@@ -52,6 +57,9 @@ public class GameScreenController {
         getCurrentLevel();
     }
 
+    /**
+     * Sets up view-controller bindings for UI components.
+     */
     private void setUpViewControllerBindings() {
         this.levelTitle = view.getLevelTitle();
         this.runCodeButton = view.getRunCodeButton();
@@ -64,6 +72,9 @@ public class GameScreenController {
         this.consoleOutputController = view.getConsoleOutputArea().getController();
     }
 
+    /**
+     * Loads the current level data.
+     */
     private void getCurrentLevel() {
         LevelDTO currentLevel = serviceFacade.getCurrentLevel();
         if (currentLevel != null) {
@@ -72,6 +83,9 @@ public class GameScreenController {
         }
     }
 
+    /**
+     * Sets up observable bindings for game events.
+     */
     private void setupObservableBindings() {
         serviceFacade.setupObservableBindings(
                 this::handleGridUpdate,
@@ -85,34 +99,59 @@ public class GameScreenController {
         );
     }
 
+    /**
+     * Handles grid updates by re-rendering.
+     */
     private void handleGridUpdate() {
         gameGridController.renderGridAndSprite();
     }
 
+    /**
+     * Handles console message output.
+     * @param message The message to display
+     */
     private void handleConsoleMessage(String message) {
         if (!StringUtils.isNullOrEmpty(message)) {
             consoleOutputController.appendMessage(message);
         }
     }
 
+    /**
+     * Handles console error output.
+     * @param error The error message to display
+     */
     private void handleConsoleError(String error) {
         if (!StringUtils.isNullOrEmpty(error)) {
             consoleOutputController.logError(error);
         }
     }
 
+    /**
+     * Handles execution start events.
+     */
     private void handleExecutionStart() {
         setExecutionState(true);
     }
 
+    /**
+     * Handles execution completion events.
+     * @param message The completion message
+     */
     private void handleExecutionComplete(String message) {
         finishExecution(message);
     }
 
+    /**
+     * Handles return to game events.
+     */
     private void handleReturnToGame() {
         serviceFacade.requestResume();
     }
 
+    /**
+     * Loads a level into the game.
+     * @param level The level data to load
+     */
     private void loadLevel(LevelDTO level) {
         LevelData levelData = serviceFacade.getLevelData(level);
         gameState = new GameState(levelData);
@@ -121,6 +160,8 @@ public class GameScreenController {
     }
 
     /**
+     * Executes user code when run button is clicked.
+     * @param event The action event
      * fxml method to run the code of the user.
      */
     public void runCode(ActionEvent event) {
@@ -134,6 +175,10 @@ public class GameScreenController {
         serviceFacade.executeCode(code, gameState);
     }
 
+    /**
+     * Updates UI state during execution.
+     * @param executing True if code is executing
+     */
     private void setExecutionState(boolean executing) {
         Platform.runLater(() -> {
             runCodeButton.setDisable(executing || !serviceFacade.isReady());
@@ -157,6 +202,9 @@ public class GameScreenController {
         resetLevel();
     }
 
+    /**
+     * Resets the current level to its initial state.
+     */
     private void resetLevel() {
         if (serviceFacade.isExecuting()) {
             consoleOutputController.logError("Stop execution first before resetting.");
@@ -168,6 +216,10 @@ public class GameScreenController {
         loadLevel(levelDTO);
     }
 
+    /**
+     * Handles execution completion and displays the result message.
+     * @param message The completion message to display
+     */
     private void finishExecution(String message) {
         setExecutionState(false);
         Platform.runLater(() -> {
@@ -197,6 +249,9 @@ public class GameScreenController {
         serviceFacade.navigateToHelp();
     }
 
+    /**
+     * Handles level completion when player wins.
+     */
     private void handleLevelWon() {
         gameState.setGameResult(GameResult.WON);
         serviceFacade.stopExecution();
@@ -208,6 +263,9 @@ public class GameScreenController {
         serviceFacade.navigateToWinScreen();
     }
 
+    /**
+     * Handles game loss condition.
+     */
     private void handleLoss() {
         gameState.setGameResult(GameResult.LOST);
         serviceFacade.stopExecution();

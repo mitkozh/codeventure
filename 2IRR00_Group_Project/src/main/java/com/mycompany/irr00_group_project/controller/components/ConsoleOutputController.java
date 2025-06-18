@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.controller.components;
 
 import com.mycompany.irr00_group_project.gui.components.ConsoleOutputArea;
+
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 
@@ -13,6 +14,10 @@ public class ConsoleOutputController {
     private ConsoleOutputArea view;
     private TextArea consoleOutput;
 
+    /**
+     * Constructs a controller for the console output view.
+     * @param view The ConsoleOutputArea view component
+     */
     public ConsoleOutputController(ConsoleOutputArea view) {
         this.view = view;
     }
@@ -25,6 +30,9 @@ public class ConsoleOutputController {
         setupConsole();
     }
 
+    /**
+     * Configures console output properties.
+     */
     private void setupConsole() {
         consoleOutput.setEditable(false);
     }
@@ -41,10 +49,17 @@ public class ConsoleOutputController {
         });
     }
 
+    /**
+     * Clears all messages from the console.
+     */
     public void clear() {
         Platform.runLater(() -> consoleOutput.clear());
     }
 
+    /**
+     * Logs an error message to the console.
+     * @param error The error message to log
+     */
     public void logError(String error) {
         appendMessage("ERROR: " + error);
     }

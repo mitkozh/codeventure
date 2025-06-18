@@ -1,6 +1,7 @@
 package com.mycompany.irr00_group_project.controller.components;
 
 import com.mycompany.irr00_group_project.gui.components.GameGridDisplay;
+import com.mycompany.irr00_group_project.gui.components.SpriteCharacterView;
 import com.mycompany.irr00_group_project.model.core.GameState;
 import com.mycompany.irr00_group_project.model.core.SpriteCharacter;
 import com.mycompany.irr00_group_project.model.enums.TileType;
@@ -9,11 +10,11 @@ import com.mycompany.irr00_group_project.service.core.impl.SettingsServiceImpl;
 import com.mycompany.irr00_group_project.service.observable.ObservableProvider;
 import com.mycompany.irr00_group_project.service.observable.SettingsObservables;
 import com.mycompany.irr00_group_project.utils.StringUtils;
-import com.mycompany.irr00_group_project.gui.components.SpriteCharacterView;
+
 import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -28,6 +29,10 @@ public class GameGridController {
     private SettingsService settingsService;
     private GameGridDisplay view;
 
+    /**
+     * Constructs a controller for the game grid display.
+     * @param view The GameGridDisplay view component
+     */
     public GameGridController(GameGridDisplay view) {
         this.view = view;
     }
@@ -44,6 +49,9 @@ public class GameGridController {
         setupSettingsObservables();
     }
 
+    /**
+     * Configures settings observables for avatar changes.
+     */
     private void setupSettingsObservables() {
         settingsService = SettingsServiceImpl.getInstance();
         if (settingsService instanceof ObservableProvider provider) {
@@ -80,6 +88,9 @@ public class GameGridController {
         updateSpritePosition();
     }
 
+    /**
+     * Sets up grid constraints based on game state size.
+     */
     private void setupGridConstraints() {
         int size = gameState.getSize();
         double percentageSize = 100.0 / size;
@@ -103,6 +114,9 @@ public class GameGridController {
         }
     }
 
+    /**
+     * Renders the game grid tiles.
+     */
     private void renderGrid() {
         gameGrid.getChildren().clear();
 
@@ -121,6 +135,11 @@ public class GameGridController {
         }
     }
 
+    /**
+     * Creates a styled tile for the grid.
+     * @param tileType The type of tile to create
+     * @return The created StackPane tile
+     */
     private StackPane createTile(TileType tileType) {
         StackPane tile = new StackPane();
         tile.getStyleClass().add("game-tile");
@@ -128,6 +147,11 @@ public class GameGridController {
         return tile;
     }
 
+    /**
+     * Gets the CSS style class for a tile type.
+     * @param tileType The tile type to get style for
+     * @return The corresponding style class name
+     */
     private String getTileStyleClass(TileType tileType) {
         return switch (tileType) {
             case OBSTACLE -> "obstacle-tile";

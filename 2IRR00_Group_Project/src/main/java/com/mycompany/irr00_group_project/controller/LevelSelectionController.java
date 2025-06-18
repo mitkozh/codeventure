@@ -1,17 +1,18 @@
 package com.mycompany.irr00_group_project.controller;
 
+import java.util.List;
+
+import com.mycompany.irr00_group_project.gui.components.LevelPreviewButton;
 import com.mycompany.irr00_group_project.model.core.dto.LevelDTO;
 import com.mycompany.irr00_group_project.service.core.LevelService;
 import com.mycompany.irr00_group_project.service.core.impl.LevelServiceImpl;
 import com.mycompany.irr00_group_project.service.navigator.LevelSelectionScreenNavigatorManager;
 import com.mycompany.irr00_group_project.utils.Constants;
-import com.mycompany.irr00_group_project.gui.components.LevelPreviewButton;
+
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.GridPane;
-
-import java.util.List;
 
 /**
  * Controller for the level selection screen.
@@ -39,6 +40,11 @@ public class LevelSelectionController {
         pagination.setPageFactory(this::createPage);
     }
 
+    /**
+     * Creates a page of level selection buttons for the pagination control.
+     * @param pageIndex The index of the page to create
+     * @return The created page as a JavaFX Node
+     */
     private Node createPage(int pageIndex) {
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -65,11 +71,18 @@ public class LevelSelectionController {
         return grid;
     }
 
+    /**
+     * Handles level selection by the user.
+     * @param level The selected level DTO
+     */
     private void selectLevel(LevelDTO level) {
         levelService.selectLevel(level);
         loadLevel();
     }
 
+    /**
+     * Loads the selected level.
+     */
     private void loadLevel() {
         navigatorManager.navigateToLevel();
     }
@@ -84,10 +97,17 @@ public class LevelSelectionController {
         goToMenu();
     }
 
+    /**
+     * Navigates back to the main menu screen.
+     */
     public void goToMenu() {
         navigatorManager.navigateToMenu();
     }
 
+    /**
+     * Sets the pagination control for level selection.
+     * @param pagination The pagination control to use
+     */
     public void setPagination(Pagination pagination) {
         this.pagination = pagination;
     }
